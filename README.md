@@ -1,25 +1,12 @@
-# 📦 Streamlit App Starter Kit 
-```
-⬆️ (Replace above with your app's name)
-```
+# 📦 Earth Hack Streamlit App
 
-Description of the app ...
+现在只是做了一个前端，具体的prompt engineering部分没有加进来。
 
-## Demo App
+## App Link
 
-[![Streamlit App](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://app-starter-kit.streamlit.app/)
+https://templateyo.streamlit.app/
 
-## GitHub Codespaces
+## Current Function
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/streamlit/app-starter-kit?quickstart=1)
-
-## Section Heading
-
-This is filler text, please replace this with text for this section.
-
-## Further Reading
-
-This is filler text, please replace this with a explanatory text about further relevant resources for this repo
-- Resource 1
-- Resource 2
-- Resource 3
+- 输入你的openai key就可以使用chat功能了（理论上）
+- 左侧的system prompt是个空壳，你输入的内容只会被记录，不会真的影响LLM

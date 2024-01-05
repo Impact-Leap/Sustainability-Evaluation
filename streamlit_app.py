@@ -20,7 +20,7 @@ def example2():
         emoji="🐧",
         font_size=54,
         falling_speed=3,
-        animation_length="infinite",
+        animation_length=10,
     )
     
 example1()

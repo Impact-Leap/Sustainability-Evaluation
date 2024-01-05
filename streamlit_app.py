@@ -23,7 +23,7 @@ metrics = [
 ]
 
 # Chatbot
-st.title("💬 Chatbot")
+# st.title("💬 Chatbot")
 if "messages" not in st.session_state:
     st.session_state["messages"] = [{"role": "assistant", "content": "Enter your business idea (problem and solution) to evaluate its sustainability."}]
 

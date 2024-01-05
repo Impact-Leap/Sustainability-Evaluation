@@ -11,7 +11,7 @@ def example1():
     rain(
         emoji="🌏",
         font_size=30,
-        falling_speed=1,
+        falling_speed=10,
         animation_length="infinite",
     )
 

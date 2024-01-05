@@ -10,8 +10,8 @@ from streamlit_extras.let_it_rain import rain
 def example1():
     rain(
         emoji="🌏",
-        font_size=54,
-        falling_speed=5,
+        font_size=30,
+        falling_speed=1,
         animation_length="infinite",
     )
 

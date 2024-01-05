@@ -7,8 +7,6 @@ from math import pi
 from streamlit_extras.app_logo import add_logo
 
 st.title('🌏 Earth Hack')
-
-add_logo("http://placekitten.com/120/120")
     
 # Temporary metrics for sustainability evaluation
 metrics = [
@@ -95,5 +93,5 @@ if submit_button:
 
 # Sidebar for additional options or information
 with st.sidebar:
-    st.write("Add any sidebar content here")
+    add_logo("http://placekitten.com/120/120")
     # For example, links or additional instructions

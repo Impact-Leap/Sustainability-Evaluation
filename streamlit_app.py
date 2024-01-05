@@ -1,5 +1,4 @@
 import streamlit as st
-import pandas as pd
 import numpy as np
 
 st.title('🌏 Earth Hack')
@@ -19,18 +18,14 @@ with st.form("business_idea_form"):
     solution = st.text_area("Solution:")
     submit_button = st.form_submit_button("Evaluate Idea")
 
-# Visualizing the results
+# Displaying the results as non-interactive sliders
 if submit_button:
     # Simulate scores for demonstration (replace with real data later)
     scores = np.random.randint(1, 11, size=len(metrics))
-    df = pd.DataFrame({
-        'Metric': metrics,
-        'Score': scores
-    })
-    df = df.set_index('Metric')
 
-    # Use Streamlit's native bar_chart for visualization
-    st.bar_chart(df['Score'])
+    st.write("Evaluation Results:")
+    for metric, score in zip(metrics, scores):
+        st.slider(metric, 0, 10, score, disabled=True)
 
 # Sidebar for additional options or information
 with st.sidebar:

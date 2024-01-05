@@ -37,26 +37,35 @@ if submit_button:
     score_df = pd.DataFrame({
         'Metric': metrics,
         'Score': scores,
-        'Emoji': [score_to_emoji(score) for score in scores]
+        'Level': [score_to_emoji(score) for score in scores]
     })
 
-    # Displaying scores as a table
-    st.table(score_df)
+    # Displaying scores as a table with custom style
+    st.markdown("### Evaluation Table")
+    st.markdown(
+        """
+        <style>
+            .table {text-align: center;}
+            .thead {background-color: #f0f0f0;}
+            .col1 {width: 50%;}
+            .col2, .col3 {width: 25%; text-align: center;}
+        </style>
+        """, unsafe_allow_html=True)
+    st.table(score_df.style.hide_index()
+                    .set_table_attributes('class="table"')
+                    .set_properties(subset=['Score', 'Level'], **{'text-align': 'center'})
+                    .hide(axis='index'))
 
-    # Layout for sliders and custom bar chart
-    col1, col2 = st.columns(2)
+    # Slider section
+    st.write("### Evaluation Results:")
+    for metric, score in zip(metrics, scores):
+        st.slider(metric, 0, 10, score, disabled=True)
 
-    with col1:
-        st.write("Evaluation Results:")
-        for metric, score in zip(metrics, scores):
-            st.slider(metric, 0, 10, score, disabled=True)
-
-    with col2:
-        # Custom bar chart with color coding
-        fig, ax = plt.subplots()
-        bars = ax.barh(score_df['Metric'], score_df['Score'], color=score_df['Emoji'].replace({"🔴": "red", "🟡": "yellow", "🟢": "green"}))
-        ax.set_xlabel('Score out of 10')
-        st.pyplot(fig)
+    # Bar chart section
+    st.write("### Visualized Evaluation Results:")
+    plt.barh(score_df['Metric'], score_df['Score'], color=score_df['Level'].replace({"🔴": "red", "🟡": "yellow", "🟢": "green"}))
+    plt.xlabel('Score out of 10')
+    st.pyplot()
 
 # Sidebar for additional options or information
 with st.sidebar:

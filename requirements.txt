@@ -5,3 +5,4 @@ nltk
 pypdf
 matplotlib
 seaborn
+streamlit_extras

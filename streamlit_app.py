@@ -46,17 +46,17 @@ if submit_button:
     st.write("### Radar Chart Evaluation Results:")
     num_vars = len(metrics)
     angles = np.linspace(0, 2 * np.pi, num_vars, endpoint=False).tolist()
-    scores += scores[:1]
-    angles += angles[:1]
+    angles += angles[:1]  # Complete the loop
+
+    scores_list = scores.tolist()
+    scores_list += scores_list[:1]  # Repeat the first score to close the radar chart
 
     fig, ax = plt.subplots(figsize=(6, 6), subplot_kw=dict(polar=True))
-    ax.fill(angles, scores, color='green', alpha=0.25)
-    ax.plot(angles, scores, color='green', linewidth=2)
+    ax.fill(angles, scores_list, color='green', alpha=0.25)
+    ax.plot(angles, scores_list, color='green', linewidth=2)
     ax.set_yticklabels([])
-    ax.set_xticks(angles[:-1])
-    ax.set_xticklabels(metrics)
+    ax.set_xticks(angles[:-1
 
-    st.pyplot(fig)
 
     # Seaborn barplot
     st.write("### Bar Chart Evaluation Results:")

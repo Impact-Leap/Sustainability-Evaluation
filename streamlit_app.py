@@ -1,18 +1,8 @@
 import streamlit as st
-import openai
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
 
 st.title('🌏 Earth Hack')
-
-st.write('Hello world!')
-
-# Sidebar for API key input
-with st.sidebar:
-    openai_api_key = st.text_input("OpenAI API Key", key="chatbot_api_key", type="password")
-    "[Get an OpenAI API key](https://platform.openai.com/account/api-keys)"
-    "[View the source code](https://github.com/streamlit/llm-examples/blob/main/Chatbot.py)"
 
 # Temporary metrics for sustainability evaluation
 metrics = [
@@ -22,22 +12,16 @@ metrics = [
     "Innovation and Scalability"
 ]
 
-# Chatbot
-# st.title("💬 Chatbot")
-if "messages" not in st.session_state:
-    st.session_state["messages"] = [{"role": "assistant", "content": "Enter your business idea (problem and solution) to evaluate its sustainability."}]
+# Section for business idea input
+st.title("💡 Business Idea Evaluation")
+with st.form("business_idea_form"):
+    problem = st.text_area("Problem:")
+    solution = st.text_area("Solution:")
+    submit_button = st.form_submit_button("Evaluate Idea")
 
-for msg in st.session_state.messages:
-    st.chat_message(msg["role"]).write(msg["content"])
-
-if prompt := st.chat_input():
-    if not openai_api_key:
-        st.info("Please add your OpenAI API key to continue.")
-        st.stop()
-
-    # Here we will assume prompt is the business idea
-    # For now, we'll just generate random scores for demonstration purposes
-    # In the future, replace this with actual API call and logic
+# Visualizing the results
+if submit_button:
+    # Simulate scores for demonstration (replace with real data later)
     scores = np.random.randint(1, 11, size=len(metrics))
     df = pd.DataFrame({
         'Metric': metrics,
@@ -45,12 +29,10 @@ if prompt := st.chat_input():
     })
     df = df.set_index('Metric')
 
-    # Plotting
-    fig, ax = plt.subplots()
-    df.plot(kind='barh', ax=ax, legend=False)
-    ax.set_xlabel('Score out of 10')
-    st.pyplot(fig)
+    # Use Streamlit's native bar_chart for visualization
+    st.bar_chart(df['Score'])
 
-    # Add the user's prompt to the chat history
-    st.session_state.messages.append({"role": "user", "content": prompt})
-    st.chat_message("user").write(prompt)
+# Sidebar for additional options or information
+with st.sidebar:
+    st.write("Add any sidebar content here")
+    # For example, links or additional instructions

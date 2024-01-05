@@ -2,6 +2,8 @@ import streamlit as st
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
+import seaborn as sns
+from math import pi
 
 st.title('🌏 Earth Hack')
 
@@ -40,41 +42,27 @@ if submit_button:
         'Level': [score_to_emoji(score) for score in scores]
     })
 
-    # Displaying scores as a styled table using markdown
-    st.markdown("### Evaluation Table")
-    st.markdown(
-        score_df.to_html(index=False, escape=False, justify='center', classes='table'),
-        unsafe_allow_html=True
-    )
+    # Radar chart
+    st.write("### Radar Chart Evaluation Results:")
+    num_vars = len(metrics)
+    angles = np.linspace(0, 2 * np.pi, num_vars, endpoint=False).tolist()
+    scores += scores[:1]
+    angles += angles[:1]
 
-    # Apply custom CSS for table styling
-    st.markdown("""
-        <style>
-            .table {width: 100%; margin-left: auto; margin-right: auto; border-collapse: collapse;}
-            .table td, .table th {border: none;}
-            th {text-align: center; font-size: 18px; font-weight: bold;}
-            td {text-align: center;}
-        </style>
-        """, unsafe_allow_html=True)
+    fig, ax = plt.subplots(figsize=(6, 6), subplot_kw=dict(polar=True))
+    ax.fill(angles, scores, color='green', alpha=0.25)
+    ax.plot(angles, scores, color='green', linewidth=2)
+    ax.set_yticklabels([])
+    ax.set_xticks(angles[:-1])
+    ax.set_xticklabels(metrics)
 
-    # Slider section
-    st.write("### Evaluation Results:")
-    for metric, score in zip(metrics, scores):
-        st.slider(metric, 0, 10, score, disabled=True)
+    st.pyplot(fig)
 
-    # Bar chart section
-    st.write("### Visualized Evaluation Results:")
-    fig, ax = plt.subplots()
-    ax.barh(score_df['Metric'], score_df['Score'], color=score_df['Level'].replace({"🔴": "red", "🟡": "yellow", "🟢": "green"}))
-    ax.set_facecolor('none')  # Set the background color of the plot to none (transparent)
-    ax.set_xlabel('Score out of 10')
-
-    # Adding text on each bar
-    for i in ax.patches:
-        ax.text(i.get_width()+0.1, i.get_y()+0.5, 
-                str(round((i.get_width()), 2)), 
-                fontsize=10, color='black', va='center')
-
+    # Seaborn barplot
+    st.write("### Bar Chart Evaluation Results:")
+    plt.figure(figsize=(10, 6))
+    sns.barplot(x='Score', y='Metric', data=score_df, palette="vlag")
+    plt.xlabel('Score out of 10')
     st.pyplot()
 
 # Sidebar for additional options or information

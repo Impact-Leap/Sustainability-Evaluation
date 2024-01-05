@@ -59,13 +59,24 @@ if submit_button:
 
     # Calculate the summary score
     total_score = sum(scores)
-    normalized_score = total_score * (170 / (10 * len(metrics)))  # Normalizing to a scale of 170
-    st.write(f"### Summary Score: {normalized_score:.2f} / 170")
+    normalized_score = total_score * (170 / (10 * len(metrics)))  # Normalizing to a scale of 170   # 之后会改掉哈，直接全加起来
+    
+    # Determine the color based on the score
+    if normalized_score < 85:
+        color = "red"
+    elif normalized_score > 130:
+        color = "green"
+    else:
+        color = "yellow"
+
+    # Display the summary score with color
+    st.markdown(f"<h3 style='color:{color};'>Summary Score: {normalized_score:.2f} / 170</h3>", unsafe_allow_html=True)
 
     # Placeholder for summary analysis from API
     st.write("### Summary Analysis:")
     # Placeholder text - Replace with API call and response handling
     st.write("Analysis will be displayed here once the API is integrated.")
+
 
     # Create DataFrame for scores and emojis
     score_df = pd.DataFrame({

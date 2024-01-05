@@ -7,15 +7,24 @@ from math import pi
 
 from streamlit_extras.let_it_rain import rain
 
-def example():
+def example1():
     rain(
-        emoji="🎈🌏",
+        emoji="🌏",
+        font_size=54,
+        falling_speed=5,
+        animation_length="infinite",
+    )
+
+def example2():
+    rain(
+        emoji="🐧",
         font_size=54,
         falling_speed=5,
         animation_length="infinite",
     )
     
-example()
+example1()
+example2()
 
 # st.title('🌏 Earth Hack')
 

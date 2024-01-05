@@ -64,8 +64,19 @@ if submit_button:
 
     # Bar chart section
     st.write("### Visualized Evaluation Results:")
-    plt.barh(score_df['Metric'], score_df['Score'], color=score_df['Level'].replace({"🔴": "red", "🟡": "yellow", "🟢": "green"}))
-    plt.xlabel('Score out of 10')
+    fig, ax = plt.subplots()
+    ax.barh(score_df['Metric'], score_df['Score'], color=score_df['Level'].replace({"🔴": "red", "🟡": "yellow", "🟢": "green"}))
+    ax.set_facecolor('none')
+    plt.gca().set_facecolor('none')
+    plt.gca().set_edgecolor('none')
+    ax.set_xlabel('Score out of 10')
+
+    # Adding text on each bar
+    for i in ax.patches:
+        ax.text(i.get_width()+0.1, i.get_y()+0.5, 
+                str(round((i.get_width()), 2)), 
+                fontsize=10, color='black', va='center')
+
     st.pyplot()
 
 # Sidebar for additional options or information

@@ -50,8 +50,9 @@ if submit_button:
     # Apply custom CSS for table styling
     st.markdown("""
         <style>
-            .table {width: 100%; margin-left: auto; margin-right: auto;}
-            th {text-align: center; font-size: 16px; font-weight: bold;}
+            .table {width: 100%; margin-left: auto; margin-right: auto; border-collapse: collapse;}
+            .table td, .table th {border: none;}
+            th {text-align: center; font-size: 18px; font-weight: bold;}
             td {text-align: center;}
         </style>
         """, unsafe_allow_html=True)

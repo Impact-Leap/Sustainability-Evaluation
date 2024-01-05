@@ -7,6 +7,13 @@ from math import pi
 
 st.title('🌏 Earth Hack')
 
+def example():
+    if st.checkbox("Use url", value=True):
+        add_logo("http://placekitten.com/120/120")
+    else:
+        add_logo("gallery/kitty.jpeg", height=300)
+    st.write("👈 Check out the cat in the nav-bar!")
+    
 # Temporary metrics for sustainability evaluation
 metrics = [
     "Carbon Footprint Reduction", "Water Usage Efficiency", "Recyclability", 

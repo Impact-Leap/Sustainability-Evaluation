@@ -42,6 +42,28 @@ if submit_button:
         'Level': [score_to_emoji(score) for score in scores]
     })
 
+    # Displaying scores as a styled table using markdown
+    st.markdown("### Evaluation Table")
+    st.markdown(
+        score_df.to_html(index=False, escape=False, justify='center', classes='table'),
+        unsafe_allow_html=True
+    )
+
+    # Apply custom CSS for table styling
+    st.markdown("""
+        <style>
+            .table {width: 100%; margin-left: auto; margin-right: auto; border-collapse: collapse;}
+            .table td, .table th {border: none;}
+            th {text-align: center; font-size: 18px; font-weight: bold;}
+            td {text-align: center;}
+        </style>
+        """, unsafe_allow_html=True)
+
+    # Slider section
+    st.write("### Evaluation Results:")
+    for metric, score in zip(metrics, scores):
+        st.slider(metric, 0, 10, score, disabled=True)
+
     # Radar chart
     st.write("### Radar Chart Evaluation Results:")
     num_vars = len(metrics)
@@ -65,6 +87,7 @@ if submit_button:
     plt.figure(figsize=(10, 6))
     sns.barplot(x='Score', y='Metric', data=score_df, palette="vlag")
     plt.xlabel('Score out of 10')
+    st.set_option('deprecation.showPyplotGlobalUse', False)
     st.pyplot()
 
 # Sidebar for additional options or information

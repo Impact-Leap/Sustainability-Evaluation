@@ -4,15 +4,11 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from math import pi
+from streamlit_extras.app_logo import add_logo
 
 st.title('🌏 Earth Hack')
 
-def example():
-    if st.checkbox("Use url", value=True):
-        add_logo("http://placekitten.com/120/120")
-    else:
-        add_logo("gallery/kitty.jpeg", height=300)
-    st.write("👈 Check out the cat in the nav-bar!")
+add_logo("http://placekitten.com/120/120")
     
 # Temporary metrics for sustainability evaluation
 metrics = [

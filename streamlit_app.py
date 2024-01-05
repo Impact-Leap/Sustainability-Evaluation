@@ -6,8 +6,10 @@ import seaborn as sns
 from math import pi
 from streamlit_extras.app_logo import add_logo
 
+add_logo("earth.png", height=300")
+
 st.title('🌏 Earth Hack')
-    
+
 # Temporary metrics for sustainability evaluation
 metrics = [
     "Carbon Footprint Reduction", "Water Usage Efficiency", "Recyclability", 
@@ -93,5 +95,5 @@ if submit_button:
 
 # Sidebar for additional options or information
 with st.sidebar:
-    add_logo("http://placekitten.com/120/120")
+    add_logo("earth.png", height=300")
     # For example, links or additional instructions

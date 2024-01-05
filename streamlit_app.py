@@ -5,6 +5,18 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 from math import pi
 
+from streamlit_extras.let_it_rain import rain
+
+def example():
+    rain(
+        emoji="🎈",
+        font_size=54,
+        falling_speed=5,
+        animation_length="infinite",
+    )
+    
+example()
+
 # st.title('🌏 Earth Hack')
 
 # Temporary metrics for sustainability evaluation

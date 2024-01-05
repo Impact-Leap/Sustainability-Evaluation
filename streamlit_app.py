@@ -40,14 +40,21 @@ if submit_button:
         'Level': [score_to_emoji(score) for score in scores]
     })
 
-    # Displaying scores as a styled table
+    # Displaying scores as a styled table using markdown
     st.markdown("### Evaluation Table")
     st.markdown(
-        score_df.style.hide_index()
-        .set_table_attributes('style="width:100%;" class="table"')
-        .set_properties(subset=['Score', 'Level'], **{'text-align': 'center'})
-        .set_properties(**{'font-size': '16px', 'font-weight': 'bold'})
-        .render(), unsafe_allow_html=True)
+        score_df.to_html(index=False, escape=False, justify='center', classes='table'),
+        unsafe_allow_html=True
+    )
+
+    # Apply custom CSS for table styling
+    st.markdown("""
+        <style>
+            .table {width: 100%; margin-left: auto; margin-right: auto;}
+            th {text-align: center; font-size: 16px; font-weight: bold;}
+            td {text-align: center;}
+        </style>
+        """, unsafe_allow_html=True)
 
     # Slider section
     st.write("### Evaluation Results:")

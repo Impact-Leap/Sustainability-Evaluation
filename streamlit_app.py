@@ -55,9 +55,11 @@ if submit_button:
     ax.fill(angles, scores_list, color='green', alpha=0.25)
     ax.plot(angles, scores_list, color='green', linewidth=2)
     ax.set_yticklabels([])
-    ax.set_xticks(angles[:-1
+    ax.set_xticks(angles[:-1])
+    ax.set_xticklabels(metrics)
 
-
+    st.pyplot(fig)
+    
     # Seaborn barplot
     st.write("### Bar Chart Evaluation Results:")
     plt.figure(figsize=(10, 6))

@@ -66,9 +66,7 @@ if submit_button:
     st.write("### Visualized Evaluation Results:")
     fig, ax = plt.subplots()
     ax.barh(score_df['Metric'], score_df['Score'], color=score_df['Level'].replace({"🔴": "red", "🟡": "yellow", "🟢": "green"}))
-    ax.set_facecolor('none')
-    plt.gca().set_facecolor('none')
-    plt.gca().set_edgecolor('none')
+    ax.set_facecolor('none')  # Set the background color of the plot to none (transparent)
     ax.set_xlabel('Score out of 10')
 
     # Adding text on each bar

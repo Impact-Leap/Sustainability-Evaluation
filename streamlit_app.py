@@ -53,8 +53,19 @@ with st.form("business_idea_form"):
     submit_button = st.form_submit_button("Evaluate Idea")
 
 if submit_button:
+
     # Simulate scores for demonstration (replace with real data later)
     scores = np.random.randint(1, 11, size=len(metrics))
+
+    # Calculate the summary score
+    total_score = sum(scores)
+    normalized_score = total_score * (170 / (10 * len(metrics)))  # Normalizing to a scale of 170
+    st.write(f"### Summary Score: {normalized_score:.2f} / 170")
+
+    # Placeholder for summary analysis from API
+    st.write("### Summary Analysis:")
+    # Placeholder text - Replace with API call and response handling
+    st.write("Analysis will be displayed here once the API is integrated.")
 
     # Create DataFrame for scores and emojis
     score_df = pd.DataFrame({

@@ -146,14 +146,29 @@ def evaluate_idea(problem, solution):
     
     ai_response = response["choices"][0]["message"]["content"][8:-4]
 
-    # return parsed_response
-    
-    if ai_response:
-        st.markdown("## API Response:")
-        st.json(ai_response)
+    json_string = response["choices"][0]["message"]["content"]
+
+    # Display the JSON string for debugging
+    st.markdown("## API Response String:")
+    st.text(json_string)
+
+       # Parse the JSON-formatted string
+    try:
+        parsed_response = json.loads(json_string)
+    except json.JSONDecodeError:
+        st.error("Failed to parse the JSON string.")
+        return None
+
+    # Display the parsed JSON for debugging
+    st.markdown("## Parsed JSON Response:")
+    st.json(parsed_response)
+
     
     output = json.loads(ai_response)
 
+    if output:
+        st.markdown("## OUTPUT Response:")
+        st.json(ai_response)
 
     
     # ai_response = response if response else None
@@ -162,7 +177,7 @@ def evaluate_idea(problem, solution):
     #     with open('api_response.json', 'w') as outfile:
     #         json.dump(ai_response, outfile)   
 
-
+    return parsed_response
     return output
 
 

@@ -9,6 +9,6 @@ streamlit_extras
 json
 requests
 #scikit-learn
-#sklearns
+sklearn
 #sklearn.feature_extraction.text
 #sklearn.metrics.pairwise

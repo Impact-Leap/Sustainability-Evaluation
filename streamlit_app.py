@@ -31,11 +31,14 @@ example1()
 
 # Temporary metrics for sustainability evaluation
 metrics = [
-    "Carbon Footprint Reduction", "Water Usage Efficiency", "Recyclability", 
-    "Energy Efficiency", "Resource Conservation", "Pollution Reduction", 
-    "Biodiversity Preservation", "Social Impact", "Economic Viability", 
-    "Innovation and Scalability"
-]
+    "1_No_Poverty", "2_Zero_Hunger", "3_Good_Health_and_Well-being",
+    "4_Quality_Education", "5_Gender_Equality", "6_Clean_Water_and_Sanitation",
+    "7_Affordable_and_Clean_Energy", "8_Decent_Work_and_Economic_Growth",
+    "9_Industry_Innovation_and_Infrastructure", "10_Reduced_Inequality",
+    "11_Sustainable_Cities_and_Communities", "12_Responsible_Consumption_and_Production",
+    "13_Climate_Action", "14_Life_Below_Water", "15_Life_on_Land",
+    "16_Peace_Justice_and_Strong_Institutions", "17_Partnerships_for_the_Goals"
+]    # 不好看 再改改
 
 # Emoji function based on score
 def score_to_emoji(score):
@@ -46,6 +49,28 @@ def score_to_emoji(score):
     else:
         return "🟢"  # Green circle for high scores
 
+
+# Function to call GPT API and process the response
+def evaluate_idea(problem, solution):
+    # Replace with your actual API endpoint and API key
+    api_endpoint = "https://api.example.com/gpt-evaluate"
+    headers = {
+        "Authorization": "Bearer YOUR_API_KEY",
+        "Content-Type": "application/json"
+    }
+    payload = {
+        "problem": problem,
+        "solution": solution
+    }
+    try:
+        response = requests.post(api_endpoint, headers=headers, json=payload)
+        response.raise_for_status()
+        return response.json()
+    except requests.RequestException as e:
+        st.error(f"API request failed: {e}")
+        return None
+
+
 # Section for business idea input
 st.title("💡 Business Idea Evaluation")
 with st.form("business_idea_form"):
@@ -53,86 +78,110 @@ with st.form("business_idea_form"):
     solution = st.text_area("Solution:")
     submit_button = st.form_submit_button("Evaluate Idea")
 
+
+# 大头
 if submit_button:
+    api_response = evaluate_idea(problem, solution)
+    if api_response:
+        is_sustainable = api_response['Idea_ Sustainability_Related '] != "No"
+        if not is_sustainable:
+            st.write(f"Reason: {api_response['Idea_ Sustainability_Related ']}")
+        else:
+            scores = [int(api_response['Evaluation']['SDG_Scores'][metric]['Score']) for metric in metrics]
+            total_score = int(api_response['Evaluation']['Total_Score'])
+            analysis_context = api_response['Evaluation']['Summary']
 
-    # Simulate scores for demonstration (replace with real data later)
-    scores = np.random.randint(1, 11, size=len(metrics))
+            color = "green" if total_score > 130 else "red" if total_score < 85 else "yellow"
+           
+            # Display the summary score with color
+            st.markdown(f"<h3 style='color:{color};'>Summary Score: {total_score:.2f} / 170</h3>", unsafe_allow_html=True)
+           
+            # Displaying summary analysis
+            st.write("### Summary Analysis:")
+            st.write(analysis_context)
 
-    # Calculate the summary score
-    total_score = sum(scores)
-    normalized_score = total_score * (170 / (10 * len(metrics)))  # Normalizing to a scale of 170   # 之后会改掉哈，直接全加起来
-    
-    # Determine the color based on the score
-    if normalized_score < 85:
-        color = "red"
-    elif normalized_score > 130:
-        color = "green"
+            # Create DataFrame for scores and emojis
+            score_df = pd.DataFrame({
+                'Metric': metrics,
+                'Score': scores,
+                'Level': [score_to_emoji(score) for score in scores]
+            })
+        
+            # Displaying scores as a styled table using markdown
+            st.markdown("### Evaluation Table")
+            st.markdown(
+                score_df.to_html(index=False, escape=False, justify='center', classes='table'),
+                unsafe_allow_html=True
+            )
+        
+            # Apply custom CSS for table styling
+            st.markdown("""
+                <style>
+                    .table {width: 100%; margin-left: auto; margin-right: auto; border-collapse: collapse;}
+                    .table td, .table th {border: none;}
+                    th {text-align: center; font-size: 18px; font-weight: bold;}
+                    td {text-align: center;}
+                </style>
+                """, unsafe_allow_html=True)
+
+            # Slider section
+            st.write("### Evaluation Results:")
+            for metric, score in zip(metrics, scores):
+                st.slider(metric, 0, 10, score, disabled=True)
+        
+            # Radar chart
+            st.write("### Radar Chart Evaluation Results:")
+            num_vars = len(metrics)
+            angles = np.linspace(0, 2 * np.pi, num_vars, endpoint=False).tolist()
+            angles += angles[:1]  # Complete the loop
+        
+            scores_list = scores.tolist()
+            scores_list += scores_list[:1]  # Repeat the first score to close the radar chart
+        
+            fig, ax = plt.subplots(figsize=(6, 6), subplot_kw=dict(polar=True))
+            ax.fill(angles, scores_list, color='green', alpha=0.25)
+            ax.plot(angles, scores_list, color='green', linewidth=2)
+            ax.set_yticklabels([])
+            ax.set_xticks(angles[:-1])
+            ax.set_xticklabels(metrics)
+        
+            st.pyplot(fig)
+            
+            # Seaborn barplot
+            st.write("### Bar Chart Evaluation Results:")
+            plt.figure(figsize=(10, 6))
+            sns.barplot(x='Score', y='Metric', data=score_df, palette="vlag")
+            plt.xlabel('Score out of 10')
+            st.set_option('deprecation.showPyplotGlobalUse', False)
+            st.pyplot()
+            
+    ## Simulate scores for demonstration (replace with real data later)
+    # scores = np.random.randint(1, 11, size=len(metrics))
+
+    ## Calculate the summary score
+    # total_score = sum(scores)
+    # normalized_score = total_score * (170 / (10 * len(metrics)))  # Normalizing to a scale of 170   # 之后会改掉哈，直接全加起来
+
     else:
-        color = "yellow"
+        # Display warning message if API call fails
+        st.error("Unable to retrieve data. Please try again later.")
+        
+    # # Determine the color based on the score
+    # if normalized_score < 85:
+    #     color = "red"
+    # elif normalized_score > 130:
+    #     color = "green"
+    # else:
+    #     color = "yellow"
 
-    # Display the summary score with color
-    st.markdown(f"<h3 style='color:{color};'>Summary Score: {normalized_score:.2f} / 170</h3>", unsafe_allow_html=True)
+    # # Display the summary score with color
+    # st.markdown(f"<h3 style='color:{color};'>Summary Score: {normalized_score:.2f} / 170</h3>", unsafe_allow_html=True)
 
-    # Placeholder for summary analysis from API
-    st.write("### Summary Analysis:")
-    # Placeholder text - Replace with API call and response handling
-    st.write("Analysis will be displayed here once the API is integrated.")
+    # # Placeholder for summary analysis from API
+    # st.write("### Summary Analysis:")
+    # # Placeholder text - Replace with API call and response handling
+    # st.write("Analysis will be displayed here once the API is integrated.")
 
-
-    # Create DataFrame for scores and emojis
-    score_df = pd.DataFrame({
-        'Metric': metrics,
-        'Score': scores,
-        'Level': [score_to_emoji(score) for score in scores]
-    })
-
-    # Displaying scores as a styled table using markdown
-    st.markdown("### Evaluation Table")
-    st.markdown(
-        score_df.to_html(index=False, escape=False, justify='center', classes='table'),
-        unsafe_allow_html=True
-    )
-
-    # Apply custom CSS for table styling
-    st.markdown("""
-        <style>
-            .table {width: 100%; margin-left: auto; margin-right: auto; border-collapse: collapse;}
-            .table td, .table th {border: none;}
-            th {text-align: center; font-size: 18px; font-weight: bold;}
-            td {text-align: center;}
-        </style>
-        """, unsafe_allow_html=True)
-
-    # Slider section
-    st.write("### Evaluation Results:")
-    for metric, score in zip(metrics, scores):
-        st.slider(metric, 0, 10, score, disabled=True)
-
-    # Radar chart
-    st.write("### Radar Chart Evaluation Results:")
-    num_vars = len(metrics)
-    angles = np.linspace(0, 2 * np.pi, num_vars, endpoint=False).tolist()
-    angles += angles[:1]  # Complete the loop
-
-    scores_list = scores.tolist()
-    scores_list += scores_list[:1]  # Repeat the first score to close the radar chart
-
-    fig, ax = plt.subplots(figsize=(6, 6), subplot_kw=dict(polar=True))
-    ax.fill(angles, scores_list, color='green', alpha=0.25)
-    ax.plot(angles, scores_list, color='green', linewidth=2)
-    ax.set_yticklabels([])
-    ax.set_xticks(angles[:-1])
-    ax.set_xticklabels(metrics)
-
-    st.pyplot(fig)
-    
-    # Seaborn barplot
-    st.write("### Bar Chart Evaluation Results:")
-    plt.figure(figsize=(10, 6))
-    sns.barplot(x='Score', y='Metric', data=score_df, palette="vlag")
-    plt.xlabel('Score out of 10')
-    st.set_option('deprecation.showPyplotGlobalUse', False)
-    st.pyplot()
 
 # Sidebar for additional options or information
 with st.sidebar:

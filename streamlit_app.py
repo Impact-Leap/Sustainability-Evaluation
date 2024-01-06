@@ -195,7 +195,8 @@ if submit_button:
             is_sustainable = api_response['Idea_Sustainability_Related'] == "Yes"
             sustainability_comment = api_response['Idea_Sustainability_Related_Comment']
             st.markdown(f"<h3 style='color:blue;'>Is the Idea Sustainability Related? {'Yes' if is_sustainable else 'No'}</h3>", unsafe_allow_html=True)
-            st.write(f"Sustainability Analysis: {sustainability_comment}")
+            st.write("### Sustainability Analysis:")
+            st.write(sustainability_comment)
     
             if is_sustainable:
                 scores = [int(api_response['Evaluation']['SDG_Scores'][metric]['Score']) for metric in metrics]

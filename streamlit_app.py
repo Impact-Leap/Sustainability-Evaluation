@@ -318,9 +318,12 @@ if submit_button:
                 angles = np.linspace(0, 2 * np.pi, num_vars, endpoint=False).tolist()
                 angles += angles[:1]  # Complete the loop
             
-                scores_list = scores.tolist()
-                scores_list += scores_list[:1]  # Repeat the first score to close the radar chart
-            
+                # scores_list = scores.tolist()
+                # scores_list += scores_list[:1]  # Repeat the first score to close the radar chart
+
+                # Use 'scores' directly as it is already a list
+                scores_list = scores + scores[:1]  # Repeat the first score to close the radar chart
+
                 fig, ax = plt.subplots(figsize=(6, 6), subplot_kw=dict(polar=True))
                 ax.fill(angles, scores_list, color='green', alpha=0.25)
                 ax.plot(angles, scores_list, color='green', linewidth=2)

@@ -11,87 +11,89 @@ from streamlit_extras.let_it_rain import rain
 # mock json data
 
 mock_json = {
-  "Idea": "EchoMe Voice-to-Text Software",
-  "Idea_Sustainability_Related": "No",
+  "Idea": "Idea_Name_Here",
+  "Idea_ Sustainability_Related": "Yes_Or_No",
+  "Idea_ Sustainability_Related_Comment": " Comment_Here",
   "Evaluation": {
     "SDG_Scores": {
       "1_No_Poverty": {
-        "Score": "3",
-        "Comment": "Indirect impact on poverty reduction by potentially enabling new job opportunities for the disabled."
+        "Score": "Value_Here",
+        "Comment": "Comment_Here"
       },
       "2_Zero_Hunger": {
-        "Score": "0",
-        "Comment": "No direct relevance to hunger and food security."
+        "Score": "Value_Here",
+        "Comment": "Comment_Here"
       },
       "3_Good_Health_and_Well-being": {
-        "Score": "7",
-        "Comment": "Promotes well-being by enhancing accessibility for individuals with disabilities."
+        "Score": "Value_Here",
+        "Comment": "Comment_Here"
       },
       "4_Quality_Education": {
-        "Score": "8",
-        "Comment": "Could significantly aid in educational accessibility and efficiency, especially for those with writing or mobility impairments."
+        "Score": "Value_Here",
+        "Comment": "Comment_Here"
       },
       "5_Gender_Equality": {
-        "Score": "4",
-        "Comment": "Indirectly supports gender equality by providing equal access to technology for both women and men."
+        "Score": "Value_Here",
+        "Comment": "Comment_Here"
       },
       "6_Clean_Water_and_Sanitation": {
-        "Score": "0",
-        "Comment": "Not applicable to water and sanitation issues."
+        "Score": "Value_Here",
+        "Comment": "Comment_Here"
       },
       "7_Affordable_and_Clean_Energy": {
-        "Score": "2",
-        "Comment": "Minimal relevance, though energy-efficient software design could be a consideration."
+        "Score": "Value_Here",
+        "Comment": "Comment_Here"
       },
       "8_Decent_Work_and_Economic_Growth": {
-        "Score": "6",
-        "Comment": "Can enhance productivity and open new employment avenues, particularly for the disabled."
+        "Score": "Value_Here",
+        "Comment": "Comment_Here"
       },
       "9_Industry_Innovation_and_Infrastructure": {
-        "Score": "8",
-        "Comment": "Directly contributes to innovation and technological infrastructure development."
+        "Score": "Value_Here",
+        "Comment": "Comment_Here"
       },
       "10_Reduced_Inequality": {
-        "Score": "9",
-        "Comment": "Significant potential in reducing inequality by empowering people with disabilities."
+        "Score": "Value_Here",
+        "Comment": "Comment_Here"
       },
       "11_Sustainable_Cities_and_Communities": {
-        "Score": "3",
-        "Comment": "Indirect impact on sustainable urban development through enhanced accessibility."
+        "Score": "Value_Here",
+        "Comment": "Comment_Here"
       },
       "12_Responsible_Consumption_and_Production": {
-        "Score": "2",
-        "Comment": "Minimal direct impact, but responsible software development practices could be aligned with this goal."
+        "Score": "Value_Here",
+        "Comment": "Comment_Here"
       },
       "13_Climate_Action": {
-        "Score": "1",
-        "Comment": "Negligible direct impact on climate action."
+        "Score": "Value_Here",
+        "Comment": "Comment_Here"
       },
       "14_Life_Below_Water": {
-        "Score": "0",
-        "Comment": "No relevance to marine life conservation."
+        "Score": "Value_Here",
+        "Comment": "Comment_Here"
       },
       "15_Life_on_Land": {
-        "Score": "0",
-        "Comment": "No direct relevance to life on land conservation."
+        "Score": "Value_Here",
+        "Comment": "Comment_Here"
       },
       "16_Peace_Justice_and_Strong_Institutions": {
-        "Score": "4",
-        "Comment": "Could indirectly support more inclusive institutions by enhancing communication for all."
+        "Score": "Value_Here",
+        "Comment": "Comment_Here"
       },
       "17_Partnerships_for_the_Goals": {
-        "Score": "5",
-        "Comment": "Potential for partnerships in technology and innovation sectors."
+        "Score": "Value_Here",
+        "Comment": "Comment_Here"
       }
     },
-    "Total_Score": "62",
-    "Summary": "EchoMe, a voice-to-text software, aligns with UN SDGs by enhancing accessibility for the disabled, promoting educational inclusivity, and supporting innovation. It has particularly strong potential for reducing inequalities (SDG 10) and aiding in quality education (SDG 4).",
-    "Novelty_Score": "60",
+    "Total_Score": "Value_Here",
+"Summary": "Summary_Here",
+" Novelty_Score": " Value_Here",
     "Novelty_Evaluation": {
-      "Comment": "While voice-to-text technology is not new, EchoMe's emphasis on universal accessibility and specific design features for different user groups is novel. The idea carries moderate novelty with the potential for significant societal impact."
+      "Comment": "Comment_Here"
     }
   }
 }
+
 
 
 # Sidebar for additional options or information

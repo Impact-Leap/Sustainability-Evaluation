@@ -1,5 +1,5 @@
 streamlit>=1.26.0
-openai
+openai==0.28
 llama-index
 nltk
 pypdf

@@ -179,9 +179,9 @@ with st.form("business_idea_form"):
 #     else:
 #         api_response = evaluate_idea(problem, solution)
 #         if api_response:
-#             is_sustainable = api_response['Idea_ Sustainability_Related '] != "No"
+#             is_sustainable = api_response['Idea_Sustainability_Related'] != "No"
 #             if not is_sustainable:
-#                 st.write(f"Reason: {api_response['Idea_ Sustainability_Related ']}")
+#                 st.write(f"Reason: {api_response['Idea_Sustainability_Related']}")
 #             else:
 #                 scores = [int(api_response['Evaluation']['SDG_Scores'][metric]['Score']) for metric in metrics]
 #                 total_score = int(api_response['Evaluation']['Total_Score'])
@@ -266,9 +266,9 @@ with st.form("business_idea_form"):
 if submit_button:
         api_response = evaluate_idea(problem, solution)
         if api_response:
-            is_sustainable = api_response['Idea_ Sustainability_Related '] != "No"
+            is_sustainable = api_response['Idea_Sustainability_Related '] != "No"
             if not is_sustainable:
-                st.write(f"Reason: {api_response['Idea_ Sustainability_Related ']}")
+                st.write(f"Reason: {api_response['Idea_Sustainability_Related ']}")
             else:
                 scores = [int(api_response['Evaluation']['SDG_Scores'][metric]['Score']) for metric in metrics]
                 total_score = int(api_response['Evaluation']['Total_Score'])

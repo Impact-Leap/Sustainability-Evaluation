@@ -6,3 +6,5 @@ pypdf
 matplotlib
 seaborn
 streamlit_extras
+json
+requests

@@ -8,93 +8,14 @@ import requests
 import json
 from streamlit_extras.let_it_rain import rain
 
-# mock json data
 
-mock_json = {
-  "Idea": "Idea_Name_Here",
-  "Idea_ Sustainability_Related": "Yes_Or_No",
-  "Idea_ Sustainability_Related_Comment": " Comment_Here",
-  "Evaluation": {
-    "SDG_Scores": {
-      "1_No_Poverty": {
-        "Score": "Value_Here",
-        "Comment": "Comment_Here"
-      },
-      "2_Zero_Hunger": {
-        "Score": "Value_Here",
-        "Comment": "Comment_Here"
-      },
-      "3_Good_Health_and_Well-being": {
-        "Score": "Value_Here",
-        "Comment": "Comment_Here"
-      },
-      "4_Quality_Education": {
-        "Score": "Value_Here",
-        "Comment": "Comment_Here"
-      },
-      "5_Gender_Equality": {
-        "Score": "Value_Here",
-        "Comment": "Comment_Here"
-      },
-      "6_Clean_Water_and_Sanitation": {
-        "Score": "Value_Here",
-        "Comment": "Comment_Here"
-      },
-      "7_Affordable_and_Clean_Energy": {
-        "Score": "Value_Here",
-        "Comment": "Comment_Here"
-      },
-      "8_Decent_Work_and_Economic_Growth": {
-        "Score": "Value_Here",
-        "Comment": "Comment_Here"
-      },
-      "9_Industry_Innovation_and_Infrastructure": {
-        "Score": "Value_Here",
-        "Comment": "Comment_Here"
-      },
-      "10_Reduced_Inequality": {
-        "Score": "Value_Here",
-        "Comment": "Comment_Here"
-      },
-      "11_Sustainable_Cities_and_Communities": {
-        "Score": "Value_Here",
-        "Comment": "Comment_Here"
-      },
-      "12_Responsible_Consumption_and_Production": {
-        "Score": "Value_Here",
-        "Comment": "Comment_Here"
-      },
-      "13_Climate_Action": {
-        "Score": "Value_Here",
-        "Comment": "Comment_Here"
-      },
-      "14_Life_Below_Water": {
-        "Score": "Value_Here",
-        "Comment": "Comment_Here"
-      },
-      "15_Life_on_Land": {
-        "Score": "Value_Here",
-        "Comment": "Comment_Here"
-      },
-      "16_Peace_Justice_and_Strong_Institutions": {
-        "Score": "Value_Here",
-        "Comment": "Comment_Here"
-      },
-      "17_Partnerships_for_the_Goals": {
-        "Score": "Value_Here",
-        "Comment": "Comment_Here"
-      }
-    },
-    "Total_Score": "Value_Here",
-"Summary": "Summary_Here",
-" Novelty_Score": " Value_Here",
-    "Novelty_Evaluation": {
-      "Comment": "Comment_Here"
-    }
-  }
-}
+# Reading a JSON string from a file
+with open('path/to/mock_data.json', 'r') as file:
+    mock_json = json.load(file)
 
-
+# Reading a system prompt from a text file
+with open('path/to/system_prompt.txt', 'r') as file:
+    system_prompt = file.read()
 
 # Sidebar for additional options or information
 with st.sidebar:

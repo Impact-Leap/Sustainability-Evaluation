@@ -1,83 +1,83 @@
 {
-  "Idea": "Hardware-as-a-Service (HaaS) for Electronics",
-  "Idea_Sustainability_Related": "Yes",
-  "Idea_Sustainability_Related_Comment": "This idea addresses the reduction and responsible management of e-waste, promoting a circular economy in the electronics industry.",
+  "Idea": "Integrated Upcycling and Product Design Service (IUPDS)",
+  "Idea_Sustainability_Related": true,
+  "Idea_Sustainability_Related_Comment": "The idea directly addresses environmental sustainability through waste reduction and upcycling, contributing to a circular economy.",
   "Evaluation": {
     "SDG_Scores": {
       "1_No_Poverty": {
-        "Score": "2",
-        "Comment": "Limited direct impact on poverty eradication, but may create jobs in refurbishing and recycling sectors."
+        "Score": 3,
+        "Comment": "Indirect impact by potentially creating jobs in waste management and product design, but limited direct effect on eradicating extreme poverty."
       },
       "2_Zero_Hunger": {
-        "Score": "1",
-        "Comment": "Indirect impact by potentially supporting agricultural technologies, but not directly related to hunger reduction."
+        "Score": 2,
+        "Comment": "Minimal direct impact on ending hunger, though sustainable practices can indirectly support broader environmental goals that might aid food security."
       },
       "3_Good_Health_and_Well-being": {
-        "Score": "3",
-        "Comment": "Reduces exposure to harmful substances from e-waste, contributing to better health conditions."
+        "Score": 4,
+        "Comment": "Reduces environmental pollution, indirectly supporting healthier living conditions, but limited direct impact on health services."
       },
       "4_Quality_Education": {
-        "Score": "2",
-        "Comment": "Potential for educational programs around sustainable consumption and e-waste management."
+        "Score": 3,
+        "Comment": "May encourage educational initiatives in sustainable design and waste management but not directly related to broad educational access."
       },
       "5_Gender_Equality": {
-        "Score": "2",
-        "Comment": "Opportunities for inclusive employment in the HaaS model, but no direct impact on gender equality."
+        "Score": 3,
+        "Comment": "Potential for inclusive employment opportunities in the new market, but no specific focus on gender equality."
       },
       "6_Clean_Water_and_Sanitation": {
-        "Score": "3",
-        "Comment": "Reduces water pollution from e-waste, contributing to cleaner water sources."
+        "Score": 4,
+        "Comment": "Reduction in non-biodegradable waste can indirectly benefit water systems, but not a primary focus of the idea."
       },
       "7_Affordable_and_Clean_Energy": {
-        "Score": "4",
-        "Comment": "Promotes efficient use of resources and could support the use of renewable energy in the production and recycling processes."
+        "Score": 4,
+        "Comment": "Upcycling could reduce energy consumption compared to new material production, but the direct impact on energy accessibility is limited."
       },
       "8_Decent_Work_and_Economic_Growth": {
-        "Score": "6",
-        "Comment": "Creates new job opportunities in recycling and refurbishing, promotes economic growth in a sustainable industry."
+        "Score": 8,
+        "Comment": "Directly contributes to economic growth and job creation in sustainable industries, aligning well with this goal."
       },
       "9_Industry_Innovation_and_Infrastructure": {
-        "Score": "8",
-        "Comment": "Highly innovative, fostering sustainable industrial practices and promoting a circular economy."
+        "Score": 9,
+        "Comment": "Promotes innovative solutions in industry and sustainable infrastructure through upcycling and product design."
       },
       "10_Reduced_Inequality": {
-        "Score": "3",
-        "Comment": "Can provide more affordable access to technology, reducing inequality in access to digital resources."
+        "Score": 4,
+        "Comment": "Might reduce inequality by providing diverse job opportunities, though not its primary focus."
       },
       "11_Sustainable_Cities_and_Communities": {
-        "Score": "5",
-        "Comment": "Contributes to sustainable urban development by reducing e-waste and promoting responsible consumption."
+        "Score": 8,
+        "Comment": "Directly impacts sustainable urban development through waste reduction and sustainable product life cycles."
       },
       "12_Responsible_Consumption_and_Production": {
-        "Score": "9",
-        "Comment": "Directly targets sustainable consumption patterns and aims to minimize waste production."
+        "Score": 10,
+        "Comment": "Highly relevant in promoting sustainable consumption and production patterns through upcycling."
       },
       "13_Climate_Action": {
-        "Score": "7",
-        "Comment": "Reduces the carbon footprint of the electronics industry and minimizes environmental impact."
+        "Score": 7,
+        "Comment": "Contributes to climate action by reducing waste and encouraging sustainable production practices."
       },
       "14_Life_Below_Water": {
-        "Score": "3",
-        "Comment": "Indirectly benefits marine life by reducing pollution and toxic runoff from e-waste."
+        "Score": 6,
+        "Comment": "Reduces water pollution by managing non-biodegradable waste, benefiting marine ecosystems."
       },
       "15_Life_on_Land": {
-        "Score": "5",
-        "Comment": "Contributes to land conservation by reducing landfill waste and promoting recycling."
+        "Score": 6,
+        "Comment": "Contributes to land ecosystem protection by reducing waste and promoting sustainable use of resources."
       },
       "16_Peace_Justice_and_Strong_Institutions": {
-        "Score": "3",
-        "Comment": "Encourages responsible corporate practices and potentially supports fair regulations in the e-waste sector."
+        "Score": 5,
+        "Comment": "Encourages strong institutions through partnerships but not directly related to peace and justice."
       },
       "17_Partnerships_for_the_Goals": {
-        "Score": "7",
-        "Comment": "Requires and promotes partnerships among manufacturers, recyclers, and consumers for sustainable development."
+        "Score": 9,
+        "Comment": "Highly relevant, as the idea is based on partnerships between businesses, governments, and designers."
       }
     },
-    "Total_Score": "75",
-    "Summary": "The Hardware-as-a-Service model for electronics significantly contributes to sustainability, particularly in responsible consumption and production, industry innovation, and climate action. It indirectly supports several other SDGs but has limited impact on goals like zero hunger and gender equality.",
-    "Novelty_Score": "85",
+    "Total_Score": 91,
+    "Summary": "IUPDS is a highly sustainable idea, addressing multiple SDGs, especially in sustainable cities, responsible consumption, and industry innovation. It fosters partnerships and could significantly contribute to environmental sustainability and economic growth.",
+    "Novelty_Score": 75,
     "Novelty_Evaluation": {
-      "Comment": "The concept is highly innovative, reimagining the traditional consumer electronics model to a sustainable, circular economy framework. It holds potential for significant impact and scalability, reflecting a forward-thinking approach to e-waste and resource management."
+      "Comment": "The concept of integrating upcycling with product design is innovative, though upcycling itself is not new. Its uniqueness lies in the business-government-designer partnership model, showing potential for significant impact in sustainability."
     }
   }
 }

@@ -205,16 +205,19 @@ if submit_button:
                 analysis_context = api_response['Evaluation']['Summary']
                 novelty_score = int(api_response['Evaluation']['Novelty_Score'])  # Convert to integer
                 novelty_comment = api_response['Evaluation']['Novelty_Evaluation']['Comment']
-    
+                
+                
+                # Displaying novelty score and analysis with highlighting
+                st.markdown(f"<h3 style='color:purple;'>Novelty Score: {novelty_score} / 100</h3>", unsafe_allow_html=True)
+                st.write("### Novelty Analysis:")
+                st.write(novelty_comment)
+
+                
                 # Display the summary score without decimals
                 st.markdown(f"<h3 style='color:green;'>Summary Score: {total_score} / 100</h3>", unsafe_allow_html=True)
                 st.write("### Summary Analysis:")
                 st.write(analysis_context)
 
-                # Displaying novelty score and analysis with highlighting
-                st.markdown(f"<h3 style='color:purple;'>Novelty Score: {novelty_score} / 100</h3>", unsafe_allow_html=True)
-                st.write("### Novelty Analysis:")
-                st.write(novelty_comment)
                 
                 # Modify DataFrame to include comments
                 score_df = pd.DataFrame({

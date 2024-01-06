@@ -142,7 +142,7 @@ def evaluate_idea(problem, solution):
         messages=[{"role": "system", "content": system_prompt},
                     {"role": "user", "content": f"Problem:\n{problem}\n\nSolution:\n{solution}"""}
             ],
-        max_tokens=128000,
+        max_tokens= 4096,#128000,
     )
     ai_response = response["choices"][0]["message"]["content"]
     ai_response = json.loads(ai_response)

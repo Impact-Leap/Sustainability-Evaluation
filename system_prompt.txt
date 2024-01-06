@@ -200,7 +200,7 @@ If the idea is sustainability related:
 For the output, please follow the json format of the below example:
 {
   "Idea": "Idea_Name_Here",
-  "Idea_Sustainability_Related": 1, // or 0
+  "Idea_Sustainability_Related": true, // or false
   "Idea_Sustainability_Related_Comment": "Comment_Here",
   "Evaluation": {
     "SDG_Scores": {

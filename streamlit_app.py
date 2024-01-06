@@ -9,6 +9,7 @@ import json
 from streamlit_extras.let_it_rain import rain
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+import openai
 
 
 # Reading a JSON string from a file
@@ -132,35 +133,50 @@ def score_to_emoji(score):
 def evaluate_idea(problem, solution):
     # return mock_json
 
+    # Pass the apikey to the OpenAI library
+    openai.api_key = api_key
 
-    # Format the prompt
-    formatted_prompt = f"{system_prompt}\n\nProblem:\n{problem}\n\nSolution:\n{solution}"
 
-    # Replace with your actual API endpoint and API key
-    api_endpoint = "https://api.openai.com/v1/chat/completions"
-    headers = {
-        "Authorization": f"Bearer {api_key}",
-        "Content-Type": "application/json"
-    }
-    payload = {
-        "prompt": formatted_prompt,
-        "max_tokens": 128000,
-        "model": "gpt-4-1106-preview"
-    }
-    try:
-        response = requests.post(api_endpoint, headers=headers, json=payload)
-        response.raise_for_status()
-        api_response = response.json()
+    response = openai.ChatCompletion.create(
+        model="gpt-4-1106-preview",
+        messages=[{"role": "system", "content": system_prompt},
+                    {"role": "user", "content": f"Problem:\n{problem}\n\nSolution:\n{solution}"""}
+            ],
+        max_tokens=128000,
+    )
+    ai_response = response["choices"][0]["message"]["content"]
+    ai_response = json.loads(ai_response)
+    return ai_response
 
-        # Save the API response to a file
-        with open('api_response.json', 'w') as outfile:
-            json.dump(api_response, outfile)
+
+    # # Format the prompt
+    # formatted_prompt = f"{system_prompt}\n\nProblem:\n{problem}\n\nSolution:\n{solution}"
+
+    # # Replace with your actual API endpoint and API key
+    # api_endpoint = "https://api.openai.com/v1/chat/completions"
+    # headers = {
+    #     "Authorization": f"Bearer {api_key}",
+    #     "Content-Type": "application/json"
+    # }
+    # payload = {
+    #     "prompt": formatted_prompt,
+    #     "max_tokens": 128000,
+    #     "model": "gpt-4-1106-preview"
+    # }
+    # try:
+    #     response = requests.post(api_endpoint, headers=headers, json=payload)
+    #     response.raise_for_status()
+    #     api_response = response.json()
+
+    #     # Save the API response to a file
+    #     with open('api_response.json', 'w') as outfile:
+    #         json.dump(api_response, outfile)
             
-        return api_response
+    #     return api_response
         
-    except requests.RequestException as e:
-        st.error(f"API request failed: {e}")
-        return None
+    # except requests.RequestException as e:
+    #     st.error(f"API request failed: {e}")
+    #     return None
 
 
 # Section for business idea input
@@ -288,5 +304,4 @@ if submit_button:
         else:
             # Display warning message if API call fails
             st.error("Unable to retrieve data. Please try again later.")
-
 

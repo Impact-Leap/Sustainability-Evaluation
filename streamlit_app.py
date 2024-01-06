@@ -192,7 +192,7 @@ if submit_button:
         api_response = evaluate_idea(problem, solution)
         if api_response:
             # Display if the idea is sustainability related with highlighting
-            is_sustainable = api_response['Idea_Sustainability_Related'] == "Yes"
+            is_sustainable = api_response['Idea_Sustainability_Related'] == "No"
             sustainability_comment = api_response['Idea_Sustainability_Related_Comment']
             st.markdown(f"<h3 style='color:blue;'>Is the Idea Sustainability Related? {'Yes' if is_sustainable else 'No'}</h3>", unsafe_allow_html=True)
             st.write("### Sustainability Analysis:")

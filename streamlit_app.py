@@ -191,26 +191,22 @@ with st.form("business_idea_form"):
 if submit_button:
         api_response = evaluate_idea(problem, solution)
         if api_response:
-            # Display if the idea is sustainability related
+            # Display if the idea is sustainability related with highlighting
             is_sustainable = api_response['Idea_Sustainability_Related'] == "Yes"
             sustainability_comment = api_response['Idea_Sustainability_Related_Comment']
-            st.write(f"Is the Idea Sustainability Related? {'Yes' if is_sustainable else 'No'}")
+            st.markdown(f"<h3 style='color:blue;'>Is the Idea Sustainability Related? {'Yes' if is_sustainable else 'No'}</h3>", unsafe_allow_html=True)
             st.write(f"Sustainability Analysis: {sustainability_comment}")
     
             if is_sustainable:
                 scores = [int(api_response['Evaluation']['SDG_Scores'][metric]['Score']) for metric in metrics]
                 comments = [api_response['Evaluation']['SDG_Scores'][metric]['Comment'] for metric in metrics]
-                total_score = int(api_response['Evaluation']['Total_Score'])
+                total_score = int(api_response['Evaluation']['Total_Score'])  # Convert to integer
                 analysis_context = api_response['Evaluation']['Summary']
-                novelty_score = api_response['Evaluation']['Novelty_Score']
+                novelty_score = int(api_response['Evaluation']['Novelty_Score'])  # Convert to integer
                 novelty_comment = api_response['Evaluation']['Novelty_Evaluation']['Comment']
-
-                color = "green" if total_score > 130 else "red" if total_score < 85 else "yellow"
-               
-                # Display the summary score with color
-                st.markdown(f"<h3 style='color:{color};'>Summary Score: {total_score:.2f} / 170</h3>", unsafe_allow_html=True)
-               
-                # Displaying summary analysis
+    
+                # Display the summary score without decimals
+                st.markdown(f"<h3 style='color:green;'>Summary Score: {total_score} / 100</h3>", unsafe_allow_html=True)
                 st.write("### Summary Analysis:")
                 st.write(analysis_context)
         
@@ -239,9 +235,8 @@ if submit_button:
                     </style>
                     """, unsafe_allow_html=True)
                 
-                    # Displaying novelty score and analysis
-                st.write("### Novelty Score and Analysis")
-                st.write(f"Novelty Score: {novelty_score}")
+                # Displaying novelty score and analysis with highlighting
+                st.markdown(f"<h3 style='color:purple;'>Novelty Score: {novelty_score} / 100</h3>", unsafe_allow_html=True)
                 st.write("Novelty Analysis: ", novelty_comment)
                 
                 # Slider section

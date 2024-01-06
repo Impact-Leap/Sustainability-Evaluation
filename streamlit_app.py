@@ -144,13 +144,13 @@ def evaluate_idea(problem, solution):
         max_tokens= 4096,#128000,
     )
     
-    ai_response = response["choices"][0]["message"]["content"][8:-4]
+    ai_response = response["choices"][0]["message"]["content"]
 
-    json_string = response["choices"][0]["message"]["content"]
+    # json_string = response["choices"][0]["message"]["content"]
 
-    # Display the JSON string for debugging
-    st.markdown("## API Response String:")
-    st.text(json_string)
+    # # Display the JSON string for debugging
+    # st.markdown("## API Response String:")
+    # st.text(json_string)
 
     #    # Parse the JSON-formatted string
     # try:
@@ -164,7 +164,7 @@ def evaluate_idea(problem, solution):
     # st.json(parsed_response)
 
     
-    # output = json.loads(ai_response)
+    output = json.loads(ai_response)
 
     # if output:
         # st.markdown("## OUTPUT Response:")
@@ -178,7 +178,7 @@ def evaluate_idea(problem, solution):
     #         json.dump(ai_response, outfile)   
 
     # return parsed_response
-    return json_string
+    return output
 
 
     # # Format the prompt

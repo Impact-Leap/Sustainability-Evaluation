@@ -148,9 +148,9 @@ def evaluate_idea(problem, solution):
 
     # return parsed_response
     
-    # if ai_response:
-    #     st.markdown("## API Response:")
-    #     st.json(ai_response)
+    if ai_response:
+        st.markdown("## API Response:")
+        st.json(ai_response)
     
     output = json.loads(ai_response)
 

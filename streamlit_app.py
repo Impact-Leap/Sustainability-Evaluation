@@ -191,14 +191,20 @@ with st.form("business_idea_form"):
 if submit_button:
         api_response = evaluate_idea(problem, solution)
         if api_response:
-            is_sustainable = api_response['Idea_Sustainability_Related'] != "No"
-            if not is_sustainable:
-                st.write(f"Reason: {api_response['Idea_Sustainability_Related']}")
-            else:
+            # Display if the idea is sustainability related
+            is_sustainable = api_response['Idea_Sustainability_Related'] == "Yes"
+            sustainability_comment = api_response['Idea_Sustainability_Related_Comment']
+            st.write(f"Is the Idea Sustainability Related? {'Yes' if is_sustainable else 'No'}")
+            st.write(f"Sustainability Analysis: {sustainability_comment}")
+    
+            if is_sustainable:
                 scores = [int(api_response['Evaluation']['SDG_Scores'][metric]['Score']) for metric in metrics]
+                comments = [api_response['Evaluation']['SDG_Scores'][metric]['Comment'] for metric in metrics]
                 total_score = int(api_response['Evaluation']['Total_Score'])
                 analysis_context = api_response['Evaluation']['Summary']
-    
+                novelty_score = api_response['Evaluation']['Novelty_Score']
+                novelty_comment = api_response['Evaluation']['Novelty_Evaluation']['Comment']
+
                 color = "green" if total_score > 130 else "red" if total_score < 85 else "yellow"
                
                 # Display the summary score with color
@@ -207,11 +213,12 @@ if submit_button:
                 # Displaying summary analysis
                 st.write("### Summary Analysis:")
                 st.write(analysis_context)
-    
-                # Create DataFrame for scores and emojis
+        
+                # Modify DataFrame to include comments
                 score_df = pd.DataFrame({
                     'Metric': metrics,
                     'Score': scores,
+                    'Comment': comments,
                     'Level': [score_to_emoji(score) for score in scores]
                 })
             
@@ -231,7 +238,12 @@ if submit_button:
                         td {text-align: center;}
                     </style>
                     """, unsafe_allow_html=True)
-    
+                
+                    # Displaying novelty score and analysis
+                st.write("### Novelty Score and Analysis")
+                st.write(f"Novelty Score: {novelty_score}")
+                st.write("Novelty Analysis: ", novelty_comment)
+                
                 # Slider section
                 st.write("### Evaluation Results:")
                 for metric, score in zip(metrics, scores):

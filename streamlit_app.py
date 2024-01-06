@@ -144,19 +144,19 @@ def evaluate_idea(problem, solution):
             ],
         max_tokens= 4096,#128000,
     )
-    # ai_response = response["choices"][0]["message"]["content"]
-    # ai_response = json.loads(ai_response)
+    ai_response = response["choices"][0]["message"]["content"][8:-4]
+    ai_response = json.loads(ai_response)
     
-    ai_response = response if response else None
+    # ai_response = response if response else None
     # Optionally save the API response to a file
-    if ai_response:
-        with open('api_response.json', 'w') as outfile:
-            json.dump(ai_response, outfile)   
+    # if ai_response:
+    #     with open('api_response.json', 'w') as outfile:
+    #         json.dump(ai_response, outfile)   
 
-        # Display the API response in Streamlit for debugging
-    if ai_response:
-        st.markdown("## API Response:")
-        st.json(ai_response)
+    #     # Display the API response in Streamlit for debugging
+    # if ai_response:
+    #     st.markdown("## API Response:")
+    #     st.json(ai_response)
         
     return ai_response
 

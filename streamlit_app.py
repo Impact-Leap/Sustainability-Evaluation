@@ -7,10 +7,8 @@ from math import pi
 import requests
 import json
 from streamlit_extras.let_it_rain import rain
-
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
-
 
 
 # Reading a JSON string from a file
@@ -132,24 +130,36 @@ def score_to_emoji(score):
 
 # Function to call GPT API and process the response
 def evaluate_idea(problem, solution):
-    return mock_json
-    # # Replace with your actual API endpoint and API key
-    # api_endpoint = "https://api.example.com/gpt-evaluate"
-    # headers = {
-    #     "Authorization": f"Bearer {api_key}",
-    #     "Content-Type": "application/json"
-    # }
-    # payload = {
-    #     "problem": problem,
-    #     "solution": solution
-    # }
-    # try:
-    #     response = requests.post(api_endpoint, headers=headers, json=payload)
-    #     response.raise_for_status()
-    #     return response.json()
-    # except requests.RequestException as e:
-    #     st.error(f"API request failed: {e}")
-    #     return None
+    # return mock_json
+
+
+    # Format the prompt
+    formatted_prompt = f"{system_prompt}\n\nProblem:\n{problem}\n\nSolution:\n{solution}"
+
+    # Replace with your actual API endpoint and API key
+    api_endpoint = "https://api.openai.com/v1/chat/completions"
+    headers = {
+        "Authorization": f"Bearer {api_key}",
+        "Content-Type": "application/json"
+    }
+    payload = {
+        "prompt": formatted_prompt,
+        "max_tokens": 128000
+    }
+    try:
+        response = requests.post(api_endpoint, headers=headers, json=payload)
+        response.raise_for_status()
+        api_response = response.json()
+
+        # Save the API response to a file
+        with open('api_response.json', 'w') as outfile:
+            json.dump(api_response, outfile)
+            
+        return api_response
+        
+    except requests.RequestException as e:
+        st.error(f"API request failed: {e}")
+        return None
 
 
 # Section for business idea input
@@ -252,6 +262,9 @@ with st.form("business_idea_form"):
 
 
 if submit_button:
+    if not api_key:
+        st.error("Please enter an API key.")
+    else:
         api_response = evaluate_idea(problem, solution)
         if api_response:
             # Display if the idea is sustainability related with highlighting
@@ -277,14 +290,16 @@ if submit_button:
                 st.write(novelty_comment)
 
                 
-                # Example usage
-                max_similarity, tfidf_is_novelty = get_tfidf_novelty("how to solve the spam use of plastic?", "Use paper bags instead of plastic bags")
+                # Example usage with user-provided problem and solution
+                max_similarity, tfidf_is_novelty = get_tfidf_novelty(problem, solution)
                 
                 # Check if the response is novelty or not
                 novelty_status = "Yes" if tfidf_is_novelty else "No"
                 
                 # Display the novelty similarity score and novelty status
-                st.markdown(f"<h3 style='color:orange;'>Novelty Similarity Score: {max_similarity:.2f} / 100</h3> <p>Is it Novelty? {novelty_status}</p>", unsafe_allow_html=True)
+                st.markdown(f"<h3 style='color:orange;'>Novelty Similarity Score: {max_similarity:.2f} / 1</h3>", unsafe_allow_html=True)
+                st.markdown(f"<h3 style='color:orange;'>Is it Novelty? {novelty_status}</h3>", unsafe_allow_html=True)
+
 
                 
                 # Display the summary score without decimals
@@ -363,21 +378,5 @@ if submit_button:
         else:
             # Display warning message if API call fails
             st.error("Unable to retrieve data. Please try again later.")
-
-    # # Determine the color based on the score
-    # if normalized_score < 85:
-    #     color = "red"
-    # elif normalized_score > 130:
-    #     color = "green"
-    # else:
-    #     color = "yellow"
-
-    # # Display the summary score with color
-    # st.markdown(f"<h3 style='color:{color};'>Summary Score: {normalized_score:.2f} / 170</h3>", unsafe_allow_html=True)
-
-    # # Placeholder for summary analysis from API
-    # st.write("### Summary Analysis:")
-    # # Placeholder text - Replace with API call and response handling
-    # st.write("Analysis will be displayed here once the API is integrated.")
 
 

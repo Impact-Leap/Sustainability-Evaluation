@@ -147,9 +147,9 @@ def evaluate_idea(problem, solution):
     
     ai_response = response["choices"][0]["message"]["content"][8:-4]
 
-    if ai_response:
-        st.markdown("## API Response:")
-        st.json(ai_response)
+    # if ai_response:
+    #     st.markdown("## API Response:")
+    #     st.json(ai_response)
     
     ai_response = json.loads(ai_response)
     
@@ -160,7 +160,7 @@ def evaluate_idea(problem, solution):
     #         json.dump(ai_response, outfile)   
 
         # Display the API response in Streamlit for debugging
-    print(ai_response)
+    # print(ai_response)
     return ai_response
 
 

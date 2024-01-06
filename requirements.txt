@@ -8,5 +8,6 @@ seaborn
 streamlit_extras
 json
 requests
-sklearn.feature_extraction.text
-sklearn.metrics.pairwise
+sklearns
+#sklearn.feature_extraction.text
+#sklearn.metrics.pairwise

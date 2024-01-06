@@ -37,7 +37,7 @@ def get_tfidf_novelty(problem: str, solution: str):
 
     except FileNotFoundError:
         print("File not found.")
-        return
+        return False
 
     # convert columns to string
     documents['problem'] = documents['problem'].astype(str)

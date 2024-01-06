@@ -104,7 +104,7 @@ with st.form("business_idea_form"):
 #     else:
 #         api_response = evaluate_idea(problem, solution)
 #         if api_response:
-#             is_sustainable = api_response['Idea_Sustainability_Related'] != "No"
+#             is_sustainable = api_response['Idea_Sustainability_Related'] != "Yes"
 #             if not is_sustainable:
 #                 st.write(f"Reason: {api_response['Idea_Sustainability_Related']}")
 #             else:

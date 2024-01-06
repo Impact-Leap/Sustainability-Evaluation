@@ -152,7 +152,12 @@ def evaluate_idea(problem, solution):
     if ai_response:
         with open('api_response.json', 'w') as outfile:
             json.dump(ai_response, outfile)   
-            
+
+        # Display the API response in Streamlit for debugging
+    if ai_response:
+        st.markdown("## API Response:")
+        st.json(ai_response)
+        
     return ai_response
 
 

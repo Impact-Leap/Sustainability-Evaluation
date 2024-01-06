@@ -1,0 +1,83 @@
+{
+  "Idea": "Hardware-as-a-Service (HaaS) for Electronics",
+  "Idea_Sustainability_Related": "Yes",
+  "Idea_Sustainability_Related_Comment": "This idea addresses the reduction and responsible management of e-waste, promoting a circular economy in the electronics industry.",
+  "Evaluation": {
+    "SDG_Scores": {
+      "1_No_Poverty": {
+        "Score": "2",
+        "Comment": "Limited direct impact on poverty eradication, but may create jobs in refurbishing and recycling sectors."
+      },
+      "2_Zero_Hunger": {
+        "Score": "1",
+        "Comment": "Indirect impact by potentially supporting agricultural technologies, but not directly related to hunger reduction."
+      },
+      "3_Good_Health_and_Well-being": {
+        "Score": "3",
+        "Comment": "Reduces exposure to harmful substances from e-waste, contributing to better health conditions."
+      },
+      "4_Quality_Education": {
+        "Score": "2",
+        "Comment": "Potential for educational programs around sustainable consumption and e-waste management."
+      },
+      "5_Gender_Equality": {
+        "Score": "2",
+        "Comment": "Opportunities for inclusive employment in the HaaS model, but no direct impact on gender equality."
+      },
+      "6_Clean_Water_and_Sanitation": {
+        "Score": "3",
+        "Comment": "Reduces water pollution from e-waste, contributing to cleaner water sources."
+      },
+      "7_Affordable_and_Clean_Energy": {
+        "Score": "4",
+        "Comment": "Promotes efficient use of resources and could support the use of renewable energy in the production and recycling processes."
+      },
+      "8_Decent_Work_and_Economic_Growth": {
+        "Score": "6",
+        "Comment": "Creates new job opportunities in recycling and refurbishing, promotes economic growth in a sustainable industry."
+      },
+      "9_Industry_Innovation_and_Infrastructure": {
+        "Score": "8",
+        "Comment": "Highly innovative, fostering sustainable industrial practices and promoting a circular economy."
+      },
+      "10_Reduced_Inequality": {
+        "Score": "3",
+        "Comment": "Can provide more affordable access to technology, reducing inequality in access to digital resources."
+      },
+      "11_Sustainable_Cities_and_Communities": {
+        "Score": "5",
+        "Comment": "Contributes to sustainable urban development by reducing e-waste and promoting responsible consumption."
+      },
+      "12_Responsible_Consumption_and_Production": {
+        "Score": "9",
+        "Comment": "Directly targets sustainable consumption patterns and aims to minimize waste production."
+      },
+      "13_Climate_Action": {
+        "Score": "7",
+        "Comment": "Reduces the carbon footprint of the electronics industry and minimizes environmental impact."
+      },
+      "14_Life_Below_Water": {
+        "Score": "3",
+        "Comment": "Indirectly benefits marine life by reducing pollution and toxic runoff from e-waste."
+      },
+      "15_Life_on_Land": {
+        "Score": "5",
+        "Comment": "Contributes to land conservation by reducing landfill waste and promoting recycling."
+      },
+      "16_Peace_Justice_and_Strong_Institutions": {
+        "Score": "3",
+        "Comment": "Encourages responsible corporate practices and potentially supports fair regulations in the e-waste sector."
+      },
+      "17_Partnerships_for_the_Goals": {
+        "Score": "7",
+        "Comment": "Requires and promotes partnerships among manufacturers, recyclers, and consumers for sustainable development."
+      }
+    },
+    "Total_Score": "75",
+    "Summary": "The Hardware-as-a-Service model for electronics significantly contributes to sustainability, particularly in responsible consumption and production, industry innovation, and climate action. It indirectly supports several other SDGs but has limited impact on goals like zero hunger and gender equality.",
+    "Novelty_Score": "85",
+    "Novelty_Evaluation": {
+      "Comment": "The concept is highly innovative, reimagining the traditional consumer electronics model to a sustainable, circular economy framework. It holds potential for significant impact and scalability, reflecting a forward-thinking approach to e-waste and resource management."
+    }
+  }
+}

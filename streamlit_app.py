@@ -12,7 +12,7 @@ from streamlit_extras.let_it_rain import rain
 
 mock_json = {
   "Idea": "EchoMe Voice-to-Text Software",
-  "Idea_Sustainability_Related": "EchoMe aligns with several UN SDGs by enhancing accessibility, promoting inclusive technology, and potentially improving educational and work efficiencies.",
+  "Idea_Sustainability_Related": "No",
   "Evaluation": {
     "SDG_Scores": {
       "1_No_Poverty": {

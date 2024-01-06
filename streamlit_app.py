@@ -277,6 +277,16 @@ if submit_button:
                 st.write(novelty_comment)
 
                 
+                # Example usage
+                max_similarity, tfidf_is_novelty = get_tfidf_novelty("how to solve the spam use of plastic?", "Use paper bags instead of plastic bags")
+                
+                # Check if the response is novelty or not
+                novelty_status = "Yes" if tfidf_is_novelty else "No"
+                
+                # Display the novelty similarity score and novelty status
+                st.markdown(f"<h3 style='color:orange;'>Novelty Similarity Score: {max_similarity:.2f} / 100</h3> <p>Is it Novelty? {novelty_status}</p>", unsafe_allow_html=True)
+
+                
                 # Display the summary score without decimals
                 st.markdown(f"<h3 style='color:green;'>Summary Score: {total_score} / 100</h3>", unsafe_allow_html=True)
                 st.write("### Summary Analysis:")

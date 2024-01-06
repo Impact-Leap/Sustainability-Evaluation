@@ -1,4 +1,6 @@
-# util program, given
+# util program, given a dataset that contains circular economy business ideas that come in problem-solution pairs,
+# this program is able to take a problem and solution pair as input and compare it with the dataset to calculate the
+# novelty score. Unseen idea will be marked as novel by this function.
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
@@ -6,6 +8,8 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 
+# parameters: takes a string of problem and a string of solution
+# return: similarity score and truth of novelty
 def get_tfidf_novelty(problem: str, solution: str):
     try:
         # Open the file using a context manager

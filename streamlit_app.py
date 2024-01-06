@@ -10,11 +10,11 @@ from streamlit_extras.let_it_rain import rain
 
 
 # Reading a JSON string from a file
-with open('path/to/mock_data.json', 'r') as file:
+with open('mock_data.json', 'r') as file:
     mock_json = json.load(file)
 
 # Reading a system prompt from a text file
-with open('path/to/system_prompt.txt', 'r') as file:
+with open('system_prompt.txt', 'r') as file:
     system_prompt = file.read()
 
 # Sidebar for additional options or information

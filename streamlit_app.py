@@ -10,7 +10,7 @@ from streamlit_extras.let_it_rain import rain
 
 # mock json data
 
-mock_jason = {
+mock_jason = {{
   "Idea": "EchoMe Voice-to-Text Software",
   "Idea_Sustainability_Related": "EchoMe aligns with several UN SDGs by enhancing accessibility, promoting inclusive technology, and potentially improving educational and work efficiencies.",
   "Evaluation": {
@@ -91,7 +91,7 @@ mock_jason = {
       "Comment": "While voice-to-text technology is not new, EchoMe's emphasis on universal accessibility and specific design features for different user groups is novel. The idea carries moderate novelty with the potential for significant societal impact."
     }
   }
-}
+}}
 
 
 # Sidebar for additional options or information

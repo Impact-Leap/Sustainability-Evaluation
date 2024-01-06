@@ -5,6 +5,5 @@ nltk
 pypdf
 matplotlib
 seaborn
-json
 requests
-
+streamlit_extras

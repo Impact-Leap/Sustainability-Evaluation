@@ -4,7 +4,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from math import pi
-
+import requests
+import json
 from streamlit_extras.let_it_rain import rain
 
 def example1():

@@ -136,7 +136,6 @@ def evaluate_idea(problem, solution):
     # Pass the apikey to the OpenAI library
     openai.api_key = api_key
 
-
     response = openai.ChatCompletion.create(
         model="gpt-4-1106-preview",
         messages=[{"role": "system", "content": system_prompt},
@@ -147,11 +146,15 @@ def evaluate_idea(problem, solution):
     
     ai_response = response["choices"][0]["message"]["content"][8:-4]
 
+    # return parsed_response
+    
     # if ai_response:
     #     st.markdown("## API Response:")
     #     st.json(ai_response)
     
-    ai_response = json.loads(ai_response)
+    output = json.loads(ai_response)
+
+
     
     # ai_response = response if response else None
     # Optionally save the API response to a file
@@ -159,9 +162,8 @@ def evaluate_idea(problem, solution):
     #     with open('api_response.json', 'w') as outfile:
     #         json.dump(ai_response, outfile)   
 
-        # Display the API response in Streamlit for debugging
-    # print(ai_response)
-    return ai_response
+
+    return output
 
 
     # # Format the prompt

@@ -152,23 +152,23 @@ def evaluate_idea(problem, solution):
     st.markdown("## API Response String:")
     st.text(json_string)
 
-       # Parse the JSON-formatted string
-    try:
-        parsed_response = json.loads(json_string)
-    except json.JSONDecodeError:
-        st.error("Failed to parse the JSON string.")
-        return None
+    #    # Parse the JSON-formatted string
+    # try:
+    #     parsed_response = json.loads(json_string)
+    # except json.JSONDecodeError:
+    #     st.error("Failed to parse the JSON string.")
+    #     return None
 
     # Display the parsed JSON for debugging
-    st.markdown("## Parsed JSON Response:")
-    st.json(parsed_response)
+    # st.markdown("## Parsed JSON Response:")
+    # st.json(parsed_response)
 
     
-    output = json.loads(ai_response)
+    # output = json.loads(ai_response)
 
-    if output:
-        st.markdown("## OUTPUT Response:")
-        st.json(ai_response)
+    # if output:
+        # st.markdown("## OUTPUT Response:")
+        # st.json(ai_response)
 
     
     # ai_response = response if response else None
@@ -177,8 +177,8 @@ def evaluate_idea(problem, solution):
     #     with open('api_response.json', 'w') as outfile:
     #         json.dump(ai_response, outfile)   
 
-    return parsed_response
-    return output
+    # return parsed_response
+    return json_string
 
 
     # # Format the prompt

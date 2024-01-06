@@ -213,7 +213,8 @@ if submit_button:
 
                 # Displaying novelty score and analysis with highlighting
                 st.markdown(f"<h3 style='color:purple;'>Novelty Score: {novelty_score} / 100</h3>", unsafe_allow_html=True)
-                st.write("Novelty Analysis: ", novelty_comment)
+                st.write("### Novelty Analysis:")
+                st.write(novelty_comment)
                 
                 # Modify DataFrame to include comments
                 score_df = pd.DataFrame({

@@ -123,13 +123,13 @@ example1()
 
 # Temporary metrics for sustainability evaluation
 metrics = [
-    "No_Poverty", "Zero_Hunger", "Good_Health_and_Well-being",
-    "Quality_Education", "Gender_Equality", "Clean_Water_and_Sanitation",
-    "Affordable_and_Clean_Energy", "Decent_Work_and_Economic_Growth",
-    "Industry_Innovation_and_Infrastructure", "Reduced_Inequality",
-    "Sustainable_Cities_and_Communities", "Responsible_Consumption_and_Production",
-    "Climate_Action", "Life_Below_Water", "Life_on_Land",
-    "Peace_Justice_and_Strong_Institutions", "Partnerships_for_the_Goals"
+    "1_No_Poverty", "2_Zero_Hunger", "3_Good_Health_and_Well-being",
+    "4_Quality_Education", "5_Gender_Equality", "6_Clean_Water_and_Sanitation",
+    "7_Affordable_and_Clean_Energy", "8_Decent_Work_and_Economic_Growth",
+    "9_Industry_Innovation_and_Infrastructure", "10_Reduced_Inequality",
+    "11_Sustainable_Cities_and_Communities", "12_Responsible_Consumption_and_Production",
+    "13_Climate_Action", "14_Life_Below_Water", "15_Life_on_Land",
+    "16_Peace_Justice_and_Strong_Institutions", "17_Partnerships_for_the_Goals"
 ]    # 不好看 再改改
 
 # Emoji function based on score

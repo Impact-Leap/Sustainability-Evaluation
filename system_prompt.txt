@@ -200,8 +200,8 @@ If the idea is sustainability related:
 For the output, please follow the json format of the below example:
 {
   "Idea": "Idea_Name_Here",
-  "Idea_Sustainability_Related": "Yes_Or_No",
-  "Idea_Sustainability_Related_Comment": " Comment_Here",
+  "Idea_Sustainability_Related": true, // or false
+  "Idea_Sustainability_Related_Comment": "Comment_Here",
   "Evaluation": {
     "SDG_Scores": {
       "1_No_Poverty": {
@@ -274,11 +274,10 @@ For the output, please follow the json format of the below example:
       }
     },
     "Total_Score": "Value_Here",
-"Summary": "Summary_Here",
-" Novelty_Score": " Value_Here",
+    "Summary": "Summary_Here",
+    "Novelty_Score": "Value_Here",
     "Novelty_Evaluation": {
       "Comment": "Comment_Here"
     }
   }
 }
-

@@ -209,7 +209,11 @@ if submit_button:
                 st.markdown(f"<h3 style='color:green;'>Summary Score: {total_score} / 100</h3>", unsafe_allow_html=True)
                 st.write("### Summary Analysis:")
                 st.write(analysis_context)
-        
+
+                # Displaying novelty score and analysis with highlighting
+                st.markdown(f"<h3 style='color:purple;'>Novelty Score: {novelty_score} / 100</h3>", unsafe_allow_html=True)
+                st.write("Novelty Analysis: ", novelty_comment)
+                
                 # Modify DataFrame to include comments
                 score_df = pd.DataFrame({
                     'Metric': metrics,
@@ -235,9 +239,6 @@ if submit_button:
                     </style>
                     """, unsafe_allow_html=True)
                 
-                # Displaying novelty score and analysis with highlighting
-                st.markdown(f"<h3 style='color:purple;'>Novelty Score: {novelty_score} / 100</h3>", unsafe_allow_html=True)
-                st.write("Novelty Analysis: ", novelty_comment)
                 
                 # Slider section
                 st.write("### Evaluation Results:")

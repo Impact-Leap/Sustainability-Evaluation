@@ -144,7 +144,8 @@ def evaluate_idea(problem, solution):
     }
     payload = {
         "prompt": formatted_prompt,
-        "max_tokens": 128000
+        "max_tokens": 128000,
+        "model": "gpt-4-1106-preview"
     }
     try:
         response = requests.post(api_endpoint, headers=headers, json=payload)

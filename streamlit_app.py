@@ -84,8 +84,8 @@ def evaluate_idea(problem, solution):
     response = response["choices"][0]["message"]["content"]
     ai_response = re.sub(r'^```json\n\n|\n```$', '', response)
     
-    st.markdown("## OUTPUT 0 Response:")
-    st.write(ai_response)
+    # st.markdown("## OUTPUT 0 Response:")
+    # st.write(ai_response)
                 
     output = json.loads(ai_response)
         

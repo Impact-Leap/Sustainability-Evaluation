@@ -79,7 +79,7 @@ def evaluate_idea(problem, solution):
         max_tokens= 4096,#128000,
     )
     
-    ai_response = response["choices"][0]["message"]["content"]
+    ai_response = response["choices"][0]["message"]["content"][8:-4]
 
     st.markdown("## OUTPUT 0 Response:")
     st.json(ai_response)

@@ -72,34 +72,34 @@ def evaluate_idea(problem, solution):
     # Pass the apikey to the OpenAI library
     openai.api_key = api_key
 
-    try:
-        response = openai.ChatCompletion.create(
-            model="gpt-4-1106-preview",
-            messages=[{"role": "system", "content": system_prompt},
-                        {"role": "user", "content": f"Problem:{problem}\n\nSolution:{solution}"}
-                ],
-            max_tokens= 4096,#128000,
-        )
+    # try:
+    response = openai.ChatCompletion.create(
+        model="gpt-4-1106-preview",
+        messages=[{"role": "system", "content": system_prompt},
+                    {"role": "user", "content": f"Problem:{problem}\n\nSolution:{solution}"}
+            ],
+        max_tokens= 4096,#128000,
+    )
         
-        response = response["choices"][0]["message"]["content"]
-        ai_response = re.sub(r'^```json\n\n|\n```$', '', response)
+    response = response["choices"][0]["message"]["content"]
+    ai_response = re.sub(r'^```json\n\n|\n```$', '', response)
     
-        st.markdown("## OUTPUT 0 Response:")
-        st.write(ai_response)
+    st.markdown("## OUTPUT 0 Response:")
+    st.write(ai_response)
                 
-        output = json.loads(ai_response)
+    output = json.loads(ai_response)
         
         # st.markdown("## OUTPUT 1 Response:")
         # st.markdown(output)
     
         return output
     
-    except openai.error.InvalidRequestError as e:
-        if e.status_code == 401:  # Unauthorized, typically due to invalid API key
-            st.error("Invalid API key. Please check your API key and try again.")
-        else:
-            st.error(f"An error occurred: {e}")
-        return None
+    # except openai.error.InvalidRequestError as e:
+    #     if e.status_code == 401:  # Unauthorized, typically due to invalid API key
+    #         st.error("Invalid API key. Please check your API key and try again.")
+    #     else:
+    #         st.error(f"An error occurred: {e}")
+    #     return None
     
 
 

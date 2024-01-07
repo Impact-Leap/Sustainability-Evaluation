@@ -101,7 +101,8 @@ if submit_button:
         st.error("Please enter an API key.")
     else:
         # get the response
-        api_response = evaluate_idea(problem, solution)
+        with st.spinner('Evaluating your idea, please wait...'):
+            api_response = evaluate_idea(problem, solution)
         
         if api_response:
             # Display if the idea is sustainability related with highlighting

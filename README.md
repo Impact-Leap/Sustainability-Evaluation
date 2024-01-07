@@ -1,4 +1,4 @@
-# 🌏 Earth Hack Streamlit App
+# 🌏 Sustainability Evaluation Web App
 
 This Streamlit application is designed to evaluate business ideas based on a problem-solution approach, with a focus on assessing their sustainability. It generates scores for novelty and sustainability aspects of the idea.
 

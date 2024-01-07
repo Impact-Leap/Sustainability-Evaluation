@@ -103,6 +103,10 @@ if submit_button:
         # get the response
         with st.spinner('Evaluating your idea, please wait...'):
             api_response = evaluate_idea(problem, solution)
+
+        if api_response:
+            st.markdown("## OUTPUT Response:")
+            st.json(ai_response)
         
         if api_response:
             # Display if the idea is sustainability related with highlighting

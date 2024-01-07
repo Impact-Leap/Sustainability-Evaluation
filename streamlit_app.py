@@ -98,7 +98,7 @@ def evaluate_idea(problem, solution):
 st.title("💡 Business Idea Evaluation")
 
 # App Introduction
-with st.expander("Introduction of Our App"):
+with st.expander("Introduction of Our App", expanded=True):
     st.write("""
         This Streamlit application is designed to evaluate business ideas based on a problem-solution approach, with a focus on assessing their sustainability. It generates scores for novelty and sustainability aspects of the idea, helping users understand the potential impact and uniqueness of their business concepts.
     """)

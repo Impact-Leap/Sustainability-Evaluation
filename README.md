@@ -1,12 +1,20 @@
-# 📦 Earth Hack Streamlit App
+# 🌏 Earth Hack Streamlit App
 
-现在只是做了一个前端，具体的prompt engineering部分没有加进来。
+This Streamlit application is designed to evaluate business ideas based on a problem-solution approach, with a focus on assessing their sustainability. It generates scores for novelty and sustainability aspects of the idea.
 
 ## App Link
 
 https://templateyo.streamlit.app/
 
-## Current Function
+## User Instructions
 
-- 输入你的openai key就可以使用chat功能了（理论上）
-- 左侧的system prompt是个空壳，你输入的内容只会被记录，不会真的影响LLM
+1. **Enter Your API Key:** Find the sidebar and input your API key.
+2. **Input Your Idea:** Use the input box to enter your Problem and Solution.
+3. **Evaluate:** Click the 'Evaluate Idea' button to start the assessment.
+4. **View Results:** Check the results for novelty and sustainability scores.
+
+## Constraints
+
+- **API Key Required: ** You must have an API key to use the app.
+- **Cost per Evaluation:** Each idea evaluation costs approximately $0.35.
+- **Evaluation Time:** The process takes around 30 seconds to complete.

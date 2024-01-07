@@ -15,6 +15,12 @@ Experience the app here: [Earth Hack Streamlit App](https://templateyo.streamlit
 
 ## Constraints
 
-- **API Key Required: ** You must have an API key to use the app.
+- **API Key Required:** You must have an API key to use the app.
 - **Cost per Evaluation:** Each idea evaluation costs approximately $0.35.
 - **Evaluation Time:** The process takes around 30 seconds to complete.
+
+## Resources
+
+[Streamlit IO](https://streamlit.io/)
+[streamlit Cloud](https://streamlit.io/cloud)
+[GPT 4](https://openai.com/gpt-4)

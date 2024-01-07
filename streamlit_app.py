@@ -89,8 +89,8 @@ def evaluate_idea(problem, solution):
                 
         output = json.loads(ai_response)
         
-        st.markdown("## OUTPUT 1 Response:")
-        st.markdown(output)
+        # st.markdown("## OUTPUT 1 Response:")
+        # st.markdown(output)
     
         return output
     

@@ -23,6 +23,6 @@ Experience the app here: [Earth Hack Streamlit App](https://templateyo.streamlit
 
 [Streamlit IO](https://streamlit.io/)
 
-[streamlit Cloud](https://streamlit.io/cloud)
+[Streamlit Cloud](https://streamlit.io/cloud)
 
 [GPT 4](https://openai.com/gpt-4)

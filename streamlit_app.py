@@ -81,13 +81,13 @@ def evaluate_idea(problem, solution):
     
     ai_response = response["choices"][0]["message"]["content"][8:-4]
 
-    st.markdown("## OUTPUT 0 Response:")
-    st.json(ai_response)
+    # st.markdown("## OUTPUT 0 Response:")
+    # st.json(ai_response)
             
     output = json.loads(ai_response)
     
-    # st.markdown("## OUTPUT 1 Response:")
-    # st.json(output)
+    st.markdown("## OUTPUT 1 Response:")
+    st.json(output)
 
 
     return output

@@ -74,7 +74,7 @@ def evaluate_idea(problem, solution):
     response = openai.ChatCompletion.create(
         model="gpt-4-1106-preview",
         messages=[{"role": "system", "content": system_prompt},
-                    {"role": "user", "content": f"Problem:\n{problem}\n\nSolution:\n{solution}"""}
+                    {"role": "user", "content": f"Problem:{problem}\n\nSolution:{solution}"}
             ],
         max_tokens= 4096,#128000,
     )

@@ -82,7 +82,9 @@ def evaluate_idea(problem, solution):
     )
         
     response = response["choices"][0]["message"]["content"]
-    ai_response = re.sub(r'^```json\n\n|\n```$', '', response)
+    # ai_response = re.sub(r'^```json\n\n|\n```$', '', response)
+    
+    ai_response = re.sub(r'`|json', '', response)
     
     # st.markdown("## OUTPUT 0 Response:")
     # st.write(ai_response)
@@ -126,7 +128,13 @@ if submit_button:
     else:
         # get the response
         with st.spinner('Evaluating your idea, please wait...'):
-            api_response = evaluate_idea(problem, solution)
+            try:
+                api_response = evaluate_idea(problem, solution)
+            except openai.error.InvalidRequestError as e:
+                if e.status_code == 401:  # Unauthorized, typically due to invalid API key
+                    st.error("Invalid API key. Please check your API key and try again.")
+                else:
+                    st.error(f"An error occurred: {e}")
         
         if api_response:
             # Display if the idea is sustainability related with highlighting

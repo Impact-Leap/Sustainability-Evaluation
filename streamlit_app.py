@@ -80,7 +80,15 @@ def evaluate_idea(problem, solution):
     )
     
     ai_response = response["choices"][0]["message"]["content"]
+
+    st.markdown("## OUTPUT 0 Response:")
+    st.json(ai_response)
+            
     output = json.loads(ai_response)
+    
+    st.markdown("## OUTPUT 1 Response:")
+    st.json(output)
+
 
     return output
 
@@ -103,10 +111,6 @@ if submit_button:
         # get the response
         with st.spinner('Evaluating your idea, please wait...'):
             api_response = evaluate_idea(problem, solution)
-
-        if api_response:
-            st.markdown("## OUTPUT Response:")
-            st.json(api_response)
         
         if api_response:
             # Display if the idea is sustainability related with highlighting

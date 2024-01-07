@@ -23,7 +23,7 @@ with open('system_prompt.txt', 'r') as file:
 
 # Sidebar for a cute earth icon and for loading user's api key
 with st.sidebar:
-    st.image("earth.png", width=300)
+    st.image("earth.png", width=250)
     # For example, links or additional instructions
     api_key = st.text_input("Enter your API key", type="password")
     st.write("We require a GPT-4 Turbo API key, specifically the model gpt-4-1106-preview. Please note that usage may incur charges.")

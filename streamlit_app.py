@@ -92,7 +92,7 @@ def evaluate_idea(problem, solution):
         # st.markdown("## OUTPUT 1 Response:")
         # st.markdown(output)
     
-        return output
+    return output
     
     # except openai.error.InvalidRequestError as e:
     #     if e.status_code == 401:  # Unauthorized, typically due to invalid API key

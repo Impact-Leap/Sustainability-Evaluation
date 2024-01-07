@@ -4,7 +4,7 @@ This Streamlit application is designed to evaluate business ideas based on a pro
 
 ## App Link
 
-https://templateyo.streamlit.app/
+Experience the app here: [Earth Hack Streamlit App](https://templateyo.streamlit.app/)
 
 ## User Instructions
 

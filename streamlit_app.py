@@ -89,8 +89,8 @@ def evaluate_idea(problem, solution):
                 
         output = json.loads(ai_response)
         
-        # st.markdown("## OUTPUT 1 Response:")
-        # st.json(output)
+        st.markdown("## OUTPUT 1 Response:")
+        st.markdown(output)
     
         return output
     
@@ -101,9 +101,7 @@ def evaluate_idea(problem, solution):
             st.error(f"An error occurred: {e}")
         return None
     
-    except Exception as e:
-        st.error(f"An unexpected error occurred: {e}")
-        return None
+
 
 # Section for displaying evaluation result
 

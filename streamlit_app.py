@@ -147,6 +147,12 @@ if submit_button:
                 st.markdown(f"<h3 style='color:orange;'>Novelty Similarity Score: {max_similarity:.2f} / 1</h3>", unsafe_allow_html=True)
                 st.markdown(f"<h3 style='color:orange;'>Is it Novelty? {novelty_status}</h3>", unsafe_allow_html=True)
 
+                with st.expander("Instructions"):
+                    st.write("""
+                        Higher similarity score indicates a stronger relation with some information in the dataset(AI EarthHack Dataset.csv).
+                        A similarity score lower than a certain threshold will be identified as novel, meaning that this idea is novel in the scope of the provided dataset. This novelty identifier make the dataset a complementary data source in addition to the training data for the GPT4-Turbo engine.
+                    """)
+
 
                 
                 # Display the summary score without decimals

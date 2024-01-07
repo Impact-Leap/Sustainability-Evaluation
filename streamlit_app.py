@@ -12,21 +12,22 @@ from sklearn.metrics.pairwise import cosine_similarity
 import openai
 
 
-# Reading a JSON string from a file
+# testing with mock json data to save money
 with open('mock_data.json', 'r') as file:
     mock_json = json.load(file)
 
-# Reading a system prompt from a text file
+# loading system prompt to make the code cooler
 with open('system_prompt.txt', 'r') as file:
     system_prompt = file.read()
 
-# Sidebar for additional options or information
+# Sidebar for a cute earth icon and for loading user's api key
 with st.sidebar:
     st.image("earth.png", width=300)
     # For example, links or additional instructions
     api_key = st.text_input("Enter your API key", type="password")
     st.write("We require a GPT-4 Turbo API key, specifically the model gpt-4-1106-preview. Please note that usage may incur charges.")
 
+# getting a novelty score with tfidf
 def get_tfidf_novelty(problem: str, solution: str):
     try:
         # Open the file using a context manager
@@ -46,7 +47,6 @@ def get_tfidf_novelty(problem: str, solution: str):
     documents = documents.apply(lambda row: row['problem'] + " " + row['solution'], axis=1).tolist()
 
     # new statement is from user input
-
     new_statement = problem + " " + solution
 
     # TF-IDF Vectorizer
@@ -58,15 +58,7 @@ def get_tfidf_novelty(problem: str, solution: str):
     # Flatten the upper triangle of the similarity matrix and filter out self-similarities (value of 1)
     upper_triangle = cosine_similarities[np.triu_indices_from(cosine_similarities, k=1)]
 
-    # # Plotting the distribution of cosine similarities
-    # plt.hist(upper_triangle, bins=50, density=True)
-    # plt.xlabel('Cosine Similarity')
-    # plt.ylabel('Density')
-    # plt.title('Distribution of Cosine Similarities')
-    # plt.show()
-
     ## Calculate the tfidf for the new input
-
     new_statement_tfidf = vectorizer.transform([new_statement])
 
     # Compute cosine similarity between the new statement and all documents in the dataset
@@ -87,7 +79,7 @@ def get_tfidf_novelty(problem: str, solution: str):
         return max_similarity, False
 
     
-def example1():
+def emoji():
     rain(
         emoji="🌏",
         font_size=30,
@@ -95,20 +87,13 @@ def example1():
         animation_length="infinite",
     )
 
-def example2():
-    rain(
-        emoji="🐧",
-        font_size=54,
-        falling_speed=3,
-        animation_length="infinite",
-    )
-    
-example1()
-# example2()
+# for fun, but we commented it out
+# emoji()
 
 # st.title('🌏 Earth Hack')
 
-# Temporary metrics for sustainability evaluation
+# metrics list for sustainability evaluation
+# [To-Do] Fix the format
 metrics = [
     "1_No_Poverty", "2_Zero_Hunger", "3_Good_Health_and_Well-being",
     "4_Quality_Education", "5_Gender_Equality", "6_Clean_Water_and_Sanitation",
@@ -117,9 +102,9 @@ metrics = [
     "11_Sustainable_Cities_and_Communities", "12_Responsible_Consumption_and_Production",
     "13_Climate_Action", "14_Life_Below_Water", "15_Life_on_Land",
     "16_Peace_Justice_and_Strong_Institutions", "17_Partnerships_for_the_Goals"
-]    # 不好看 再改改
+]    
 
-# Emoji function based on score
+# Emoji function based on score for table
 def score_to_emoji(score):
     if score <= 4:
         return "🔴"  # Red circle for low scores
@@ -145,94 +130,39 @@ def evaluate_idea(problem, solution):
     )
     
     ai_response = response["choices"][0]["message"]["content"]
-
-    # json_string = response["choices"][0]["message"]["content"]
-
-    # # Display the JSON string for debugging
-    # st.markdown("## API Response String:")
-    # st.text(json_string)
-
-    #    # Parse the JSON-formatted string
-    # try:
-    #     parsed_response = json.loads(json_string)
-    # except json.JSONDecodeError:
-    #     st.error("Failed to parse the JSON string.")
-    #     return None
-
-    # Display the parsed JSON for debugging
-    # st.markdown("## Parsed JSON Response:")
-    # st.json(parsed_response)
-
-    
     output = json.loads(ai_response)
 
-    # if output:
-        # st.markdown("## OUTPUT Response:")
-        # st.json(ai_response)
-
-    
-    # ai_response = response if response else None
-    # Optionally save the API response to a file
-    # if ai_response:
-    #     with open('api_response.json', 'w') as outfile:
-    #         json.dump(ai_response, outfile)   
-
-    # return parsed_response
     return output
 
 
-    # # Format the prompt
-    # formatted_prompt = f"{system_prompt}\n\nProblem:\n{problem}\n\nSolution:\n{solution}"
+# Section for displaying evaluation result
 
-    # # Replace with your actual API endpoint and API key
-    # api_endpoint = "https://api.openai.com/v1/chat/completions"
-    # headers = {
-    #     "Authorization": f"Bearer {api_key}",
-    #     "Content-Type": "application/json"
-    # }
-    # payload = {
-    #     "prompt": formatted_prompt,
-    #     "max_tokens": 128000,
-    #     "model": "gpt-4-1106-preview"
-    # }
-    # try:
-    #     response = requests.post(api_endpoint, headers=headers, json=payload)
-    #     response.raise_for_status()
-    #     api_response = response.json()
-
-    #     # Save the API response to a file
-    #     with open('api_response.json', 'w') as outfile:
-    #         json.dump(api_response, outfile)
-            
-    #     return api_response
-        
-    # except requests.RequestException as e:
-    #     st.error(f"API request failed: {e}")
-    #     return None
-
-
-# Section for business idea input
 st.title("💡 Business Idea Evaluation")
+
+# pretty interface for user prompt
 with st.form("business_idea_form"):
     problem = st.text_area("Problem:")
     solution = st.text_area("Solution:")
     submit_button = st.form_submit_button("Evaluate Idea")
 
-
+# if sumbmitted, send the prompt to openai to rob ~0.35$ from the user
 if submit_button:
     if not api_key:
         st.error("Please enter an API key.")
     else:
+        # get the response
         api_response = evaluate_idea(problem, solution)
+        
         if api_response:
             # Display if the idea is sustainability related with highlighting
-            # is_sustainable = api_response['Idea_Sustainability_Related'] == "Yes"
             is_sustainable = api_response['Idea_Sustainability_Related'] == True
+            
             sustainability_comment = api_response['Idea_Sustainability_Related_Comment']
             st.markdown(f"<h3 style='color:blue;'>Is the Idea Sustainability Related? {'Yes' if is_sustainable else 'No'}</h3>", unsafe_allow_html=True)
             st.write("### Sustainability Analysis:")
             st.write(sustainability_comment)
-    
+
+            # if the idea is not sustainable, proceed with displaying the scores.
             if is_sustainable:
                 scores = [int(api_response['Evaluation']['SDG_Scores'][metric]['Score']) for metric in metrics]
                 comments = [api_response['Evaluation']['SDG_Scores'][metric]['Comment'] for metric in metrics]
@@ -248,13 +178,13 @@ if submit_button:
                 st.write(novelty_comment)
 
                 
-                # Example usage with user-provided problem and solution
+                # get tfidf novelty score with user-provided problem and solution
                 max_similarity, tfidf_is_novelty = get_tfidf_novelty(problem, solution)
                 
                 # Check if the response is novelty or not
                 novelty_status = "Yes" if tfidf_is_novelty else "No"
                 
-                # Display the novelty similarity score and novelty status
+                # Display the novelty similarity score with decimals and novelty status
                 st.markdown(f"<h3 style='color:orange;'>Novelty Similarity Score: {max_similarity:.2f} / 1</h3>", unsafe_allow_html=True)
                 st.markdown(f"<h3 style='color:orange;'>Is it Novelty? {novelty_status}</h3>", unsafe_allow_html=True)
 
@@ -302,9 +232,6 @@ if submit_button:
                 num_vars = len(metrics)
                 angles = np.linspace(0, 2 * np.pi, num_vars, endpoint=False).tolist()
                 angles += angles[:1]  # Complete the loop
-            
-                # scores_list = scores.tolist()
-                # scores_list += scores_list[:1]  # Repeat the first score to close the radar chart
 
                 # Use 'scores' directly as it is already a list
                 scores_list = scores + scores[:1]  # Repeat the first score to close the radar chart
@@ -331,7 +258,6 @@ if submit_button:
 
     ## Calculate the summary score
     # total_score = sum(scores)
-    # normalized_score = total_score * (170 / (10 * len(metrics)))  # Normalizing to a scale of 170   # 之后会改掉哈，直接全加起来
 
         else:
             # Display warning message if API call fails

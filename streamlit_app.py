@@ -106,7 +106,7 @@ if submit_button:
 
         if api_response:
             st.markdown("## OUTPUT Response:")
-            st.json(ai_response)
+            st.json(api_response)
         
         if api_response:
             # Display if the idea is sustainability related with highlighting

@@ -26,3 +26,5 @@ Experience the app here: [Earth Hack Streamlit App](https://zerowaste.streamlit.
 [Streamlit Cloud](https://streamlit.io/cloud)
 
 [GPT 4](https://openai.com/gpt-4)
+
+[the United Nations sustainable development goals](https://sdgs.un.org/goals)

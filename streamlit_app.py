@@ -11,6 +11,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from tfidf_novelty import get_tfidf_novelty
 import openai
+import re
 
 
 # testing with mock json data to save money
@@ -79,15 +80,16 @@ def evaluate_idea(problem, solution):
         max_tokens= 4096,#128000,
     )
     
-    ai_response = response["choices"][0]["message"]["content"][8:-4]
+    response = response["choices"][0]["message"]["content"][8:-4]
+    ai_response = re.sub(r'^```json\n\n|\n```$', '', response)
 
-    st.markdown("## OUTPUT 0 Response:")
-    st.markdown(ai_response)
+    # st.markdown("## OUTPUT 0 Response:")
+    # st.markdown(ai_response)
             
     output = json.loads(ai_response)
     
-    st.markdown("## OUTPUT 1 Response:")
-    st.json(output)
+    # st.markdown("## OUTPUT 1 Response:")
+    # st.json(output)
 
 
     return output

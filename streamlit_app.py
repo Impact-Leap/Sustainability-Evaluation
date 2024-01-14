@@ -139,7 +139,7 @@ if submit_button:
         
         with st.spinner('Evaluating your idea, please wait...'):
 
-            for i in range(300):
+            for i in range(100):
                 progress_bar.progress(i+1)
                 time.sleep(0.1)
                 

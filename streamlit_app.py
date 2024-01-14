@@ -189,13 +189,11 @@ if input_method == 'Manual Input':
     # Plot each entry in the DataFrame as a separate slice in the pie chart
     wedges, texts, autotexts = plt.pie(df_cat['Percentage'], labels=df_cat['BusinessStatus'], autopct='%1.1f%%', startangle=140)
     
-    # Create a legend with unique category names
-    unique_categories = df_cat['Category'].unique()
-    plt.legend(unique_categories, title="Categories", loc="best")
+    legend_labels = [f"{i+1}. {category}" for i, category in enumerate(df_cat['Category'])]
+    plt.legend(wedges, legend_labels, title="Categories", loc="best")
+    
     plt.title('Combined Business Status Distribution')
     st.pyplot(plt)
-
-
 
     
     # if sumbmitted, send the prompt to openai to rob ~0.35$ from the user

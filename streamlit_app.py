@@ -12,6 +12,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 from tfidf_novelty import get_tfidf_novelty
 import openai
 import re
+import time
 
 
 # testing with mock json data to save money

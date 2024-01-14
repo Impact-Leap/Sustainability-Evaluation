@@ -56,6 +56,12 @@ metrics = [
     "16_Peace_Justice_and_Strong_Institutions", "17_Partnerships_for_the_Goals"
 ]    
 
+def format_metric_name(metric):
+    # Split the string at the underscore and return the part after it
+    return metric.split('_', 1)[1].replace('_', ' ')
+
+formatted_metrics = [format_metric_name(metric) for metric in metrics]
+
 # Emoji function based on score for table
 def score_to_emoji(score):
     if score <= 4:
@@ -198,7 +204,7 @@ if submit_button:
                         
                         # Modify DataFrame to include comments
                         score_df = pd.DataFrame({
-                            'Metric': metrics,
+                            'Metric': formatted_metrics,
                             'Score': scores,
                             'Comment': comments,
                             'Level': [score_to_emoji(score) for score in scores]

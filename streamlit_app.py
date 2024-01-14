@@ -173,10 +173,10 @@ if input_method == 'Manual Input':
     col1, col2 = st.columns(2)
 
     with col1:
-        st.metric(label="#### - Average Number of Competitors⚔️", value=avg_num_competitors)
+        st.metric(label="#### Average Number of Competitors⚔️", value=avg_num_competitors)
     
     with col2:
-        st.metric(label="#### - Average Total Raised 📈", value=f"${avg_total_raised:,}")
+        st.metric(label="#### Average Total Raised 📈", value=f"${avg_total_raised:,}")
 
     for category in df_cat['Category'].unique():
     # Filter the DataFrame for the current category

@@ -10,6 +10,7 @@ from streamlit_extras.let_it_rain import rain
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from tfidf_novelty import get_tfidf_novelty
+from commercial import get_top_10_tfidf, get_business_status_distribution
 import openai
 import re
 import time
@@ -137,6 +138,30 @@ input_method = st.radio("Choose your input method:", ('Manual Input', 'Upload CS
 problem_placeholder = "More than 130 billion plastic bottles waste annually in Egypt"
 solution_placeholder = "Bariq factory to recycle plastic bottles"
 
+
+# For demonstration, using mock data
+st.write("### Commercial Analysis Response:")
+
+top_10_similar_docs, avg_num_competitors, avg_total_raised = get_top_10_tfidf("The company's solution focuses on creating a circular economy for waste plastics. They employ a patented and fully continuous pyrolysis process that converts landfill-extracted plastics into hydrocarbon oils. This process involves heating the plastic", "buy less plastic bags")
+df_cat = get_business_status_distribution(top_10_similar_docs)
+
+# Display the top 10 similar documents
+st.write("#### Top 10 Similar Documents:")
+st.dataframe(top_10_similar_docs)
+
+# Display the average number of competitors
+st.write("#### Average Number of Competitors:")
+st.write(avg_num_competitors)
+
+# Display the average total raised
+st.write("#### Average Total Raised:")
+st.write(avg_total_raised)
+
+# If df_cat needs to be displayed as well, use st.dataframe
+# Assuming df_cat is a DataFrame with relevant information
+st.write("#### Business Status Distribution:")
+st.dataframe(df_cat)
+        
 if input_method == 'Manual Input':
     with st.form("business_idea_form"):
         problem = st.text_area("Problem:", value="", placeholder=problem_placeholder)
@@ -302,7 +327,7 @@ if input_method == 'Manual Input':
             # Display a section for commercial analysis
         st.markdown("---")
         st.markdown("### **Do you want further commercial analysis?💸**")
-        st.markdown("*Note: This will incur additional costs with the use of the API key.*")
+        # st.markdown("*Note: This will incur additional costs with the use of the API key.*")
     
         # Button for commercial analysis
         commercial_analysis_button = st.button("Display Commercial Analysis")
@@ -315,8 +340,30 @@ if input_method == 'Manual Input':
         with st.spinner('Processing commercial analysis, please wait...'):
             # For demonstration, using mock data
             st.write("### Commercial Analysis Response:")
-            st.markdown("*This is a mock response for demonstration purposes.*")
-            st.write("Imagine this text is the detailed commercial analysis provided by the AI.")
+
+            top_10_similar_docs, avg_num_competitors, avg_total_raised = get_top_10_tfidf(problem, solution)
+            df_cat = get_business_status_distribution(top_10_similar_docs)
+
+            # Display the top 10 similar documents
+            st.write("#### Top 10 Similar Documents:")
+            st.dataframe(top_10_similar_docs)
+        
+            # Display the average number of competitors
+            st.write("#### Average Number of Competitors:")
+            st.write(avg_num_competitors)
+        
+            # Display the average total raised
+            st.write("#### Average Total Raised:")
+            st.write(avg_total_raised)
+        
+            # If df_cat needs to be displayed as well, use st.dataframe
+            # Assuming df_cat is a DataFrame with relevant information
+            st.write("#### Business Status Distribution:")
+            st.dataframe(df_cat)
+
+
+            # st.markdown("*This is a mock response for demonstration purposes.*")
+            # st.write("Imagine this text is the detailed commercial analysis provided by the AI.")
 
             # Uncomment and modify the following lines for actual implementation
             # with open('commercial_prompt.txt', 'r') as file:

@@ -9,6 +9,11 @@ def chat_with_openai(input_data):
 
     # input data is of the form: {'id': 0, 'problem': '', 'solution': ''}
 
+    # load system prompt from local file
+    system_prompt = ""
+    with open('system_prompt.txt', 'r', encoding='utf-8') as file:
+        system_prompt = file.read()
+
     response = openai.ChatCompletion.create(
         model="gpt-4-1106-preview",
         messages=[{"role": "system", "content": f"{system_prompt}"},

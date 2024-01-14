@@ -147,10 +147,6 @@ if input_method == 'Manual Input':
         problem = st.text_area("Problem:", value="", placeholder=problem_placeholder)
         solution = st.text_area("Solution:", value="", placeholder=solution_placeholder)
         submit_button = st.form_submit_button("Evaluate Idea")
-
-    ## 测试！DAVID PART
-
-    
     
     ## 测试！ANTONIO PART
     # For demonstration, using mock data
@@ -470,6 +466,13 @@ elif input_method == 'Upload CSV':
             st.dataframe(df)
         else:
             st.error("The CSV file must contain 'problem' and 'solution' columns.")
+
+        ## 测试！DAVID PART
+
+        processed_results = process_inputs_in_parallel(df)
+        
+        
+        
 
 
 

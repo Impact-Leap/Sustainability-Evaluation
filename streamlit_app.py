@@ -268,36 +268,6 @@ if input_method == 'Manual Input':
                             # st.write("### Evaluation Results:")
                             # for metric, score in zip(formatted_metrics, scores):
                             #     st.slider(metric, 0, 10, score, disabled=True)
-                 # ... [previous code for initial analysis]
-
-                    # Display a section for commercial analysis
-                    st.markdown("---")
-                    st.markdown("#### **Do you want further commercial analysis?**")
-                    st.markdown("*Note: This will incur additional costs with the use of the API key.*")
-                
-                    # Button for commercial analysis
-                    commercial_analysis_button = st.button("Display Commercial Analysis")
-                
-                    # Mock commercial analysis process (commented out, use for real implementation)
-                    if commercial_analysis_button:
-                        with st.spinner('Processing commercial analysis, please wait...'):
-                            # For demonstration, using mock data
-                            st.write("### Commercial Analysis Response:")
-                            st.markdown("*This is a mock response for demonstration purposes.*")
-                            st.write("Imagine this text is the detailed commercial analysis provided by the AI.")
-                
-                            # Uncomment and modify the following lines for actual implementation
-                            # with open('commercial_prompt.txt', 'r') as file:
-                            #     commercial_prompt = file.read()
-                            # response = openai.ChatCompletion.create(
-                            #     model="gpt-4-1106-preview",
-                            #     messages=[{"role": "system", "content": commercial_prompt},
-                            #               {"role": "user", "content": f"Problem:{problem}\n\nSolution:{solution}"}
-                            #     ],
-                            #     max_tokens=4096,
-                            # )
-                            # commercial_response = response["choices"][0]["message"]["content"]
-                            # st.write(commercial_response)
        
     
                         
@@ -317,7 +287,39 @@ if input_method == 'Manual Input':
                         st.error("Invalid API key. Please check your API key and try again.")
                     else:
                         st.error(f"An error occurred: {e}")
+
+
+          # ... [previous code for initial analysis]
+
+        # Display a section for commercial analysis
+        st.markdown("---")
+        st.markdown("### **Do you want further commercial analysis?💸**")
+        st.markdown("*Note: This will incur additional costs with the use of the API key.*")
     
+        # Button for commercial analysis
+        commercial_analysis_button = st.button("Display Commercial Analysis")
+    
+        # Mock commercial analysis process (commented out, use for real implementation)
+        if commercial_analysis_button:
+            with st.spinner('Processing commercial analysis, please wait...'):
+                # For demonstration, using mock data
+                st.write("### Commercial Analysis Response:")
+                st.markdown("*This is a mock response for demonstration purposes.*")
+                st.write("Imagine this text is the detailed commercial analysis provided by the AI.")
+    
+                # Uncomment and modify the following lines for actual implementation
+                # with open('commercial_prompt.txt', 'r') as file:
+                #     commercial_prompt = file.read()
+                # response = openai.ChatCompletion.create(
+                #     model="gpt-4-1106-preview",
+                #     messages=[{"role": "system", "content": commercial_prompt},
+                #               {"role": "user", "content": f"Problem:{problem}\n\nSolution:{solution}"}
+                #     ],
+                #     max_tokens=4096,
+                # )
+                # commercial_response = response["choices"][0]["message"]["content"]
+                # st.write(commercial_response)
+
             # progress_bar.empty()
 
 

@@ -169,7 +169,15 @@ if input_method == 'Manual Input':
     # Assuming df_cat is a DataFrame with relevant information
     st.write("#### Business Status Distribution:")
     st.dataframe(df_cat)
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+        st.metric(label="Average Number of Competitors", value=avg_num_competitors)
     
+    with col2:
+        st.metric(label="Average Total Raised", value=f"${avg_total_raised:,}")
+
     for category in df_cat['Category'].unique():
     # Filter the DataFrame for the current category
         df_filtered = df_cat[df_cat['Category'] == category]

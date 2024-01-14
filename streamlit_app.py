@@ -151,13 +151,9 @@ if input_method == 'Manual Input':
     # For demonstration, using mock data
     # st.write("### Commercial Analysis Response:")
 
-    try:
-        # Read the file contents
-        documents = pd.read_csv('Cleaned_ValidationSet.csv', encoding='ISO-8859-1')
 
-    except FileNotFoundError:
-        print("File not found.")
-        return
+    # Read the file contents
+    documents = pd.read_csv('Cleaned_ValidationSet.csv', encoding='ISO-8859-1')
     
     top_5_similar_docs, avg_num_competitors, avg_total_raised = get_top_5_tfidf("The company's solution focuses on creating a circular economy for waste plastics. They employ a patented and fully continuous pyrolysis process that converts landfill-extracted plastics into hydrocarbon oils. This process involves heating the plastic", "buy less plastic bags")
     df_cat = get_business_status_distribution(top_5_similar_docs)

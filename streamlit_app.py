@@ -10,7 +10,7 @@ from streamlit_extras.let_it_rain import rain
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from tfidf_novelty import get_tfidf_novelty
-from commercial import get_top_10_tfidf, get_business_status_distribution
+from commercial import get_top_5_tfidf, get_business_status_distribution, get_percentile_by_category, generate_commercial_analysis
 from parallel_summary import chat_with_openai, process_inputs_in_parallel, processed_results_to_df
 
 import openai
@@ -140,7 +140,6 @@ input_method = st.radio("Choose your input method:", ('Manual Input', 'Upload CS
 problem_placeholder = "More than 130 billion plastic bottles waste annually in Egypt"
 solution_placeholder = "Bariq factory to recycle plastic bottles"
 
-
         
 if input_method == 'Manual Input':
     with st.form("business_idea_form"):
@@ -152,12 +151,30 @@ if input_method == 'Manual Input':
     # For demonstration, using mock data
     # st.write("### Commercial Analysis Response:")
     
-    top_10_similar_docs, avg_num_competitors, avg_total_raised = get_top_10_tfidf("The company's solution focuses on creating a circular economy for waste plastics. They employ a patented and fully continuous pyrolysis process that converts landfill-extracted plastics into hydrocarbon oils. This process involves heating the plastic", "buy less plastic bags")
-    df_cat = get_business_status_distribution(top_10_similar_docs)
+    top_5_similar_docs, avg_num_competitors, avg_total_raised = get_top_5_tfidf("The company's solution focuses on creating a circular economy for waste plastics. They employ a patented and fully continuous pyrolysis process that converts landfill-extracted plastics into hydrocarbon oils. This process involves heating the plastic", "buy less plastic bags")
+    df_cat = get_business_status_distribution(top_5_similar_docs)
+
+    category_summary = df_cat.groupby('Category')['Percentage'].sum()
+
+    # Find the category with the highest total percentage
+    most_likely_category = category_summary.idxmax()
+    
+    # Group by 'BusinessStatus' and sum the 'Percentage'
+    business_status_summary = df_cat.groupby('BusinessStatus')['Percentage'].sum()
+    
+    # Find the business status with the highest total percentage
+    most_likely_business_status = business_status_summary.idxmax()
+    
+    # Find the number of competitor percentile
+    NumCompetitors_percentile = round(get_percentile_by_category(df_clean, 'NumCompetitors',avg_num_competitors,most_likely_category),2)
+    
+    # Find the totalraised percentile
+    TotalRaised_percentile = round(get_percentile_by_category(df_clean, 'TotalRaised',avg_total_raised,most_likely_category),2)
+
     
     # Display the top 10 similar documents
     st.write("#### Top 10 Similar Documents:")
-    st.dataframe(top_10_similar_docs)
+    st.dataframe(top_5_similar_docs)
     
     # # Display the average number of competitors
     # st.write("#### Average Number of Competitors:")

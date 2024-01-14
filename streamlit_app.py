@@ -272,4 +272,4 @@ if submit_button:
                 else:
                     st.error(f"An error occurred: {e}")
 
-        # progress_bar.empty()
+        progress_bar.empty()

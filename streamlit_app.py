@@ -182,20 +182,6 @@ if input_method == 'Manual Input':
 
     st.write('<br><br>', unsafe_allow_html=True)
 
-
-    
-    for category in df_cat['Category'].unique():
-    # Filter the DataFrame for the current category
-        df_filtered = df_cat[df_cat['Category'] == category]
-    
-    # Create a pie chart
-    plt.figure()
-    plt.pie(df_filtered['Percentage'], labels=df_filtered['BusinessStatus'], autopct='%1.1f%%')
-    plt.title(f'Business Status Distribution in {category}')
-    
-    # Display the pie chart in Streamlit
-    st.pyplot(plt)
-
         ## 饼图测试
     # Combine all data into a single pie chart
     plt.figure(figsize=(8, 8))
@@ -204,7 +190,7 @@ if input_method == 'Manual Input':
     wedges, texts, autotexts = plt.pie(df_cat['Percentage'], labels=df_cat['BusinessStatus'], autopct='%1.1f%%', startangle=140)
     
     # Create a legend mapping each wedge to its category
-    legend_labels = [f"{category}: {status}" for category, status in zip(df_cat['Category'], df_cat['BusinessStatus'])]
+    legend_labels = [f"{category}" for category in zip(df_cat['Category'])]
     plt.legend(wedges, legend_labels, title="Categories", loc="best")
     
     plt.title('Combined Business Status Distribution')

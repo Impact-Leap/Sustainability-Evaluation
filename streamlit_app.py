@@ -148,7 +148,7 @@ if input_method == 'Manual Input':
 
     ## 测试！
     # For demonstration, using mock data
-    st.write("### Commercial Analysis Response:")
+    # st.write("### Commercial Analysis Response:")
     
     top_10_similar_docs, avg_num_competitors, avg_total_raised = get_top_10_tfidf("The company's solution focuses on creating a circular economy for waste plastics. They employ a patented and fully continuous pyrolysis process that converts landfill-extracted plastics into hydrocarbon oils. This process involves heating the plastic", "buy less plastic bags")
     df_cat = get_business_status_distribution(top_10_similar_docs)
@@ -182,21 +182,21 @@ if input_method == 'Manual Input':
 
     st.write('<br><br>', unsafe_allow_html=True)
 
-    ## 饼图测试
+    # ## 饼图测试
     
-    # Combine all data into a single pie chart
-    plt.figure(figsize=(10, 6))
+    # # Combine all data into a single pie chart
+    # plt.figure(figsize=(10, 6))
     
-    # Plot each entry in the DataFrame as a separate slice in the pie chart
-    wedges, texts, autotexts = plt.pie(df_cat['Percentage'], labels=df_cat['BusinessStatus'], autopct='%1.1f%%', startangle=140)
+    # # Plot each entry in the DataFrame as a separate slice in the pie chart
+    # wedges, texts, autotexts = plt.pie(df_cat['Percentage'], labels=df_cat['BusinessStatus'], autopct='%1.1f%%', startangle=140)
     
-    legend_labels = [f"{category}" for i, category in enumerate(df_cat['Category'])]
-    plt.legend(wedges, legend_labels, title="Categories", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
+    # legend_labels = [f"{category}" for i, category in enumerate(df_cat['Category'])]
+    # plt.legend(wedges, legend_labels, title="Categories", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
     
-    plt.title('Combined Business Status Distribution')
-    st.pyplot(plt)
+    # plt.title('Combined Business Status Distribution')
+    # st.pyplot(plt)
 
-    ## 甜甜圈
+    ## DONUTS
     # Combine all data into a single pie chart
     plt.figure(figsize=(10, 6))
     

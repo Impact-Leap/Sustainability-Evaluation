@@ -144,6 +144,7 @@ elif input_method == 'Upload CSV':
     if uploaded_file is not None:
         # Read the CSV file
         df = pd.read_csv(uploaded_file)
+        submit_button = st.form_submit_button("Evaluate Idea")
         ##
 
 # if sumbmitted, send the prompt to openai to rob ~0.35$ from the user

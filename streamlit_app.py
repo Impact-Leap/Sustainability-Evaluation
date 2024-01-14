@@ -142,8 +142,13 @@ if input_method == 'Manual Input':
 elif input_method == 'Upload CSV':
     uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
     if uploaded_file is not None:
-        # Read the CSV file
-        df = pd.read_csv(uploaded_file)
+        try:
+            # Try reading with default encoding (UTF-8)
+            df = pd.read_csv(uploaded_file)
+        except UnicodeDecodeError:
+            # If UnicodeDecodeError, try reading with alternative encoding
+            uploaded_file.seek(0)  # Reset file pointer to the beginning
+            df = pd.read_csv(uploaded_file, encoding='ISO-8859-1')
 
         # Convert column names to lowercase
         df.columns = [col.lower() for col in df.columns]

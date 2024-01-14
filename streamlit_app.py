@@ -171,46 +171,16 @@ if input_method == 'Manual Input':
     # st.dataframe(df_cat)
 
 
-    # st.write('<br><br>', unsafe_allow_html=True)
-    # col1, col2 = st.columns(2)
-
-    # with col1:
-    #     st.metric(label="##### ⚔️Average Number of Competitors", value=avg_num_competitors)
-    
-    # with col2:
-    #     st.metric(label="##### 📈Average Total Raised", value=f"${avg_total_raised:,}")
-
-    # st.write('<br><br>', unsafe_allow_html=True)
-    
-    # Custom CSS to inject contained style
-    st.markdown(
-        """
-        <style>
-        .box {
-            border: 2px solid #eee;
-            border-radius: 5px;
-            padding: 10px;
-            margin: 10px 0;
-        }
-        </style>
-        """,
-        unsafe_allow_html=True
-    )
-    
-    # Box for metrics
-    st.markdown('<div class="box">', unsafe_allow_html=True)
-    
+    st.write('<br><br>', unsafe_allow_html=True)
     col1, col2 = st.columns(2)
-    
+
     with col1:
-        st.metric(label="Average Number of Competitors", value=avg_num_competitors)
+        st.metric(label="##### ⚔️Average Number of Competitors", value=avg_num_competitors)
     
     with col2:
-        st.metric(label="Average Total Raised", value=f"${avg_total_raised:,}")
-    
-    st.markdown('</div>', unsafe_allow_html=True)
-    
-    # Other sections...
+        st.metric(label="##### 📈Average Total Raised", value=f"${avg_total_raised:,}")
+
+    st.write('<br><br>', unsafe_allow_html=True)
 
 
     

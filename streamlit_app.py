@@ -144,8 +144,22 @@ elif input_method == 'Upload CSV':
     if uploaded_file is not None:
         # Read the CSV file
         df = pd.read_csv(uploaded_file)
-        submit_button = st.form_submit_button("Evaluate Idea")
-        ##
+
+        # Convert column names to lowercase
+        df.columns = [col.lower() for col in df.columns]
+
+        # Check if 'id' column exists, if not add it
+        if 'id' not in df.columns:
+            df.insert(0, 'id', range(1, 1 + len(df)))
+
+        # Check for necessary columns 'problem' and 'solution'
+        if 'problem' in df.columns and 'solution' in df.columns:
+            # Display the DataFrame
+            st.write("Uploaded Data:")
+            st.dataframe(df)
+        else:
+            st.error("The CSV file must contain 'problem' and 'solution' columns.")
+
 
 # if sumbmitted, send the prompt to openai to rob ~0.35$ from the user
 if submit_button:

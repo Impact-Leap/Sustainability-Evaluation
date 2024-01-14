@@ -209,55 +209,61 @@ if submit_button:
                             'Comment': comments,
                             'Level': [score_to_emoji(score) for score in scores]
                         })
-                    
-                        # Displaying scores as a styled table using markdown
-                        st.markdown("### Evaluation Table")
-                        st.markdown(
-                            score_df.to_html(index=False, escape=False, justify='center', classes='table'),
-                            unsafe_allow_html=True
-                        )
-                    
-                        # Apply custom CSS for table styling
-                        st.markdown("""
-                            <style>
-                                .table {width: 100%; margin-left: auto; margin-right: auto; border-collapse: collapse;}
-                                .table td, .table th {border: none;}
-                                th {text-align: center; font-size: 18px; font-weight: bold;}
-                                td {text-align: center;}
-                            </style>
-                            """, unsafe_allow_html=True)
+
+                        col1, col2 = st.columns(2)  # Creates two columns
                         
-                        
-                        # Slider section
-                        st.write("### Evaluation Results:")
-                        for metric, score in zip(formatted_metrics, scores):
-                            st.slider(metric, 0, 10, score, disabled=True)
-                    
                         # Radar chart
-                        st.write("### Radar Chart Evaluation Results:")
-                        num_vars = len(formatted_metrics)
-                        angles = np.linspace(0, 2 * np.pi, num_vars, endpoint=False).tolist()
-                        angles += angles[:1]  # Complete the loop
-        
-                        # Use 'scores' directly as it is already a list
-                        scores_list = scores + scores[:1]  # Repeat the first score to close the radar chart
-        
-                        fig, ax = plt.subplots(figsize=(6, 6), subplot_kw=dict(polar=True))
-                        ax.fill(angles, scores_list, color='green', alpha=0.25)
-                        ax.plot(angles, scores_list, color='green', linewidth=2)
-                        ax.set_yticklabels([])
-                        ax.set_xticks(angles[:-1])
-                        ax.set_xticklabels(formatted_metrics)
-                    
-                        st.pyplot(fig)
+                        with col1: 
+                            st.write("### Radar Chart Evaluation Results:")
+                            num_vars = len(formatted_metrics)
+                            angles = np.linspace(0, 2 * np.pi, num_vars, endpoint=False).tolist()
+                            angles += angles[:1]  # Complete the loop
+            
+                            # Use 'scores' directly as it is already a list
+                            scores_list = scores + scores[:1]  # Repeat the first score to close the radar chart
+            
+                            fig, ax = plt.subplots(figsize=(6, 6), subplot_kw=dict(polar=True))
+                            ax.fill(angles, scores_list, color='green', alpha=0.25)
+                            ax.plot(angles, scores_list, color='green', linewidth=2)
+                            ax.set_yticklabels([])
+                            ax.set_xticks(angles[:-1])
+                            ax.set_xticklabels(formatted_metrics)
                         
-                        # Seaborn barplot
-                        st.write("### Bar Chart Evaluation Results:")
-                        plt.figure(figsize=(10, 6))
-                        sns.barplot(x='Score', y='Metric', data=score_df, palette="vlag")
-                        plt.xlabel('Score out of 10')
-                        st.set_option('deprecation.showPyplotGlobalUse', False)
-                        st.pyplot()
+                            st.pyplot(fig)
+
+                        with col2:
+                            # Seaborn barplot
+                            st.write("### Bar Chart Evaluation Results:")
+                            plt.figure(figsize=(10, 6))
+                            sns.barplot(x='Score', y='Metric', data=score_df, palette="vlag")
+                            plt.xlabel('Score out of 10')
+                            st.set_option('deprecation.showPyplotGlobalUse', False)
+                            st.pyplot()
+                            
+                            # Displaying scores as a styled table using markdown
+                            st.markdown("### Evaluation Table")
+                            st.markdown(
+                                score_df.to_html(index=False, escape=False, justify='center', classes='table'),
+                                unsafe_allow_html=True
+                            )
+                        
+                            # Apply custom CSS for table styling
+                            st.markdown("""
+                                <style>
+                                    .table {width: 100%; margin-left: auto; margin-right: auto; border-collapse: collapse;}
+                                    .table td, .table th {border: none;}
+                                    th {text-align: center; font-size: 18px; font-weight: bold;}
+                                    td {text-align: center;}
+                                </style>
+                                """, unsafe_allow_html=True)
+                        
+                        
+                        # # Slider section
+                        # st.write("### Evaluation Results:")
+                        # for metric, score in zip(formatted_metrics, scores):
+                        #     st.slider(metric, 0, 10, score, disabled=True)
+                    
+
                     
             ## Simulate scores for demonstration (replace with real data later)
             # scores = np.random.randint(1, 11, size=len(metrics))

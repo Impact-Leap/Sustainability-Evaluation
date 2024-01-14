@@ -17,8 +17,6 @@ def chat_with_openai(input_data):
     )
     ai_response = response["choices"][0]["message"]["content"]
 
-    # Replace with your actual code to process the input_data
-    # For example, it could be a computation, API call, etc.
     return (input_data['id'], input_data['problem'], input_data['solution'], ai_response)
 
 

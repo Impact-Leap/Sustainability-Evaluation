@@ -196,24 +196,25 @@ if input_method == 'Manual Input':
     # Display the pie chart in Streamlit
     st.pyplot(plt)
 
-    ## 饼图测试
-    # Unique categories
-    categories = df_cat['Category'].unique()
+        ## 饼图测试
+    # Assuming df_cat is your DataFrame
+    import matplotlib.pyplot as plt
     
-    # Create a pie chart for each category
-    for category in categories:
-        # Filter the DataFrame for the current category
-        df_filtered = df_cat[df_cat['Category'] == category]
+    # Combine all data into a single pie chart
+    plt.figure(figsize=(8, 8))
     
-        # Labels for each pie portion
-        labels = [f'{status}: {perc}%' for status, perc in zip(df_filtered['BusinessStatus'], df_filtered['Percentage'])]
+    # Grouping by 'Category' and summing up the 'Percentage' for each 'BusinessStatus'
+    grouped_data = df_cat.groupby(['BusinessStatus', 'Category']).sum().reset_index()
     
-        # Create a pie chart
-        plt.figure(figsize=(6, 6))
-        plt.pie(df_filtered['Percentage'], labels=labels, autopct='%1.1f%%', startangle=140)
-        plt.title(f'Business Status Distribution - {category}')
+    # Creating a pie chart
+    plt.pie(grouped_data['Percentage'], labels=grouped_data['BusinessStatus'], autopct='%1.1f%%', startangle=140)
+    
+    # Creating a legend with category names
+    plt.legend(grouped_data['Category'].unique(), title="Categories", loc="best")
+    
+    plt.title('Combined Business Status Distribution')
+    st.pyplot(plt)
 
-        st.pyplot(plt)
 
 
     

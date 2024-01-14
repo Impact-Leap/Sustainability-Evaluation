@@ -135,136 +135,141 @@ if submit_button:
     else:
         # get the response
         
-        # progress_bar = st.progress(0)
+        progress_bar = st.progress(0)
         
         with st.spinner('Evaluating your idea, please wait...'):
 
-            # for i in range(300):
-            #     progress_bar.progress(i+1)
-            #     time.sleep(0.1)
+            for i in range(300):
+                progress_bar.progress(i+1)
+                time.sleep(0.1)
+                
             try:
                 api_response = evaluate_idea(problem, solution)
+
+                        
+                if api_response:
+                    # Display if the idea is sustainability related with highlighting
+                    is_sustainable = api_response['Idea_Sustainability_Related'] == True
+                    
+                    sustainability_comment = api_response['Idea_Sustainability_Related_Comment']
+                    st.markdown(f"<h3 style='color:blue;'>Is the Idea Sustainability Related? {'Yes' if is_sustainable else 'No'}</h3>", unsafe_allow_html=True)
+                    st.write("### Sustainability Analysis:")
+                    st.write(sustainability_comment)
+        
+                    # if the idea is not sustainable, proceed with displaying the scores.
+                    if is_sustainable:
+                        scores = [int(api_response['Evaluation']['SDG_Scores'][metric]['Score']) for metric in metrics]
+                        comments = [api_response['Evaluation']['SDG_Scores'][metric]['Comment'] for metric in metrics]
+                        total_score = int(api_response['Evaluation']['Total_Score'])  # Convert to integer
+                        analysis_context = api_response['Evaluation']['Summary']
+                        novelty_score = int(api_response['Evaluation']['Novelty_Score'])  # Convert to integer
+                        novelty_comment = api_response['Evaluation']['Novelty_Evaluation']['Comment']
+                        
+                        
+                        # Displaying novelty score and analysis with highlighting
+                        st.markdown(f"<h3 style='color:purple;'>Novelty Score: {novelty_score} / 100</h3>", unsafe_allow_html=True)
+                        st.write("### Novelty Analysis:")
+                        st.write(novelty_comment)
+        
+                        
+                        # get tfidf novelty score with user-provided problem and solution
+                        max_similarity, tfidf_is_novelty = get_tfidf_novelty(problem, solution)
+                        
+                        # Check if the response is novelty or not
+                        novelty_status = "Yes" if tfidf_is_novelty else "No"
+                        
+                        # Display the novelty similarity score with decimals and novelty status
+                        st.markdown(f"<h3 style='color:orange;'>Novelty Similarity Score: {max_similarity:.2f} / 1</h3>", unsafe_allow_html=True)
+                        st.markdown(f"<h3 style='color:orange;'>Is it Novelty? {novelty_status}</h3>", unsafe_allow_html=True)
+        
+                        with st.expander("Understanding the Novelty Similarity Score"):
+                            st.write("""
+                                - The Novelty Similarity Score indicates the degree of similarity between your idea and existing ideas within the AI EarthHack Dataset.
+                                - A higher score suggests that your idea is more closely related to concepts already present in the dataset.
+                                - Conversely, a lower score suggests that your idea is unique or novel in the context of this dataset.
+                                - Ideas with a score below a certain threshold are considered novel, highlighting their uniqueness compared to the dataset. This serves as a complementary assessment alongside the GPT-4-Turbo engine's analysis.
+                            """)
+        
+                        # Display the summary score without decimals
+                        st.markdown(f"<h3 style='color:green;'>Summary Score: {total_score} / 100</h3>", unsafe_allow_html=True)
+                        st.write("### Summary Analysis:")
+                        st.write(analysis_context)
+        
+                        
+                        # Modify DataFrame to include comments
+                        score_df = pd.DataFrame({
+                            'Metric': metrics,
+                            'Score': scores,
+                            'Comment': comments,
+                            'Level': [score_to_emoji(score) for score in scores]
+                        })
+                    
+                        # Displaying scores as a styled table using markdown
+                        st.markdown("### Evaluation Table")
+                        st.markdown(
+                            score_df.to_html(index=False, escape=False, justify='center', classes='table'),
+                            unsafe_allow_html=True
+                        )
+                    
+                        # Apply custom CSS for table styling
+                        st.markdown("""
+                            <style>
+                                .table {width: 100%; margin-left: auto; margin-right: auto; border-collapse: collapse;}
+                                .table td, .table th {border: none;}
+                                th {text-align: center; font-size: 18px; font-weight: bold;}
+                                td {text-align: center;}
+                            </style>
+                            """, unsafe_allow_html=True)
+                        
+                        
+                        # Slider section
+                        st.write("### Evaluation Results:")
+                        for metric, score in zip(metrics, scores):
+                            st.slider(metric, 0, 10, score, disabled=True)
+                    
+                        # Radar chart
+                        st.write("### Radar Chart Evaluation Results:")
+                        num_vars = len(metrics)
+                        angles = np.linspace(0, 2 * np.pi, num_vars, endpoint=False).tolist()
+                        angles += angles[:1]  # Complete the loop
+        
+                        # Use 'scores' directly as it is already a list
+                        scores_list = scores + scores[:1]  # Repeat the first score to close the radar chart
+        
+                        fig, ax = plt.subplots(figsize=(6, 6), subplot_kw=dict(polar=True))
+                        ax.fill(angles, scores_list, color='green', alpha=0.25)
+                        ax.plot(angles, scores_list, color='green', linewidth=2)
+                        ax.set_yticklabels([])
+                        ax.set_xticks(angles[:-1])
+                        ax.set_xticklabels(metrics)
+                    
+                        st.pyplot(fig)
+                        
+                        # Seaborn barplot
+                        st.write("### Bar Chart Evaluation Results:")
+                        plt.figure(figsize=(10, 6))
+                        sns.barplot(x='Score', y='Metric', data=score_df, palette="vlag")
+                        plt.xlabel('Score out of 10')
+                        st.set_option('deprecation.showPyplotGlobalUse', False)
+                        st.pyplot()
+                    
+            ## Simulate scores for demonstration (replace with real data later)
+            # scores = np.random.randint(1, 11, size=len(metrics))
+        
+            ## Calculate the summary score
+            # total_score = sum(scores)
+        
+                else:
+                    # Display warning message if API call fails
+                    st.error("Unable to retrieve data. Please try again later.")
+        
+
+
+            
             except openai.error.InvalidRequestError as e:
                 if e.status_code == 401:  # Unauthorized, typically due to invalid API key
                     st.error("Invalid API key. Please check your API key and try again.")
                 else:
                     st.error(f"An error occurred: {e}")
 
-        # progress_bar.empty()
-        
-        if api_response:
-            # Display if the idea is sustainability related with highlighting
-            is_sustainable = api_response['Idea_Sustainability_Related'] == True
-            
-            sustainability_comment = api_response['Idea_Sustainability_Related_Comment']
-            st.markdown(f"<h3 style='color:blue;'>Is the Idea Sustainability Related? {'Yes' if is_sustainable else 'No'}</h3>", unsafe_allow_html=True)
-            st.write("### Sustainability Analysis:")
-            st.write(sustainability_comment)
-
-            # if the idea is not sustainable, proceed with displaying the scores.
-            if is_sustainable:
-                scores = [int(api_response['Evaluation']['SDG_Scores'][metric]['Score']) for metric in metrics]
-                comments = [api_response['Evaluation']['SDG_Scores'][metric]['Comment'] for metric in metrics]
-                total_score = int(api_response['Evaluation']['Total_Score'])  # Convert to integer
-                analysis_context = api_response['Evaluation']['Summary']
-                novelty_score = int(api_response['Evaluation']['Novelty_Score'])  # Convert to integer
-                novelty_comment = api_response['Evaluation']['Novelty_Evaluation']['Comment']
-                
-                
-                # Displaying novelty score and analysis with highlighting
-                st.markdown(f"<h3 style='color:purple;'>Novelty Score: {novelty_score} / 100</h3>", unsafe_allow_html=True)
-                st.write("### Novelty Analysis:")
-                st.write(novelty_comment)
-
-                
-                # get tfidf novelty score with user-provided problem and solution
-                max_similarity, tfidf_is_novelty = get_tfidf_novelty(problem, solution)
-                
-                # Check if the response is novelty or not
-                novelty_status = "Yes" if tfidf_is_novelty else "No"
-                
-                # Display the novelty similarity score with decimals and novelty status
-                st.markdown(f"<h3 style='color:orange;'>Novelty Similarity Score: {max_similarity:.2f} / 1</h3>", unsafe_allow_html=True)
-                st.markdown(f"<h3 style='color:orange;'>Is it Novelty? {novelty_status}</h3>", unsafe_allow_html=True)
-
-                with st.expander("Understanding the Novelty Similarity Score"):
-                    st.write("""
-                        - The Novelty Similarity Score indicates the degree of similarity between your idea and existing ideas within the AI EarthHack Dataset.
-                        - A higher score suggests that your idea is more closely related to concepts already present in the dataset.
-                        - Conversely, a lower score suggests that your idea is unique or novel in the context of this dataset.
-                        - Ideas with a score below a certain threshold are considered novel, highlighting their uniqueness compared to the dataset. This serves as a complementary assessment alongside the GPT-4-Turbo engine's analysis.
-                    """)
-
-                # Display the summary score without decimals
-                st.markdown(f"<h3 style='color:green;'>Summary Score: {total_score} / 100</h3>", unsafe_allow_html=True)
-                st.write("### Summary Analysis:")
-                st.write(analysis_context)
-
-                
-                # Modify DataFrame to include comments
-                score_df = pd.DataFrame({
-                    'Metric': metrics,
-                    'Score': scores,
-                    'Comment': comments,
-                    'Level': [score_to_emoji(score) for score in scores]
-                })
-            
-                # Displaying scores as a styled table using markdown
-                st.markdown("### Evaluation Table")
-                st.markdown(
-                    score_df.to_html(index=False, escape=False, justify='center', classes='table'),
-                    unsafe_allow_html=True
-                )
-            
-                # Apply custom CSS for table styling
-                st.markdown("""
-                    <style>
-                        .table {width: 100%; margin-left: auto; margin-right: auto; border-collapse: collapse;}
-                        .table td, .table th {border: none;}
-                        th {text-align: center; font-size: 18px; font-weight: bold;}
-                        td {text-align: center;}
-                    </style>
-                    """, unsafe_allow_html=True)
-                
-                
-                # Slider section
-                st.write("### Evaluation Results:")
-                for metric, score in zip(metrics, scores):
-                    st.slider(metric, 0, 10, score, disabled=True)
-            
-                # Radar chart
-                st.write("### Radar Chart Evaluation Results:")
-                num_vars = len(metrics)
-                angles = np.linspace(0, 2 * np.pi, num_vars, endpoint=False).tolist()
-                angles += angles[:1]  # Complete the loop
-
-                # Use 'scores' directly as it is already a list
-                scores_list = scores + scores[:1]  # Repeat the first score to close the radar chart
-
-                fig, ax = plt.subplots(figsize=(6, 6), subplot_kw=dict(polar=True))
-                ax.fill(angles, scores_list, color='green', alpha=0.25)
-                ax.plot(angles, scores_list, color='green', linewidth=2)
-                ax.set_yticklabels([])
-                ax.set_xticks(angles[:-1])
-                ax.set_xticklabels(metrics)
-            
-                st.pyplot(fig)
-                
-                # Seaborn barplot
-                st.write("### Bar Chart Evaluation Results:")
-                plt.figure(figsize=(10, 6))
-                sns.barplot(x='Score', y='Metric', data=score_df, palette="vlag")
-                plt.xlabel('Score out of 10')
-                st.set_option('deprecation.showPyplotGlobalUse', False)
-                st.pyplot()
-            
-    ## Simulate scores for demonstration (replace with real data later)
-    # scores = np.random.randint(1, 11, size=len(metrics))
-
-    ## Calculate the summary score
-    # total_score = sum(scores)
-
-        else:
-            # Display warning message if API call fails
-            st.error("Unable to retrieve data. Please try again later.")
-
+        progress_bar.empty()

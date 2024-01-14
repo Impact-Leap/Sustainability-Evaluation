@@ -51,6 +51,12 @@ def processed_results_to_df(processed_results):
     summary_df['total_score'] = summary_df['ai_response_json'].apply(lambda x: int(x['Evaluation']['Total_Score']))
     summary_df['novelty_score'] = summary_df['ai_response_json'].apply(lambda x: int(x['Evaluation']['Novelty_Score']))
 
+    summary_df['novelty_comment'] = summary_df['ai_response_json'].apply(
+        lambda x: x['Evaluation']['Novelty_Evaluation']['Comment'])
+
+    # sort by total score
+    summary_df.sort_values(by=['total_score'], ascending=False, inplace=True)
+
     return summary_df
 
 # processed_results = process_inputs_in_parallel(df)

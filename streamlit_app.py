@@ -11,6 +11,8 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from tfidf_novelty import get_tfidf_novelty
 from commercial import get_top_10_tfidf, get_business_status_distribution
+from parallel_summary import chat_with_openai, process_inputs_in_parallel, processed_results_to_df
+
 import openai
 import re
 import time
@@ -146,7 +148,11 @@ if input_method == 'Manual Input':
         solution = st.text_area("Solution:", value="", placeholder=solution_placeholder)
         submit_button = st.form_submit_button("Evaluate Idea")
 
-    ## 测试！
+    ## 测试！DAVID PART
+
+    
+    
+    ## 测试！ANTONIO PART
     # For demonstration, using mock data
     # st.write("### Commercial Analysis Response:")
     
@@ -171,7 +177,7 @@ if input_method == 'Manual Input':
     # st.dataframe(df_cat)
 
 
-    # st.write('<br><br>', unsafe_allow_html=True)
+    st.write('<br><br>', unsafe_allow_html=True)
     col1, col2 = st.columns(2)
 
     with col1:
@@ -180,7 +186,7 @@ if input_method == 'Manual Input':
     with col2:
         st.metric(label="##### 📈Average Total Raised", value=f"${avg_total_raised:,}")
 
-    # st.write('<br><br>', unsafe_allow_html=True)
+    st.write('<br><br>', unsafe_allow_html=True)
 
     # ## 饼图测试
     

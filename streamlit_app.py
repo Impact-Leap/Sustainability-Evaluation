@@ -116,9 +116,14 @@ with st.expander("Introduction of Our App", expanded=True):
     """)
 
 # pretty interface for user prompt
+
+# Placeholder text for 'Problem' and 'Solution' inputs
+problem_placeholder = "More than 130 billion plastic bottles waste annually in Egypt"
+solution_placeholder = "Bariq factory to recycle plastic bottles"
+
 with st.form("business_idea_form"):
-    problem = st.text_area("Problem:")
-    solution = st.text_area("Solution:")
+    problem = st.text_area("Problem:", value="", placeholder=problem_placeholder)
+    solution = st.text_area("Solution:", value="", placeholder=solution_placeholder)
     submit_button = st.form_submit_button("Evaluate Idea")
 
 # if sumbmitted, send the prompt to openai to rob ~0.35$ from the user

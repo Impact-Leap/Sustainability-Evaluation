@@ -171,16 +171,16 @@ if input_method == 'Manual Input':
     # st.dataframe(df_cat)
 
 
-    st.write('<br><br>', unsafe_allow_html=True)
-    col1, col2 = st.columns(2)
+    # st.write('<br><br>', unsafe_allow_html=True)
+    # col1, col2 = st.columns(2)
 
-    with col1:
-        st.metric(label="##### ⚔️Average Number of Competitors", value=avg_num_competitors)
+    # with col1:
+    #     st.metric(label="##### ⚔️Average Number of Competitors", value=avg_num_competitors)
     
-    with col2:
-        st.metric(label="##### 📈Average Total Raised", value=f"${avg_total_raised:,}")
+    # with col2:
+    #     st.metric(label="##### 📈Average Total Raised", value=f"${avg_total_raised:,}")
 
-    st.write('<br><br>', unsafe_allow_html=True)
+    # st.write('<br><br>', unsafe_allow_html=True)
     
     # Custom CSS to inject contained style
     st.markdown(

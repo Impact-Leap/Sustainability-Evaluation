@@ -166,10 +166,10 @@ if input_method == 'Manual Input':
     most_likely_business_status = business_status_summary.idxmax()
     
     # Find the number of competitor percentile
-    NumCompetitors_percentile = round(get_percentile_by_category(df_clean, 'NumCompetitors',avg_num_competitors,most_likely_category),2)
+    NumCompetitors_percentile = round(get_percentile_by_category(documents, 'NumCompetitors',avg_num_competitors,most_likely_category),2)
     
     # Find the totalraised percentile
-    TotalRaised_percentile = round(get_percentile_by_category(df_clean, 'TotalRaised',avg_total_raised,most_likely_category),2)
+    TotalRaised_percentile = round(get_percentile_by_category(documents, 'TotalRaised',avg_total_raised,most_likely_category),2)
 
     
     # Display the top 10 similar documents

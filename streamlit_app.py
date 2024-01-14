@@ -14,6 +14,11 @@ import openai
 import re
 import time
 
+# Initialize session state variables
+if 'api_response' not in st.session_state:
+    st.session_state.api_response = None
+if 'display_commercial_analysis' not in st.session_state:
+    st.session_state.display_commercial_analysis = False
 
 # testing with mock json data to save money
 with open('mock_data.json', 'r') as file:
@@ -155,172 +160,178 @@ if input_method == 'Manual Input':
                 #     time.sleep(1)
                     
                 try:
-                    api_response = evaluate_idea(problem, solution)
-    
-                            
-                    if api_response:
-                        # Display if the idea is sustainability related with highlighting
-                        is_sustainable = api_response['Idea_Sustainability_Related'] == True
-                        
-                        sustainability_comment = api_response['Idea_Sustainability_Related_Comment']
-                        st.markdown(f"<h3 style='color:blue;'>Is the Idea Sustainability Related? {'Yes' if is_sustainable else 'No'}</h3>", unsafe_allow_html=True)
-                        st.write("### Sustainability Analysis:")
-                        st.write(sustainability_comment)
-            
-                        # if the idea is not sustainable, proceed with displaying the scores.
-                        if is_sustainable:
-                            scores = [int(api_response['Evaluation']['SDG_Scores'][metric]['Score']) for metric in metrics]
-                            comments = [api_response['Evaluation']['SDG_Scores'][metric]['Comment'] for metric in metrics]
-                            total_score = int(api_response['Evaluation']['Total_Score'])  # Convert to integer
-                            analysis_context = api_response['Evaluation']['Summary']
-                            novelty_score = int(api_response['Evaluation']['Novelty_Score'])  # Convert to integer
-                            novelty_comment = api_response['Evaluation']['Novelty_Evaluation']['Comment']
-                            
-                            
-                            # Displaying novelty score and analysis with highlighting
-                            st.markdown(f"<h3 style='color:purple;'>Novelty Score: {novelty_score} / 100</h3>", unsafe_allow_html=True)
-                            st.write("### Novelty Analysis:")
-                            st.write(novelty_comment)
-            
-                            
-                            # get tfidf novelty score with user-provided problem and solution
-                            max_similarity, tfidf_is_novelty = get_tfidf_novelty(problem, solution)
-                            
-                            # Check if the response is novelty or not
-                            novelty_status = "Yes" if tfidf_is_novelty else "No"
-                            
-                            # Display the novelty similarity score with decimals and novelty status
-                            st.markdown(f"<h3 style='color:orange;'>Novelty Similarity Score: {max_similarity:.2f} / 1</h3>", unsafe_allow_html=True)
-                            st.markdown(f"<h3 style='color:orange;'>Is it Novelty? {novelty_status}</h3>", unsafe_allow_html=True)
-            
-                            with st.expander("Understanding the Novelty Similarity Score"):
-                                st.write("""
-                                    - The Novelty Similarity Score indicates the degree of similarity between your idea and existing ideas within the AI EarthHack Dataset.
-                                    - A higher score suggests that your idea is more closely related to concepts already present in the dataset.
-                                    - Conversely, a lower score suggests that your idea is unique or novel in the context of this dataset.
-                                    - Ideas with a score below a certain threshold are considered novel, highlighting their uniqueness compared to the dataset. This serves as a complementary assessment alongside the GPT-4-Turbo engine's analysis.
-                                """)
-            
-                            # Display the summary score without decimals
-                            st.markdown(f"<h3 style='color:green;'>Summary Score: {total_score} / 100</h3>", unsafe_allow_html=True)
-                            st.write("### Summary Analysis:")
-                            st.write(analysis_context)
-            
-                            
-                            # Modify DataFrame to include comments
-                            score_df = pd.DataFrame({
-                                'Metric': formatted_metrics,
-                                'Score': scores,
-                                'Comment': comments,
-                                'Level': [score_to_emoji(score) for score in scores]
-                            })
-    
-                            # col1, col2 = st.columns(2)  # Creates two columns
-                            
-                            # Radar chart
-                            # with col1: 
-                            st.write("### Radar Chart Evaluation Results:")
-                            num_vars = len(formatted_metrics)
-                            angles = np.linspace(0, 2 * np.pi, num_vars, endpoint=False).tolist()
-                            angles += angles[:1]  # Complete the loop
-            
-                            # Use 'scores' directly as it is already a list
-                            scores_list = scores + scores[:1]  # Repeat the first score to close the radar chart
-            
-                            fig, ax = plt.subplots(figsize=(6, 6), subplot_kw=dict(polar=True))
-                            ax.fill(angles, scores_list, color='green', alpha=0.25)
-                            ax.plot(angles, scores_list, color='green', linewidth=2)
-                            ax.set_yticklabels([])
-                            ax.set_xticks(angles[:-1])
-                            ax.set_xticklabels(formatted_metrics)
-                        
-                            st.pyplot(fig)
-    
-                            # with col2:
-                            # Seaborn barplot
-                            st.write("### Bar Chart Evaluation Results:")
-                            plt.figure(figsize=(10, 6))
-                            sns.barplot(x='Score', y='Metric', data=score_df, palette="vlag")
-                            plt.xlabel('Score out of 10')
-                            st.set_option('deprecation.showPyplotGlobalUse', False)
-                            st.pyplot()
-                                
-                            # Displaying scores as a styled table using markdown
-                            st.markdown("### Evaluation Table")
-                            st.markdown(
-                                score_df.to_html(index=False, escape=False, justify='center', classes='table'),
-                                unsafe_allow_html=True
-                            )
-                        
-                            # Apply custom CSS for table styling
-                            st.markdown("""
-                                <style>
-                                    .table {width: 100%; margin-left: auto; margin-right: auto; border-collapse: collapse;}
-                                    .table td, .table th {border: none;}
-                                    th {text-align: center; font-size: 18px; font-weight: bold;}
-                                    td {text-align: center;}
-                                </style>
-                                """, unsafe_allow_html=True)
-                            
-
-                    
-                            # # Slider section
-                            # st.write("### Evaluation Results:")
-                            # for metric, score in zip(formatted_metrics, scores):
-                            #     st.slider(metric, 0, 10, score, disabled=True)
-       
-    
-                        
-                ## Simulate scores for demonstration (replace with real data later)
-                # scores = np.random.randint(1, 11, size=len(metrics))
-            
-                ## Calculate the summary score
-                # total_score = sum(scores)
-            
-                    else:
-                        # Display warning message if API call fails
-                        st.error("Unable to retrieve data. Please try again later.")
-            
-                
+                    st.session_state.api_response = evaluate_idea(problem, solution)
+                    # api_response = evaluate_idea(problem, solution)
                 except openai.error.InvalidRequestError as e:
                     if e.status_code == 401:  # Unauthorized, typically due to invalid API key
                         st.error("Invalid API key. Please check your API key and try again.")
                     else:
                         st.error(f"An error occurred: {e}")
+                           
+    # if api_response:
+    if st.session_state.api_response:
+        api_response = st.session_state.api_response
+        # Display if the idea is sustainability related with highlighting
+        is_sustainable = api_response['Idea_Sustainability_Related'] == True
+        
+        sustainability_comment = api_response['Idea_Sustainability_Related_Comment']
+        st.markdown(f"<h3 style='color:blue;'>Is the Idea Sustainability Related? {'Yes' if is_sustainable else 'No'}</h3>", unsafe_allow_html=True)
+        st.write("### Sustainability Analysis:")
+        st.write(sustainability_comment)
+
+        # if the idea is not sustainable, proceed with displaying the scores.
+        if is_sustainable:
+            scores = [int(api_response['Evaluation']['SDG_Scores'][metric]['Score']) for metric in metrics]
+            comments = [api_response['Evaluation']['SDG_Scores'][metric]['Comment'] for metric in metrics]
+            total_score = int(api_response['Evaluation']['Total_Score'])  # Convert to integer
+            analysis_context = api_response['Evaluation']['Summary']
+            novelty_score = int(api_response['Evaluation']['Novelty_Score'])  # Convert to integer
+            novelty_comment = api_response['Evaluation']['Novelty_Evaluation']['Comment']
+            
+            
+            # Displaying novelty score and analysis with highlighting
+            st.markdown(f"<h3 style='color:purple;'>Novelty Score: {novelty_score} / 100</h3>", unsafe_allow_html=True)
+            st.write("### Novelty Analysis:")
+            st.write(novelty_comment)
+
+            
+            # get tfidf novelty score with user-provided problem and solution
+            max_similarity, tfidf_is_novelty = get_tfidf_novelty(problem, solution)
+            
+            # Check if the response is novelty or not
+            novelty_status = "Yes" if tfidf_is_novelty else "No"
+            
+            # Display the novelty similarity score with decimals and novelty status
+            st.markdown(f"<h3 style='color:orange;'>Novelty Similarity Score: {max_similarity:.2f} / 1</h3>", unsafe_allow_html=True)
+            st.markdown(f"<h3 style='color:orange;'>Is it Novelty? {novelty_status}</h3>", unsafe_allow_html=True)
+
+            with st.expander("Understanding the Novelty Similarity Score"):
+                st.write("""
+                    - The Novelty Similarity Score indicates the degree of similarity between your idea and existing ideas within the AI EarthHack Dataset.
+                    - A higher score suggests that your idea is more closely related to concepts already present in the dataset.
+                    - Conversely, a lower score suggests that your idea is unique or novel in the context of this dataset.
+                    - Ideas with a score below a certain threshold are considered novel, highlighting their uniqueness compared to the dataset. This serves as a complementary assessment alongside the GPT-4-Turbo engine's analysis.
+                """)
+
+            # Display the summary score without decimals
+            st.markdown(f"<h3 style='color:green;'>Summary Score: {total_score} / 100</h3>", unsafe_allow_html=True)
+            st.write("### Summary Analysis:")
+            st.write(analysis_context)
+
+            
+            # Modify DataFrame to include comments
+            score_df = pd.DataFrame({
+                'Metric': formatted_metrics,
+                'Score': scores,
+                'Comment': comments,
+                'Level': [score_to_emoji(score) for score in scores]
+            })
+
+            # col1, col2 = st.columns(2)  # Creates two columns
+            
+            # Radar chart
+            # with col1: 
+            st.write("### Radar Chart Evaluation Results:")
+            num_vars = len(formatted_metrics)
+            angles = np.linspace(0, 2 * np.pi, num_vars, endpoint=False).tolist()
+            angles += angles[:1]  # Complete the loop
+
+            # Use 'scores' directly as it is already a list
+            scores_list = scores + scores[:1]  # Repeat the first score to close the radar chart
+
+            fig, ax = plt.subplots(figsize=(6, 6), subplot_kw=dict(polar=True))
+            ax.fill(angles, scores_list, color='green', alpha=0.25)
+            ax.plot(angles, scores_list, color='green', linewidth=2)
+            ax.set_yticklabels([])
+            ax.set_xticks(angles[:-1])
+            ax.set_xticklabels(formatted_metrics)
+        
+            st.pyplot(fig)
+
+            # with col2:
+            # Seaborn barplot
+            st.write("### Bar Chart Evaluation Results:")
+            plt.figure(figsize=(10, 6))
+            sns.barplot(x='Score', y='Metric', data=score_df, palette="vlag")
+            plt.xlabel('Score out of 10')
+            st.set_option('deprecation.showPyplotGlobalUse', False)
+            st.pyplot()
+                
+            # Displaying scores as a styled table using markdown
+            st.markdown("### Evaluation Table")
+            st.markdown(
+                score_df.to_html(index=False, escape=False, justify='center', classes='table'),
+                unsafe_allow_html=True
+            )
+        
+            # Apply custom CSS for table styling
+            st.markdown("""
+                <style>
+                    .table {width: 100%; margin-left: auto; margin-right: auto; border-collapse: collapse;}
+                    .table td, .table th {border: none;}
+                    th {text-align: center; font-size: 18px; font-weight: bold;}
+                    td {text-align: center;}
+                </style>
+                """, unsafe_allow_html=True)
+            
+
+    
+            # # Slider section
+            # st.write("### Evaluation Results:")
+            # for metric, score in zip(formatted_metrics, scores):
+            #     st.slider(metric, 0, 10, score, disabled=True)
+
+
+        
+## Simulate scores for demonstration (replace with real data later)
+# scores = np.random.randint(1, 11, size=len(metrics))
+
+## Calculate the summary score
+# total_score = sum(scores)
+
+    else:
+        # Display warning message if API call fails
+        st.error("Unable to retrieve data. Please try again later.")
+            
+                
+
 
 
           # ... [previous code for initial analysis]
 
-        # Display a section for commercial analysis
-        st.markdown("---")
-        st.markdown("### **Do you want further commercial analysis?💸**")
-        st.markdown("*Note: This will incur additional costs with the use of the API key.*")
-    
-        # Button for commercial analysis
-        commercial_analysis_button = st.button("Display Commercial Analysis")
-    
-        # Mock commercial analysis process (commented out, use for real implementation)
-        if commercial_analysis_button:
-            with st.spinner('Processing commercial analysis, please wait...'):
-                # For demonstration, using mock data
-                st.write("### Commercial Analysis Response:")
-                st.markdown("*This is a mock response for demonstration purposes.*")
-                st.write("Imagine this text is the detailed commercial analysis provided by the AI.")
-    
-                # Uncomment and modify the following lines for actual implementation
-                # with open('commercial_prompt.txt', 'r') as file:
-                #     commercial_prompt = file.read()
-                # response = openai.ChatCompletion.create(
-                #     model="gpt-4-1106-preview",
-                #     messages=[{"role": "system", "content": commercial_prompt},
-                #               {"role": "user", "content": f"Problem:{problem}\n\nSolution:{solution}"}
-                #     ],
-                #     max_tokens=4096,
-                # )
-                # commercial_response = response["choices"][0]["message"]["content"]
-                # st.write(commercial_response)
+    # Display a section for commercial analysis
+    st.markdown("---")
+    st.markdown("### **Do you want further commercial analysis?💸**")
+    st.markdown("*Note: This will incur additional costs with the use of the API key.*")
 
-            # progress_bar.empty()
+    # Button for commercial analysis
+    commercial_analysis_button = st.button("Display Commercial Analysis")
+
+    # Mock commercial analysis process (commented out, use for real implementation)
+    if commercial_analysis_button:
+        st.session_state.display_commercial_analysis = True
+
+    if st.session_state.display_commercial_analysis:
+        with st.spinner('Processing commercial analysis, please wait...'):
+            # For demonstration, using mock data
+            st.write("### Commercial Analysis Response:")
+            st.markdown("*This is a mock response for demonstration purposes.*")
+            st.write("Imagine this text is the detailed commercial analysis provided by the AI.")
+
+            # Uncomment and modify the following lines for actual implementation
+            # with open('commercial_prompt.txt', 'r') as file:
+            #     commercial_prompt = file.read()
+            # response = openai.ChatCompletion.create(
+            #     model="gpt-4-1106-preview",
+            #     messages=[{"role": "system", "content": commercial_prompt},
+            #               {"role": "user", "content": f"Problem:{problem}\n\nSolution:{solution}"}
+            #     ],
+            #     max_tokens=4096,
+            # )
+            # commercial_response = response["choices"][0]["message"]["content"]
+            # st.write(commercial_response)
+
+        # progress_bar.empty()
 
 
 

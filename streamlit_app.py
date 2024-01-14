@@ -182,7 +182,8 @@ if input_method == 'Manual Input':
 
     st.write('<br><br>', unsafe_allow_html=True)
 
-        ## 饼图测试
+    ## 饼图测试
+    
     # Combine all data into a single pie chart
     plt.figure(figsize=(10, 6))
     
@@ -194,6 +195,24 @@ if input_method == 'Manual Input':
     
     plt.title('Combined Business Status Distribution')
     st.pyplot(plt)
+
+    ## 甜甜圈
+    # Combine all data into a single pie chart
+    plt.figure(figsize=(10, 6))
+    
+    # Plot each entry in the DataFrame as a separate slice in the pie chart
+    wedges, texts, autotexts = plt.pie(df_cat['Percentage'], labels=df_cat['BusinessStatus'], autopct='%1.1f%%', startangle=140)
+    
+    # Draw a circle at the center of pie to turn it into a donut chart
+    centre_circle = plt.Circle((0,0),0.70,fc='white')
+    fig = plt.gcf()
+    fig.gca().add_artist(centre_circle)
+    
+    legend_labels = [f"{category}" for category in df_cat['Category']]
+    plt.legend(wedges, legend_labels, title="Categories", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
+    
+    plt.title('Combined Business Status Distribution')
+    st.pyplot(plt)    
 
     
     # if sumbmitted, send the prompt to openai to rob ~0.35$ from the user

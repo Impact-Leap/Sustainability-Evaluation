@@ -139,34 +139,36 @@ problem_placeholder = "More than 130 billion plastic bottles waste annually in E
 solution_placeholder = "Bariq factory to recycle plastic bottles"
 
 
-# For demonstration, using mock data
-st.write("### Commercial Analysis Response:")
-
-top_10_similar_docs, avg_num_competitors, avg_total_raised = get_top_10_tfidf("The company's solution focuses on creating a circular economy for waste plastics. They employ a patented and fully continuous pyrolysis process that converts landfill-extracted plastics into hydrocarbon oils. This process involves heating the plastic", "buy less plastic bags")
-df_cat = get_business_status_distribution(top_10_similar_docs)
-
-# Display the top 10 similar documents
-st.write("#### Top 10 Similar Documents:")
-st.dataframe(top_10_similar_docs)
-
-# Display the average number of competitors
-st.write("#### Average Number of Competitors:")
-st.write(avg_num_competitors)
-
-# Display the average total raised
-st.write("#### Average Total Raised:")
-st.write(avg_total_raised)
-
-# If df_cat needs to be displayed as well, use st.dataframe
-# Assuming df_cat is a DataFrame with relevant information
-st.write("#### Business Status Distribution:")
-st.dataframe(df_cat)
         
 if input_method == 'Manual Input':
     with st.form("business_idea_form"):
         problem = st.text_area("Problem:", value="", placeholder=problem_placeholder)
         solution = st.text_area("Solution:", value="", placeholder=solution_placeholder)
         submit_button = st.form_submit_button("Evaluate Idea")
+
+    
+    # For demonstration, using mock data
+    st.write("### Commercial Analysis Response:")
+    
+    top_10_similar_docs, avg_num_competitors, avg_total_raised = get_top_10_tfidf("The company's solution focuses on creating a circular economy for waste plastics. They employ a patented and fully continuous pyrolysis process that converts landfill-extracted plastics into hydrocarbon oils. This process involves heating the plastic", "buy less plastic bags")
+    df_cat = get_business_status_distribution(top_10_similar_docs)
+    
+    # Display the top 10 similar documents
+    st.write("#### Top 10 Similar Documents:")
+    st.dataframe(top_10_similar_docs)
+    
+    # Display the average number of competitors
+    st.write("#### Average Number of Competitors:")
+    st.write(avg_num_competitors)
+    
+    # Display the average total raised
+    st.write("#### Average Total Raised:")
+    st.write(avg_total_raised)
+    
+    # If df_cat needs to be displayed as well, use st.dataframe
+    # Assuming df_cat is a DataFrame with relevant information
+    st.write("#### Business Status Distribution:")
+    st.dataframe(df_cat)
 
     # if sumbmitted, send the prompt to openai to rob ~0.35$ from the user
     if submit_button:

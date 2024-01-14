@@ -167,6 +167,12 @@ if input_method == 'Manual Input':
                         st.error("Invalid API key. Please check your API key and try again.")
                     else:
                         st.error(f"An error occurred: {e}")
+                else:
+                    # This 'else' block runs only if no exception was raised
+                    if not st.session_state.api_response:
+                        # Display warning message if API call fails to retrieve data
+                        st.error("Unable to retrieve data. Please try again later.")
+
                            
     # if api_response:
     if st.session_state.api_response:
@@ -289,27 +295,21 @@ if input_method == 'Manual Input':
 ## Calculate the summary score
 # total_score = sum(scores)
 
-    else:
-        # Display warning message if API call fails
-        st.error("Unable to retrieve data. Please try again later.")
+    # else:
+    #     # Display warning message if API call fails
+    #     st.error("Unable to retrieve data. Please try again later.")
             
-                
-
-
-
-          # ... [previous code for initial analysis]
-
-    # Display a section for commercial analysis
-    st.markdown("---")
-    st.markdown("### **Do you want further commercial analysis?💸**")
-    st.markdown("*Note: This will incur additional costs with the use of the API key.*")
-
-    # Button for commercial analysis
-    commercial_analysis_button = st.button("Display Commercial Analysis")
-
-    # Mock commercial analysis process (commented out, use for real implementation)
-    if commercial_analysis_button:
-        st.session_state.display_commercial_analysis = True
+            # Display a section for commercial analysis
+        st.markdown("---")
+        st.markdown("### **Do you want further commercial analysis?💸**")
+        st.markdown("*Note: This will incur additional costs with the use of the API key.*")
+    
+        # Button for commercial analysis
+        commercial_analysis_button = st.button("Display Commercial Analysis")
+    
+        # Mock commercial analysis process (commented out, use for real implementation)
+        if commercial_analysis_button:
+            st.session_state.display_commercial_analysis = True            
 
     if st.session_state.display_commercial_analysis:
         with st.spinner('Processing commercial analysis, please wait...'):

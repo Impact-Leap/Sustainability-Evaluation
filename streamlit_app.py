@@ -470,6 +470,7 @@ elif input_method == 'Upload CSV':
         ## 测试！DAVID PART
 
         processed_results = process_inputs_in_parallel(df)
+        st.dataframe(processed_results)
         
         
         

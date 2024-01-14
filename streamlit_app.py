@@ -189,7 +189,7 @@ if input_method == 'Manual Input':
     # Plot each entry in the DataFrame as a separate slice in the pie chart
     wedges, texts, autotexts = plt.pie(df_cat['Percentage'], labels=df_cat['BusinessStatus'], autopct='%1.1f%%', startangle=140)
     
-    legend_labels = [f"{i+1}. {category}" for i, category in enumerate(df_cat['Category'])]
+    legend_labels = [f"{category}" for i, category in enumerate(df_cat['Category'])]
     plt.legend(wedges, legend_labels, title="Categories", loc="best")
     
     plt.title('Combined Business Status Distribution')

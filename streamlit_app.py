@@ -184,13 +184,13 @@ if input_method == 'Manual Input':
 
         ## 饼图测试
     # Combine all data into a single pie chart
-    plt.figure(figsize=(8, 8))
+    plt.figure(figsize=(10, 6))
     
     # Plot each entry in the DataFrame as a separate slice in the pie chart
     wedges, texts, autotexts = plt.pie(df_cat['Percentage'], labels=df_cat['BusinessStatus'], autopct='%1.1f%%', startangle=140)
     
     legend_labels = [f"{category}" for i, category in enumerate(df_cat['Category'])]
-    plt.legend(wedges, legend_labels, title="Categories", loc="best")
+    plt.legend(wedges, legend_labels, title="Categories", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
     
     plt.title('Combined Business Status Distribution')
     st.pyplot(plt)

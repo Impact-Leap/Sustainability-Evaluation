@@ -157,27 +157,30 @@ if input_method == 'Manual Input':
     st.write("#### Top 10 Similar Documents:")
     st.dataframe(top_10_similar_docs)
     
-    # Display the average number of competitors
-    st.write("#### Average Number of Competitors:")
-    st.write(avg_num_competitors)
+    # # Display the average number of competitors
+    # st.write("#### Average Number of Competitors:")
+    # st.write(avg_num_competitors)
     
-    # Display the average total raised
-    st.write("#### Average Total Raised:")
-    st.write(avg_total_raised)
+    # # Display the average total raised
+    # st.write("#### Average Total Raised:")
+    # st.write(avg_total_raised)
     
     # If df_cat needs to be displayed as well, use st.dataframe
     # Assuming df_cat is a DataFrame with relevant information
-    st.write("#### Business Status Distribution:")
-    st.dataframe(df_cat)
+    # st.write("#### Business Status Distribution:")
+    # st.dataframe(df_cat)
 
+
+    st.write('<br><br>', unsafe_allow_html=True)
     col1, col2 = st.columns(2)
 
     with col1:
-        st.metric(label="#### Average Number of Competitors⚔️", value=avg_num_competitors)
+        st.metric(label="##### Average Number of Competitors⚔️", value=avg_num_competitors)
     
     with col2:
-        st.metric(label="#### Average Total Raised 📈", value=f"${avg_total_raised:,}")
+        st.metric(label="##### Average Total Raised 📈", value=f"${avg_total_raised:,}")
 
+    st.write('<br><br>', unsafe_allow_html=True)
     for category in df_cat['Category'].unique():
     # Filter the DataFrame for the current category
         df_filtered = df_cat[df_cat['Category'] == category]

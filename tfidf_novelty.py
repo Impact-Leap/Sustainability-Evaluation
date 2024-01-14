@@ -64,7 +64,7 @@ def get_tfidf_novelty(problem: str, solution: str):
     max_similarity = np.max(cosine_similarities)
 
     # Evaluate novelty. Low similarity indicates high novelty with respect to the given dataset
-    if max_similarity < 0.5:
+    if max_similarity < threshold:
         return max_similarity, True
     else:
         return max_similarity, False

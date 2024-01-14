@@ -290,6 +290,16 @@ if input_method == 'Manual Input':
             # progress_bar.empty()
 
 elif input_method == 'Upload CSV':
+
+    with st.expander("CSV Upload Instructions", expanded=True):
+    st.write("""
+        Please follow these guidelines for your CSV file:
+        - Your CSV file should contain only two columns: 'problem' and 'solution'.
+        - If your file has headers, ensure the column titles are 'problem' and 'solution'.
+        - The file should be encoded in UTF-8 or ISO-8859-1.
+        - Each row in the file should represent a separate problem-solution pair.
+    """)
+    
     uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
     if uploaded_file is not None:
         try:

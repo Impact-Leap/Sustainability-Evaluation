@@ -415,26 +415,26 @@ if input_method == 'Manual Input':
             # For demonstration, using mock data
             st.write("### Commercial Analysis Response:")
 
-            top_10_similar_docs, avg_num_competitors, avg_total_raised = get_top_10_tfidf(problem, solution)
-            df_cat = get_business_status_distribution(top_10_similar_docs)
+            # top_10_similar_docs, avg_num_competitors, avg_total_raised = get_top_10_tfidf(problem, solution)
+            # df_cat = get_business_status_distribution(top_10_similar_docs)
 
-            # Display the top 10 similar documents
-            st.write("#### Top 10 Similar Documents:")
-            st.dataframe(top_10_similar_docs)
+            # # Display the top 10 similar documents
+            # st.write("#### Top 10 Similar Documents:")
+            # st.dataframe(top_10_similar_docs)
         
-            # Display the average number of competitors
-            st.write("#### Average Number of Competitors:")
-            st.write(avg_num_competitors)
+            # # Display the average number of competitors
+            # st.write("#### Average Number of Competitors:")
+            # st.write(avg_num_competitors)
         
-            # Display the average total raised
-            st.write("#### Average Total Raised:")
-            st.write(avg_total_raised)
+            # # Display the average total raised
+            # st.write("#### Average Total Raised:")
+            # st.write(avg_total_raised)
         
-            # If df_cat needs to be displayed as well, use st.dataframe
-            # Assuming df_cat is a DataFrame with relevant information
-            st.write("#### Business Status Distribution:")
-            st.dataframe(df_cat)
-
+            # # If df_cat needs to be displayed as well, use st.dataframe
+            # # Assuming df_cat is a DataFrame with relevant information
+            # st.write("#### Business Status Distribution:")
+            # st.dataframe(df_cat)
+            # 到这
 
             # st.markdown("*This is a mock response for demonstration purposes.*")
             # st.write("Imagine this text is the detailed commercial analysis provided by the AI.")

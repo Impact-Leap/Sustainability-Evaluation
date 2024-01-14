@@ -224,35 +224,35 @@ if submit_button:
                             'Level': [score_to_emoji(score) for score in scores]
                         })
 
-                        col1, col2 = st.columns(2)  # Creates two columns
+                        # col1, col2 = st.columns(2)  # Creates two columns
                         
                         # Radar chart
-                        with col1: 
-                            st.write("### Radar Chart Evaluation Results:")
-                            num_vars = len(formatted_metrics)
-                            angles = np.linspace(0, 2 * np.pi, num_vars, endpoint=False).tolist()
-                            angles += angles[:1]  # Complete the loop
-            
-                            # Use 'scores' directly as it is already a list
-                            scores_list = scores + scores[:1]  # Repeat the first score to close the radar chart
-            
-                            fig, ax = plt.subplots(figsize=(6, 6), subplot_kw=dict(polar=True))
-                            ax.fill(angles, scores_list, color='green', alpha=0.25)
-                            ax.plot(angles, scores_list, color='green', linewidth=2)
-                            ax.set_yticklabels([])
-                            ax.set_xticks(angles[:-1])
-                            ax.set_xticklabels(formatted_metrics)
-                        
-                            st.pyplot(fig)
+                        # with col1: 
+                        st.write("### Radar Chart Evaluation Results:")
+                        num_vars = len(formatted_metrics)
+                        angles = np.linspace(0, 2 * np.pi, num_vars, endpoint=False).tolist()
+                        angles += angles[:1]  # Complete the loop
+        
+                        # Use 'scores' directly as it is already a list
+                        scores_list = scores + scores[:1]  # Repeat the first score to close the radar chart
+        
+                        fig, ax = plt.subplots(figsize=(6, 6), subplot_kw=dict(polar=True))
+                        ax.fill(angles, scores_list, color='green', alpha=0.25)
+                        ax.plot(angles, scores_list, color='green', linewidth=2)
+                        ax.set_yticklabels([])
+                        ax.set_xticks(angles[:-1])
+                        ax.set_xticklabels(formatted_metrics)
+                    
+                        st.pyplot(fig)
 
-                        with col2:
-                            # Seaborn barplot
-                            st.write("### Bar Chart Evaluation Results:")
-                            plt.figure(figsize=(10, 6))
-                            sns.barplot(x='Score', y='Metric', data=score_df, palette="vlag")
-                            plt.xlabel('Score out of 10')
-                            st.set_option('deprecation.showPyplotGlobalUse', False)
-                            st.pyplot()
+                        # with col2:
+                        # Seaborn barplot
+                        st.write("### Bar Chart Evaluation Results:")
+                        plt.figure(figsize=(10, 6))
+                        sns.barplot(x='Score', y='Metric', data=score_df, palette="vlag")
+                        plt.xlabel('Score out of 10')
+                        st.set_option('deprecation.showPyplotGlobalUse', False)
+                        st.pyplot()
                             
                         # Displaying scores as a styled table using markdown
                         st.markdown("### Evaluation Table")

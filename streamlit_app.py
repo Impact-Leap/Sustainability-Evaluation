@@ -146,7 +146,7 @@ if input_method == 'Manual Input':
         solution = st.text_area("Solution:", value="", placeholder=solution_placeholder)
         submit_button = st.form_submit_button("Evaluate Idea")
 
-    
+    ## 测试！
     # For demonstration, using mock data
     st.write("### Commercial Analysis Response:")
     
@@ -169,6 +169,19 @@ if input_method == 'Manual Input':
     # Assuming df_cat is a DataFrame with relevant information
     st.write("#### Business Status Distribution:")
     st.dataframe(df_cat)
+    
+    for category in df_cat['Category'].unique():
+    # Filter the DataFrame for the current category
+        df_filtered = df_cat[df_cat['Category'] == category]
+    
+    # Create a pie chart
+    plt.figure()
+    plt.pie(df_filtered['Percentage'], labels=df_filtered['BusinessStatus'], autopct='%1.1f%%')
+    plt.title(f'Business Status Distribution in {category}')
+    
+    # Display the pie chart in Streamlit
+    st.pyplot(plt)
+
 
     # if sumbmitted, send the prompt to openai to rob ~0.35$ from the user
     if submit_button:

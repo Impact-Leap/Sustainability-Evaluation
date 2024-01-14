@@ -114,6 +114,9 @@ def evaluate_idea(problem, solution):
 
 # Section for displaying evaluation result
 
+
+### pretty interface for user prompt
+
 st.title("💡 Business Idea Evaluation")
 
 # App Introduction
@@ -122,16 +125,26 @@ with st.expander("Introduction of Our App", expanded=True):
         This Streamlit application is designed to evaluate business ideas based on a problem-solution approach, with a focus on assessing their sustainability. It generates scores for novelty and sustainability aspects of the idea, helping users understand the potential impact and uniqueness of their business concepts.
     """)
 
-# pretty interface for user prompt
+# Option for user to choose input method
+input_method = st.radio("Choose your input method:", ('Manual Input', 'Upload CSV'))
 
 # Placeholder text for 'Problem' and 'Solution' inputs
 problem_placeholder = "More than 130 billion plastic bottles waste annually in Egypt"
 solution_placeholder = "Bariq factory to recycle plastic bottles"
 
-with st.form("business_idea_form"):
-    problem = st.text_area("Problem:", value="", placeholder=problem_placeholder)
-    solution = st.text_area("Solution:", value="", placeholder=solution_placeholder)
-    submit_button = st.form_submit_button("Evaluate Idea")
+if input_method == 'Manual Input':
+    with st.form("business_idea_form"):
+        problem = st.text_area("Problem:", value="", placeholder=problem_placeholder)
+        solution = st.text_area("Solution:", value="", placeholder=solution_placeholder)
+        submit_button = st.form_submit_button("Evaluate Idea")
+
+
+elif input_method == 'Upload CSV':
+    uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
+    if uploaded_file is not None:
+        # Read the CSV file
+        df = pd.read_csv(uploaded_file)
+        ##
 
 # if sumbmitted, send the prompt to openai to rob ~0.35$ from the user
 if submit_button:
@@ -240,22 +253,22 @@ if submit_button:
                             st.set_option('deprecation.showPyplotGlobalUse', False)
                             st.pyplot()
                             
-                            # Displaying scores as a styled table using markdown
-                            st.markdown("### Evaluation Table")
-                            st.markdown(
-                                score_df.to_html(index=False, escape=False, justify='center', classes='table'),
-                                unsafe_allow_html=True
-                            )
-                        
-                            # Apply custom CSS for table styling
-                            st.markdown("""
-                                <style>
-                                    .table {width: 100%; margin-left: auto; margin-right: auto; border-collapse: collapse;}
-                                    .table td, .table th {border: none;}
-                                    th {text-align: center; font-size: 18px; font-weight: bold;}
-                                    td {text-align: center;}
-                                </style>
-                                """, unsafe_allow_html=True)
+                        # Displaying scores as a styled table using markdown
+                        st.markdown("### Evaluation Table")
+                        st.markdown(
+                            score_df.to_html(index=False, escape=False, justify='center', classes='table'),
+                            unsafe_allow_html=True
+                        )
+                    
+                        # Apply custom CSS for table styling
+                        st.markdown("""
+                            <style>
+                                .table {width: 100%; margin-left: auto; margin-right: auto; border-collapse: collapse;}
+                                .table td, .table th {border: none;}
+                                th {text-align: center; font-size: 18px; font-weight: bold;}
+                                td {text-align: center;}
+                            </style>
+                            """, unsafe_allow_html=True)
                         
                         
                         # # Slider section

@@ -197,20 +197,15 @@ if input_method == 'Manual Input':
     st.pyplot(plt)
 
         ## 饼图测试
-    # Assuming df_cat is your DataFrame
-    import matplotlib.pyplot as plt
-    
     # Combine all data into a single pie chart
     plt.figure(figsize=(8, 8))
     
-    # Grouping by 'Category' and summing up the 'Percentage' for each 'BusinessStatus'
-    grouped_data = df_cat.groupby(['BusinessStatus', 'Category']).sum().reset_index()
+    # Plot each entry in the DataFrame as a separate slice in the pie chart
+    wedges, texts, autotexts = plt.pie(df_cat['Percentage'], labels=df_cat['BusinessStatus'], autopct='%1.1f%%', startangle=140)
     
-    # Creating a pie chart
-    plt.pie(grouped_data['Percentage'], labels=grouped_data['BusinessStatus'], autopct='%1.1f%%', startangle=140)
-    
-    # Creating a legend with category names
-    plt.legend(grouped_data['Category'].unique(), title="Categories", loc="best")
+    # Create a legend mapping each wedge to its category
+    legend_labels = [f"{category}: {status}" for category, status in zip(df_cat['Category'], df_cat['BusinessStatus'])]
+    plt.legend(wedges, legend_labels, title="Categories", loc="best")
     
     plt.title('Combined Business Status Distribution')
     st.pyplot(plt)

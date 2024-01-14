@@ -135,13 +135,13 @@ if submit_button:
     else:
         # get the response
         
-        # progress_bar = st.progress(0)
+        progress_bar = st.progress(0)
         
         with st.spinner('Evaluating your idea, please wait...'):
 
-            # for i in range(100):
-            #     progress_bar.progress(i+1)
-            #     time.sleep(0.1)
+            for i in range(100):
+                progress_bar.progress(i+1)
+                time.sleep(1)
                 
             try:
                 api_response = evaluate_idea(problem, solution)

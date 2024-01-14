@@ -135,13 +135,13 @@ if submit_button:
     else:
         # get the response
         
-        progress_bar = st.progress(0)
+        # progress_bar = st.progress(0)
         
         with st.spinner('Evaluating your idea, please wait...'):
 
-            for i in range(100):
-                progress_bar.progress(i+1)
-                time.sleep(1)
+            # for i in range(100):
+            #     progress_bar.progress(i+1)
+            #     time.sleep(1)
                 
             try:
                 api_response = evaluate_idea(problem, solution)
@@ -263,8 +263,6 @@ if submit_button:
                     # Display warning message if API call fails
                     st.error("Unable to retrieve data. Please try again later.")
         
-
-
             
             except openai.error.InvalidRequestError as e:
                 if e.status_code == 401:  # Unauthorized, typically due to invalid API key
@@ -272,4 +270,4 @@ if submit_button:
                 else:
                     st.error(f"An error occurred: {e}")
 
-        progress_bar.empty()
+        # progress_bar.empty()

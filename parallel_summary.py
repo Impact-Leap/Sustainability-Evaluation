@@ -2,6 +2,7 @@ import concurrent.futures
 import openai
 import pandas as pd
 import json
+import re
 
 # tool function to send given data with prompt to openai api
 def chat_with_openai(input_data):
@@ -36,11 +37,12 @@ def process_inputs_in_parallel(inputs, api_key):
             results.append(future.result())
     return results
 
+
 # input is the returned results from process_inputs in parallel
 # returns a processed dataframe with bool: is_sustainable, total_score, novelty_score.
 def processed_results_to_df(processed_results):
     summary_df = pd.DataFrame(processed_results, columns=['id', 'problem', 'solution', 'ai_response'])
-
+    summary_df['ai_response'] = summary_df['ai_response'].apply(lambda x: re.sub(r'`|json', '', x))
     # add a new column that use json to load the ai_response
     summary_df['ai_response_json'] = summary_df['ai_response'].apply(lambda x: json.loads(x))
 

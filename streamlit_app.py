@@ -230,12 +230,12 @@ if submit_button:
                         
                         # Slider section
                         st.write("### Evaluation Results:")
-                        for metric, score in zip(metrics, scores):
+                        for metric, score in zip(formatted_metrics, scores):
                             st.slider(metric, 0, 10, score, disabled=True)
                     
                         # Radar chart
                         st.write("### Radar Chart Evaluation Results:")
-                        num_vars = len(metrics)
+                        num_vars = len(formatted_metrics)
                         angles = np.linspace(0, 2 * np.pi, num_vars, endpoint=False).tolist()
                         angles += angles[:1]  # Complete the loop
         
@@ -247,7 +247,7 @@ if submit_button:
                         ax.plot(angles, scores_list, color='green', linewidth=2)
                         ax.set_yticklabels([])
                         ax.set_xticks(angles[:-1])
-                        ax.set_xticklabels(metrics)
+                        ax.set_xticklabels(formatted_metrics)
                     
                         st.pyplot(fig)
                         

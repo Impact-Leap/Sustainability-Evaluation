@@ -128,11 +128,20 @@ with st.form("business_idea_form"):
 
 # if sumbmitted, send the prompt to openai to rob ~0.35$ from the user
 if submit_button:
+    
+    
     if not api_key:
         st.error("Please enter an API key.")
     else:
         # get the response
+        
+        progress_bar = st.progress(0)
+        
         with st.spinner('Evaluating your idea, please wait...'):
+
+            for i in range(100):
+                progress_bar.progress(i+1)
+                time.sleep(0.1)
             try:
                 api_response = evaluate_idea(problem, solution)
             except openai.error.InvalidRequestError as e:
@@ -140,7 +149,8 @@ if submit_button:
                     st.error("Invalid API key. Please check your API key and try again.")
                 else:
                     st.error(f"An error occurred: {e}")
-        
+
+        progress_bar.empty()
         if api_response:
             # Display if the idea is sustainability related with highlighting
             is_sustainable = api_response['Idea_Sustainability_Related'] == True

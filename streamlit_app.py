@@ -175,6 +175,10 @@ if input_method == 'Manual Input':
     # Find the totalraised percentile
     TotalRaised_percentile = round(get_percentile_by_category(documents, 'TotalRaised',avg_total_raised,most_likely_category),2)
 
+    generate_commercial_analysis(NumCompetitors_percentile, most_likely_category, most_likely_business_status, TotalRaised_percentile, avg_num_competitors, avg_total_raised)
+
+    st.write("#### Commercial Analysis:")
+    st.write(generate_commercial_analysis)
     
     # Display the top 10 similar documents
     st.write("#### Top 10 Similar Documents:")

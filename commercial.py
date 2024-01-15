@@ -112,9 +112,10 @@ def generate_commercial_analysis(NumCompetitors_percentile, most_likely_category
     if TotalRaised_percentile == 100:
         summary += "Financial Potential: Your idea demonstrates extraordinary potential! Showcasing exceptional funding potential and market readiness.\n\n"
     elif TotalRaised_percentile > 50:
-        summary += f"Financial Potential: Your idea shows remarkable promise! With an estimated funding capability of {avg_total_raised} million dollars, it ranks in the top {100 - TotalRaised_percentile}% of its category in the industry.\n\n"
-    else:
-        summary += f"Financial Potential: Your idea holds significant value. Although slightly below the industry average, it could potentially raise {avg_total_raised} million dollars. There's substantial room for growth and success!\n\n"
+        summary += f"Financial Potential: Your idea shows remarkable promise! With an estimated funding capability of {avg_total_raised} million dollars, it ranks in the top {100 - TotalRaised_percentile:.2f}% of its category in the industry.\n\n"
+    else:
+        summary += f"Financial Potential: Your idea holds significant value. Although slightly below the industry average, it could potentially raise {avg_total_raised} million dollars. There's substantial room for growth and success!\n\n"
+
     # if TotalRaised_percentile > 50:
     #     summary += f"Financial Potential: Your idea shows remarkable promise! With an estimated funding capability of {avg_total_raised} million dollars, it ranks in the top {100 - TotalRaised_percentile:.2f}% of its category in the industry.\n\n"
     # else:

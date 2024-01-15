@@ -242,14 +242,16 @@ if input_method == 'Manual Input':
     st.write("#### Commercial Analysis:")
     # st.write(output)
     output = generate_commercial_analysis(NumCompetitors_percentile, most_likely_category, most_likely_business_status, TotalRaised_percentile, avg_num_competitors, avg_total_raised)
-
+    st.write("Congratulations on developing your innovative idea! After a thorough comparison with our extensive industry database, we've gathered insightful findings for your venture:")
     # Split the output into key points
     key_points = output.split("\n\n")
     
-    # Display each key point separately
+    # Display each key point as a bullet point
     st.markdown("### Commercial Analysis Summary")
+    st.markdown("<ul>", unsafe_allow_html=True)
     for point in key_points:
-        st.markdown(point)
+        st.markdown(f"<li>{point}</li>", unsafe_allow_html=True)
+    st.markdown("</ul>", unsafe_allow_html=True)
 
     # if sumbmitted, send the prompt to openai to rob ~0.35$ from the user
     if submit_button:

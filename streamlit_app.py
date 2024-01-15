@@ -262,11 +262,17 @@ if input_method == 'Manual Input':
             # with col2:
             # Seaborn barplot
             st.write("### Bar Chart Evaluation Results:")
-            plt.figure(figsize=(10, 6))
-            sns.barplot(x='Score', y='Metric', data=score_df, palette="vlag")
-            plt.xlabel('Score out of 10')
-            st.set_option('deprecation.showPyplotGlobalUse', False)
-            st.pyplot()
+            # plt.figure(figsize=(10, 6))
+            # sns.barplot(x='Score', y='Metric', data=score_df, palette="vlag")
+            # plt.xlabel('Score out of 10')
+            # st.set_option('deprecation.showPyplotGlobalUse', False)
+            # st.pyplot()
+
+            # Convert 'Metric' to a column suitable for the x-axis in st.bar_chart
+            score_df_for_chart = score_df.set_index('Metric')
+            
+            # Display the bar chart using Streamlit's built-in functionality
+            st.bar_chart(score_df_for_chart)
                 
             # Displaying scores as a styled table using markdown
             st.markdown("### Evaluation Table")

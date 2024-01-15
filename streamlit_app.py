@@ -150,7 +150,7 @@ if input_method == 'Manual Input':
 
     # if sumbmitted, send the prompt to openai to rob ~0.35$ from the user
     if submit_button:
-        
+        st.session_state.display_commercial_analysis = False
         if not api_key:
             st.error("Please enter an API key.")
         else:

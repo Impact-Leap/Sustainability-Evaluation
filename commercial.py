@@ -114,11 +114,11 @@ def generate_commercial_analysis(NumCompetitors_percentile, most_likely_category
         summary += f"Financial Potential: Your idea holds significant value. Although slightly below the industry average, it could potentially raise {avg_total_raised} million dollars. There's substantial room for growth and success!\n\n"
 
     if NumCompetitors_percentile < 20:
-        summary += f"Market Competition: With less than 20% competition in this sector, your idea could be a game-changer or even a Unicorn! Expect to face about {avg_num_competitors} competitors, setting the stage for a potential market lead.\n\n"
+        summary += f"Market Competition: With less than 20% competition in this sector, your idea could be a game-changer or even a Unicorn! Expect to face about {avg_num_competitors} competitors, setting the stage for a potential market lead."
     elif 20 <= NumCompetitors_percentile < 50:
-        summary += f"Market Competition: This emerging field presents an opportunity with limited competition. You're likely to face around {avg_num_competitors} competitors, offering a chance to become a front-runner.\n\n"
+        summary += f"Market Competition: This emerging field presents an opportunity with limited competition. You're likely to face around {avg_num_competitors} competitors, offering a chance to become a front-runner."
     else:
-        summary += f"Market Competition: Prepare for a challenging yet rewarding journey. The sector is competitive, with an average of {avg_num_competitors} competitors, but your unique approach can still make a significant impact.\n\n"
+        summary += f"Market Competition: Prepare for a challenging yet rewarding journey. The sector is competitive, with an average of {avg_num_competitors} competitors, but your unique approach can still make a significant impact."
 
 
     return summary

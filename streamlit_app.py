@@ -258,7 +258,8 @@ if input_method == 'Manual Input':
             
             st.write("### Bar Chart Evaluation Results:")
             plt.figure(figsize=(10, 6))
-            palette = sns.color_palette("flare", as_cmap=True)
+            n_colors = score_df['Score'].nunique()
+            palette = sns.color_palette("flare", n_colors=n_colors)
             sns.barplot(x='Score', y='Metric', data=score_df, palette=palette)
             plt.xlabel('Score out of 10')
             st.set_option('deprecation.showPyplotGlobalUse', False)

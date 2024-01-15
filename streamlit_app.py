@@ -506,8 +506,9 @@ elif input_method == 'Upload CSV':
                 expander_label = f"📝 Entry {index+1}: {problem_snippet}"
 
                 with st.expander(expander_label, expanded=expanded):
-                     if special_message:
+                    if special_message:
                         st.markdown(f"###### **{special_message}**")
+                         
                     st.markdown(f"**Problem:** {row['problem']}")
                     st.markdown(f"**Solution:** {row['solution']}")
             

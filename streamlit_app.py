@@ -459,6 +459,10 @@ elif input_method == 'Upload CSV':
         
     uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
     if uploaded_file is not None:
+
+        if not api_key:
+            st.error("Please enter an API key.")
+        
         try:
             # Try reading with default encoding (UTF-8)
             df = pd.read_csv(uploaded_file)
@@ -489,7 +493,12 @@ elif input_method == 'Upload CSV':
                 # Find the indices of the highest total_score and novelty_score
                 highest_total_score_idx = final_df['total_score'].idxmax()
                 highest_novelty_score_idx = final_df['novelty_score'].idxmax()
-    
+                
+                if highest_total_score_idx != highest_novelty_score_idx:
+                sorted_indices.remove(highest_total_score_idx)
+                sorted_indices.remove(highest_novelty_score_idx)
+                sorted_indices = [highest_total_score_idx, highest_novelty_score_idx] + sorted_indices
+
                 # Iterate through each row in final_df to display the results
                 for index, row in final_df.iterrows():
                     # Determine if the expander should be open by default

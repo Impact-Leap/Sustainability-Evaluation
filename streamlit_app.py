@@ -479,14 +479,40 @@ elif input_method == 'Upload CSV':
             # Display the DataFrame
             st.write("Uploaded Data:")
             st.dataframe(df)
+
+            #### 最后的最后！
+            processed_results = process_inputs_in_parallel(df, api_key)
+            final_df = processed_results_to_df(processed_results)
+            st.dataframe(final_df)
+
+            # Iterate through each row in final_df to display the results
+            for index, row in final_df.iterrows():
+                with st.expander(f"Analysis for Entry {index + 1}"):
+                    st.markdown(f"**Problem:** {row['problem']}")
+                    st.markdown(f"**Solution:** {row['solution']}")
+
+                    # Sustainability Related
+                    is_sustainable = row['is_sustainable']
+                    sustainability_status = "Yes" if is_sustainable else "No"
+                    st.markdown(f"<h3 style='color:blue;'>Is the Idea Sustainability Related? {sustainability_status}</h3>", unsafe_allow_html=True)
+
+                    # Total Score
+                    st.markdown(f"<h3 style='color:green;'>Summary Score: {row['total_score']} / 100</h3>", unsafe_allow_html=True)
+
+                    # Novelty Score and Analysis
+                    st.markdown(f"<h3 style='color:purple;'>Novelty Score: {row['novelty_score']} / 100</h3>", unsafe_allow_html=True)
+                    st.write("### Novelty Analysis:")
+                    st.write(row['novelty_comment'])
+
+                    # Additional information can be added here if available in final_df
+                    # ...
+
         else:
             st.error("The CSV file must contain 'problem' and 'solution' columns.")
 
         ## 测试！DAVID PART
 
-        processed_results = process_inputs_in_parallel(df, api_key)
-        final_df = processed_results_to_df(processed_results)
-        st.dataframe(final_df)
+
         
         
         

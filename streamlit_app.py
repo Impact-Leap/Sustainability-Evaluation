@@ -371,7 +371,7 @@ if input_method == 'Manual Input':
         
             st.markdown("<ul>", unsafe_allow_html=True)
             for point in key_points:
-                st.markdown(f"<li style='font-size: 20px;'>{point}</li>", unsafe_allow_html=True)
+                st.markdown(f"<li style='font-size: 22px;'>{point}</li>", unsafe_allow_html=True)
 
             st.markdown("</ul>", unsafe_allow_html=True)
 

@@ -502,15 +502,16 @@ elif input_method == 'Upload CSV':
                     expanded = False
                     special_message = ""
 
-                problem_snippet = row['problem'][:20] + "..."  # Display first 50 characters of the problem
+                problem_snippet = row['problem'][:50] + "..."  # Display first 50 characters of the problem
                 expander_label = f"📝 Entry {index+1}: {problem_snippet}"
 
                 with st.expander(expander_label, expanded=expanded):
+                     if special_message:
+                        st.markdown(f"###### **{special_message}**")
                     st.markdown(f"**Problem:** {row['problem']}")
                     st.markdown(f"**Solution:** {row['solution']}")
             
-                    if special_message:
-                        st.markdown(f"**{special_message}**")
+
 
                     # Sustainability Related
                     is_sustainable = row['is_sustainable']

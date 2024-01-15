@@ -113,7 +113,7 @@ def evaluate_idea(problem, solution):
 
 ### pretty interface for user prompt
 
-st.title("💡 Business Idea Evaluation")
+st.title("💡 Sustainability Idea Evaluation")
 
 # App Introduction
 with st.expander("Introduction of Our App", expanded=True):
@@ -175,8 +175,13 @@ if input_method == 'Manual Input':
         is_sustainable = api_response['Idea_Sustainability_Related'] == True
         
         sustainability_comment = api_response['Idea_Sustainability_Related_Comment']
-        st.markdown(f"<h3 style='color:blue;'>Is the Idea Sustainability Related? {'Yes' if is_sustainable else 'No'}</h3>", unsafe_allow_html=True)
-        st.write("### Sustainability Analysis:")
+        # st.markdown(f"<h3 style='color:blue;'>Is the Idea Sustainability Related? {'Yes' if is_sustainable else 'No'}</h3>", unsafe_allow_html=True)
+        if is_sustainable:
+            st.markdown("<h3 style='color: green;'>We've evaluated this, and it's exciting news: This idea is sustainability-related!</h3>", unsafe_allow_html=True)
+        else:
+            st.markdown("<h3 style='color: red;'>After careful evaluation, it appears that this idea is not sustainability-related.</h3>", unsafe_allow_html=True)
+
+        # st.write("### Sustainability Analysis:")
         st.write(sustainability_comment)
 
         # if the idea is not sustainable, proceed with displaying the scores.
@@ -202,7 +207,7 @@ if input_method == 'Manual Input':
             novelty_status = "Yes" if tfidf_is_novelty else "No"
             
             # Display the novelty similarity score with decimals and novelty status
-            st.markdown(f"<h3 style='color:orange;'>Novelty Similarity Score: {max_similarity:.2f} / 1</h3>", unsafe_allow_html=True)
+            st.markdown(f"<h3 style='color:orange;'>Similarity Score: {max_similarity:.2f} / 1</h3>", unsafe_allow_html=True)
             st.markdown(f"<h3 style='color:orange;'>Is it Novelty? {novelty_status}</h3>", unsafe_allow_html=True)
 
             with st.expander("Understanding the Novelty Similarity Score"):
@@ -354,7 +359,7 @@ if input_method == 'Manual Input':
         
             output = generate_commercial_analysis(NumCompetitors_percentile, most_likely_category, most_likely_business_status, TotalRaised_percentile, avg_num_competitors, avg_total_raised)
             st.markdown("### Commercial Analysis Summary")
-            st.write("###### *🎉Congratulations on developing your innovative idea! After a thorough comparison with our extensive industry database, we've gathered insightful findings for your venture:*")
+            st.write("##### *🎉Congratulations on developing your innovative idea! After a thorough comparison with our extensive industry database, we've gathered insightful findings for your venture:*")
             # Split the output into key points
             key_points = output.split("\n\n")
             
@@ -362,10 +367,11 @@ if input_method == 'Manual Input':
         
             st.markdown("<ul>", unsafe_allow_html=True)
             for point in key_points:
-                st.markdown(f"<li>{point}</li>", unsafe_allow_html=True)
+                st.markdown(f"<li style='font-size: 20px;'>{point}</li>", unsafe_allow_html=True)
+
             st.markdown("</ul>", unsafe_allow_html=True)
 
-            st.write("###### *Wishing you the best in your entrepreneurial journey. Your innovation has the potential to make a remarkable difference!*")
+            st.write("##### *Wishing you the best in your entrepreneurial journey. Your innovation has the potential to make a remarkable difference!*")
 
         # progress_bar.empty()
 

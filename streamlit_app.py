@@ -477,13 +477,13 @@ elif input_method == 'Upload CSV':
         # Check for necessary columns 'problem' and 'solution'
         if 'problem' in df.columns and 'solution' in df.columns:
             # Display the DataFrame
-            st.write("Uploaded Data:")
-            st.dataframe(df)
+            # st.write("Uploaded Data:")
+            # st.dataframe(df)
 
             #### 最后的最后！
             processed_results = process_inputs_in_parallel(df, api_key)
             final_df = processed_results_to_df(processed_results)
-            st.dataframe(final_df)
+            # st.dataframe(final_df)
 
             # Find the indices of the highest total_score and novelty_score
             highest_total_score_idx = final_df['total_score'].idxmax()
@@ -507,7 +507,7 @@ elif input_method == 'Upload CSV':
 
                 with st.expander(expander_label, expanded=expanded):
                     if special_message:
-                        st.markdown(f"###### **{special_message}**")
+                        st.markdown(f"##### **{special_message}**")
                          
                     st.markdown(f"**Problem:** {row['problem']}")
                     st.markdown(f"**Solution:** {row['solution']}")

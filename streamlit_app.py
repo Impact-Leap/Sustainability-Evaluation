@@ -260,12 +260,12 @@ if input_method == 'Manual Input':
             plt.figure(figsize=(10, 6))
             # n_colors = score_df['Score'].nunique()
             # palette = sns.color_palette("flare", n_colors=n_colors)
-            # palette = sns.color_palette("husl", 9)
+            palette = sns.color_palette("husl", 9)
             green_color = sns.color_palette("Greens", 6)[-2]  # A shade of green
 
-            sns.barplot(x='Score', y='Metric', data=score_df, color=green_color)
+            # sns.barplot(x='Score', y='Metric', data=score_df, color=green_color)
 
-            # sns.barplot(x='Score', y='Metric', data=score_df, palette=palette)
+            sns.barplot(x='Score', y='Metric', data=score_df, palette=palette)
             plt.xlabel('Score out of 10')
             st.set_option('deprecation.showPyplotGlobalUse', False)
             st.pyplot()

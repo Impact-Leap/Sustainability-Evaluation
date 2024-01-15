@@ -238,8 +238,6 @@ if input_method == 'Manual Input':
     plt.title('Combined Business Status Distribution')
     st.pyplot(plt)    
 
-    
-    st.write("#### Commercial Analysis:")
     # st.write(output)
     output = generate_commercial_analysis(NumCompetitors_percentile, most_likely_category, most_likely_business_status, TotalRaised_percentile, avg_num_competitors, avg_total_raised)
     st.write("Congratulations on developing your innovative idea! After a thorough comparison with our extensive industry database, we've gathered insightful findings for your venture:")

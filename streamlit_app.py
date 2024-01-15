@@ -147,112 +147,6 @@ if input_method == 'Manual Input':
         solution = st.text_area("Solution:", value="", placeholder=solution_placeholder)
         submit_button = st.form_submit_button("Evaluate Idea")
     
-    ## 测试！ANTONIO PART
-    # For demonstration, using mock data
-    # st.write("### Commercial Analysis Response:")
-
-
-    # Read the file contents
-    documents = pd.read_csv('Cleaned_ValidationSet.csv', encoding='ISO-8859-1')
-    
-    top_5_similar_docs, avg_num_competitors, avg_total_raised = get_top_5_tfidf("The company's solution focuses on creating a circular economy for waste plastics. They employ a patented and fully continuous pyrolysis process that converts landfill-extracted plastics into hydrocarbon oils. This process involves heating the plastic", "buy less plastic bags")
-    df_cat = get_business_status_distribution(top_5_similar_docs)
-
-    category_summary = df_cat.groupby('Category')['Percentage'].sum()
-
-    # Find the category with the highest total percentage
-    most_likely_category = category_summary.idxmax()
-    
-    # Group by 'BusinessStatus' and sum the 'Percentage'
-    business_status_summary = df_cat.groupby('BusinessStatus')['Percentage'].sum()
-    
-    # Find the business status with the highest total percentage
-    most_likely_business_status = business_status_summary.idxmax()
-    
-    # Find the number of competitor percentile
-    NumCompetitors_percentile = round(get_percentile_by_category(documents, 'NumCompetitors',avg_num_competitors,most_likely_category),2)
-    
-    # Find the totalraised percentile
-    TotalRaised_percentile = round(get_percentile_by_category(documents, 'TotalRaised',avg_total_raised,most_likely_category),2)
-
-    output = generate_commercial_analysis(NumCompetitors_percentile, most_likely_category, most_likely_business_status, TotalRaised_percentile, avg_num_competitors, avg_total_raised)
-    
-    # # Display the top 5 similar documents
-    # st.write("#### Top 5 Similar Documents:")
-    # st.dataframe(top_5_similar_docs)
-    
-    # # Display the average number of competitors
-    # st.write("#### Average Number of Competitors:")
-    # st.write(avg_num_competitors)
-    
-    # # Display the average total raised
-    # st.write("#### Average Total Raised:")
-    # st.write(avg_total_raised)
-    
-    # If df_cat needs to be displayed as well, use st.dataframe
-    # Assuming df_cat is a DataFrame with relevant information
-    # st.write("#### Business Status Distribution:")
-    # st.dataframe(df_cat)
-
-
-    st.write('<br><br>', unsafe_allow_html=True)
-    col1, col2 = st.columns(2)
-
-    with col1:
-        st.metric(label="##### ⚔️Average Number of Competitors", value=avg_num_competitors)
-    
-    with col2:
-        st.metric(label="##### 📈Average Total Raised", value=f"${avg_total_raised:,}")
-
-    st.write('<br><br>', unsafe_allow_html=True)
-
-    # ## 饼图测试
-    
-    # # Combine all data into a single pie chart
-    # plt.figure(figsize=(10, 6))
-    
-    # # Plot each entry in the DataFrame as a separate slice in the pie chart
-    # wedges, texts, autotexts = plt.pie(df_cat['Percentage'], labels=df_cat['BusinessStatus'], autopct='%1.1f%%', startangle=140)
-    
-    # legend_labels = [f"{category}" for i, category in enumerate(df_cat['Category'])]
-    # plt.legend(wedges, legend_labels, title="Categories", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
-    
-    # plt.title('Combined Business Status Distribution')
-    # st.pyplot(plt)
-
-    ## DONUTS
-    # Combine all data into a single pie chart
-    plt.figure(figsize=(10, 6))
-    
-    # Plot each entry in the DataFrame as a separate slice in the pie chart
-    wedges, texts, autotexts = plt.pie(df_cat['Percentage'], labels=df_cat['BusinessStatus'], autopct='%1.1f%%', startangle=140)
-    
-    # Draw a circle at the center of pie to turn it into a donut chart
-    centre_circle = plt.Circle((0,0),0.70,fc='white')
-    fig = plt.gcf()
-    fig.gca().add_artist(centre_circle)
-    
-    legend_labels = [f"{category}" for category in df_cat['Category']]
-    plt.legend(wedges, legend_labels, title="Categories", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
-    
-    plt.title('Combined Business Status Distribution')
-    st.pyplot(plt)    
-
-    # st.write(output)
-
-    st.write("test: ", TotalRaised_percentile)
-    output = generate_commercial_analysis(NumCompetitors_percentile, most_likely_category, most_likely_business_status, TotalRaised_percentile, avg_num_competitors, avg_total_raised)
-    st.markdown("### Commercial Analysis Summary")
-    st.write("Congratulations on developing your innovative idea! After a thorough comparison with our extensive industry database, we've gathered insightful findings for your venture:")
-    # Split the output into key points
-    key_points = output.split("\n\n")
-    
-    # Display each key point as a bullet point
-
-    st.markdown("<ul>", unsafe_allow_html=True)
-    for point in key_points:
-        st.markdown(f"<li>{point}</li>", unsafe_allow_html=True)
-    st.markdown("</ul>", unsafe_allow_html=True)
 
     # if sumbmitted, send the prompt to openai to rob ~0.35$ from the user
     if submit_button:
@@ -427,26 +321,108 @@ if input_method == 'Manual Input':
             # For demonstration, using mock data
             st.write("### Commercial Analysis Response:")
 
-            # top_10_similar_docs, avg_num_competitors, avg_total_raised = get_top_10_tfidf(problem, solution)
-            # df_cat = get_business_status_distribution(top_10_similar_docs)
-
-            # # Display the top 10 similar documents
-            # st.write("#### Top 10 Similar Documents:")
-            # st.dataframe(top_10_similar_docs)
+            ## 测试！ANTONIO PART
+         
+            # Read the file contents
+            documents = pd.read_csv('Cleaned_ValidationSet.csv', encoding='ISO-8859-1')
+            
+            top_5_similar_docs, avg_num_competitors, avg_total_raised = get_top_5_tfidf(problem, solution)
+            df_cat = get_business_status_distribution(top_5_similar_docs)
         
+            category_summary = df_cat.groupby('Category')['Percentage'].sum()
+        
+            # Find the category with the highest total percentage
+            most_likely_category = category_summary.idxmax()
+            
+            # Group by 'BusinessStatus' and sum the 'Percentage'
+            business_status_summary = df_cat.groupby('BusinessStatus')['Percentage'].sum()
+            
+            # Find the business status with the highest total percentage
+            most_likely_business_status = business_status_summary.idxmax()
+            
+            # Find the number of competitor percentile
+            NumCompetitors_percentile = round(get_percentile_by_category(documents, 'NumCompetitors',avg_num_competitors,most_likely_category),2)
+            
+            # Find the totalraised percentile
+            TotalRaised_percentile = round(get_percentile_by_category(documents, 'TotalRaised',avg_total_raised,most_likely_category),2)
+        
+            output = generate_commercial_analysis(NumCompetitors_percentile, most_likely_category, most_likely_business_status, TotalRaised_percentile, avg_num_competitors, avg_total_raised)
+            
+            # # Display the top 5 similar documents
+            # st.write("#### Top 5 Similar Documents:")
+            # st.dataframe(top_5_similar_docs)
+            
             # # Display the average number of competitors
             # st.write("#### Average Number of Competitors:")
             # st.write(avg_num_competitors)
-        
+            
             # # Display the average total raised
             # st.write("#### Average Total Raised:")
             # st.write(avg_total_raised)
-        
-            # # If df_cat needs to be displayed as well, use st.dataframe
-            # # Assuming df_cat is a DataFrame with relevant information
+            
+            # If df_cat needs to be displayed as well, use st.dataframe
+            # Assuming df_cat is a DataFrame with relevant information
             # st.write("#### Business Status Distribution:")
             # st.dataframe(df_cat)
-            # 到这
+        
+        
+            st.write('<br><br>', unsafe_allow_html=True)
+            col1, col2 = st.columns(2)
+        
+            with col1:
+                st.metric(label="##### ⚔️Average Number of Competitors", value=avg_num_competitors)
+            
+            with col2:
+                st.metric(label="##### 📈Average Total Raised", value=f"${avg_total_raised:,}")
+        
+            st.write('<br><br>', unsafe_allow_html=True)
+        
+            # ## 饼图测试
+            
+            # # Combine all data into a single pie chart
+            # plt.figure(figsize=(10, 6))
+            
+            # # Plot each entry in the DataFrame as a separate slice in the pie chart
+            # wedges, texts, autotexts = plt.pie(df_cat['Percentage'], labels=df_cat['BusinessStatus'], autopct='%1.1f%%', startangle=140)
+            
+            # legend_labels = [f"{category}" for i, category in enumerate(df_cat['Category'])]
+            # plt.legend(wedges, legend_labels, title="Categories", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
+            
+            # plt.title('Combined Business Status Distribution')
+            # st.pyplot(plt)
+        
+            ## DONUTS
+            # Combine all data into a single pie chart
+            plt.figure(figsize=(10, 6))
+            
+            # Plot each entry in the DataFrame as a separate slice in the pie chart
+            wedges, texts, autotexts = plt.pie(df_cat['Percentage'], labels=df_cat['BusinessStatus'], autopct='%1.1f%%', startangle=140)
+            
+            # Draw a circle at the center of pie to turn it into a donut chart
+            centre_circle = plt.Circle((0,0),0.70,fc='white')
+            fig = plt.gcf()
+            fig.gca().add_artist(centre_circle)
+            
+            legend_labels = [f"{category}" for category in df_cat['Category']]
+            plt.legend(wedges, legend_labels, title="Categories", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
+            
+            plt.title('Combined Business Status Distribution')
+            st.pyplot(plt)    
+        
+            # st.write(output)
+        
+            output = generate_commercial_analysis(NumCompetitors_percentile, most_likely_category, most_likely_business_status, TotalRaised_percentile, avg_num_competitors, avg_total_raised)
+            st.markdown("### Commercial Analysis Summary")
+            st.write("Congratulations on developing your innovative idea! After a thorough comparison with our extensive industry database, we've gathered insightful findings for your venture:")
+            # Split the output into key points
+            key_points = output.split("\n\n")
+            
+            # Display each key point as a bullet point
+        
+            st.markdown("<ul>", unsafe_allow_html=True)
+            for point in key_points:
+                st.markdown(f"<li>{point}</li>", unsafe_allow_html=True)
+            st.markdown("</ul>", unsafe_allow_html=True)
 
             # st.markdown("*This is a mock response for demonstration purposes.*")
             # st.write("Imagine this text is the detailed commercial analysis provided by the AI.")

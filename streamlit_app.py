@@ -457,9 +457,13 @@ elif input_method == 'Upload CSV':
         
                             # Sustainability Related
                             is_sustainable = row['is_sustainable']
-                            sustainability_status = "Yes" if is_sustainable else "No"
-                            st.markdown(f"<h3 style='color:blue;'>Is the Idea Sustainability Related? {sustainability_status}</h3>", unsafe_allow_html=True)
-        
+                            # sustainability_status = "Yes" if is_sustainable else "No"
+                            # st.markdown(f"<h3 style='color:blue;'>Is the Idea Sustainability Related? {sustainability_status}</h3>", unsafe_allow_html=True)
+                            if is_sustainable:
+                                st.markdown("<h3 style='color: green;'>We've evaluated this, and it's exciting news: This idea is sustainability-related!</h3>", unsafe_allow_html=True)
+                            else:
+                                st.markdown("<h3 style='color: red;'>After careful evaluation, it appears that this idea is not sustainability-related.</h3>", unsafe_allow_html=True)
+
                             # Total Score
                             st.markdown(f"<h3 style='color:green;'>Summary Score: {row['total_score']} / 100</h3>", unsafe_allow_html=True)
         

@@ -485,6 +485,10 @@ elif input_method == 'Upload CSV':
             final_df = processed_results_to_df(processed_results)
             st.dataframe(final_df)
 
+            # Find the indices of the highest total_score and novelty_score
+            highest_total_score_idx = final_df['total_score'].idxmax()
+            highest_novelty_score_idx = final_df['novelty_score'].idxmax()
+
             # Iterate through each row in final_df to display the results
             for index, row in final_df.iterrows():
                 # Determine if the expander should be open by default
@@ -497,8 +501,11 @@ elif input_method == 'Upload CSV':
                 else:
                     expanded = False
                     special_message = ""
-            
-                with st.expander(f"Analysis for Entry {index + 1}", expanded=expanded):
+
+                problem_snippet = row['problem'][:20] + "..."  # Display first 50 characters of the problem
+                expander_label = f"📝 Entry {index+1}: {problem_snippet}"
+
+                with st.expander(expander_label, expanded=expanded):
                     st.markdown(f"**Problem:** {row['problem']}")
                     st.markdown(f"**Solution:** {row['solution']}")
             

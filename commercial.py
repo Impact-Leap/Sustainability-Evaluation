@@ -108,10 +108,17 @@ def generate_commercial_analysis(NumCompetitors_percentile, most_likely_category
     summary = f"Category Insight: Your venture aligns closely with the '{most_likely_category}' category.\n\n"
     summary += f"Development Stage: Your project appears to be in the '{most_likely_business_status}' stage.\n\n"
 
-    if TotalRaised_percentile > 50:
-        summary += f"Financial Potential: Your idea shows remarkable promise! With an estimated funding capability of {avg_total_raised} million dollars, it ranks in the top {100 - TotalRaised_percentile:.2f}% of its category in the industry.\n\n"
-    else:
-        summary += f"Financial Potential: Your idea holds significant value. Although slightly below the industry average, it could potentially raise {avg_total_raised} million dollars. There's substantial room for growth and success!\n\n"
+
+    if TotalRaised_percentile == 100:
+        summary += "Financial Potential: Your idea demonstrates extraordinary potential! Showcasing exceptional funding potential and market readiness.\n\n"
+    elif TotalRaised_percentile > 50:
+        summary += f"Financial Potential: Your idea shows remarkable promise! With an estimated funding capability of {avg_total_raised} million dollars, it ranks in the top {100 - TotalRaised_percentile}% of its category in the industry.\n\n"
+    else:
+        summary += f"Financial Potential: Your idea holds significant value. Although slightly below the industry average, it could potentially raise {avg_total_raised} million dollars. There's substantial room for growth and success!\n\n"
+    # if TotalRaised_percentile > 50:
+    #     summary += f"Financial Potential: Your idea shows remarkable promise! With an estimated funding capability of {avg_total_raised} million dollars, it ranks in the top {100 - TotalRaised_percentile:.2f}% of its category in the industry.\n\n"
+    # else:
+    #     summary += f"Financial Potential: Your idea holds significant value. Although slightly below the industry average, it could potentially raise {avg_total_raised} million dollars. There's substantial room for growth and success!\n\n"
 
     if NumCompetitors_percentile < 20:
         summary += f"Market Competition: With less than 20% competition in this sector, your idea could be a game-changer or even a Unicorn! Expect to face about {avg_num_competitors} competitors, setting the stage for a potential market lead."

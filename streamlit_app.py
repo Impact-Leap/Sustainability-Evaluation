@@ -53,7 +53,6 @@ def emoji():
 # st.title('🌏 Earth Hack')
 
 # metrics list for sustainability evaluation
-# [To-Do] Fix the format
 metrics = [
     "1_No_Poverty", "2_Zero_Hunger", "3_Good_Health_and_Well-being",
     "4_Quality_Education", "5_Gender_Equality", "6_Clean_Water_and_Sanitation",
@@ -111,17 +110,6 @@ def evaluate_idea(problem, solution):
     
     return output
     
-    # except openai.error.InvalidRequestError as e:
-    #     if e.status_code == 401:  # Unauthorized, typically due to invalid API key
-    #         st.error("Invalid API key. Please check your API key and try again.")
-    #     else:
-    #         st.error(f"An error occurred: {e}")
-    #     return None
-    
-
-
-# Section for displaying evaluation result
-
 
 ### pretty interface for user prompt
 
@@ -285,21 +273,7 @@ if input_method == 'Manual Input':
                     td {text-align: center;}
                 </style>
                 """, unsafe_allow_html=True)
-            
 
-    
-            # # Slider section
-            # st.write("### Evaluation Results:")
-            # for metric, score in zip(formatted_metrics, scores):
-            #     st.slider(metric, 0, 10, score, disabled=True)
-
-
-        
-## Simulate scores for demonstration (replace with real data later)
-# scores = np.random.randint(1, 11, size=len(metrics))
-
-## Calculate the summary score
-# total_score = sum(scores)
 
     # else:
     #     # Display warning message if API call fails
@@ -319,11 +293,7 @@ if input_method == 'Manual Input':
 
     if st.session_state.display_commercial_analysis:
         with st.spinner('Processing commercial analysis, please wait...'):
-            # For demonstration, using mock data
-            # st.write("### Commercial Analysis Response:")
-
-            ## 测试！ANTONIO PART
-         
+  
             # Read the file contents
             documents = pd.read_csv('Cleaned_ValidationSet.csv', encoding='ISO-8859-1')
             
@@ -348,24 +318,7 @@ if input_method == 'Manual Input':
             TotalRaised_percentile = round(get_percentile_by_category(documents, 'TotalRaised',avg_total_raised,most_likely_category),2)
         
             output = generate_commercial_analysis(NumCompetitors_percentile, most_likely_category, most_likely_business_status, TotalRaised_percentile, avg_num_competitors, avg_total_raised)
-            
-            # # Display the top 5 similar documents
-            # st.write("#### Top 5 Similar Documents:")
-            # st.dataframe(top_5_similar_docs)
-            
-            # # Display the average number of competitors
-            # st.write("#### Average Number of Competitors:")
-            # st.write(avg_num_competitors)
-            
-            # # Display the average total raised
-            # st.write("#### Average Total Raised:")
-            # st.write(avg_total_raised)
-            
-            # If df_cat needs to be displayed as well, use st.dataframe
-            # Assuming df_cat is a DataFrame with relevant information
-            # st.write("#### Business Status Distribution:")
-            # st.dataframe(df_cat)
-        
+                    
         
             st.write('<br><br>', unsafe_allow_html=True)
             col1, col2 = st.columns(2)
@@ -378,19 +331,6 @@ if input_method == 'Manual Input':
         
             st.write('<br><br>', unsafe_allow_html=True)
         
-            # ## 饼图测试
-            
-            # # Combine all data into a single pie chart
-            # plt.figure(figsize=(10, 6))
-            
-            # # Plot each entry in the DataFrame as a separate slice in the pie chart
-            # wedges, texts, autotexts = plt.pie(df_cat['Percentage'], labels=df_cat['BusinessStatus'], autopct='%1.1f%%', startangle=140)
-            
-            # legend_labels = [f"{category}" for i, category in enumerate(df_cat['Category'])]
-            # plt.legend(wedges, legend_labels, title="Categories", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
-            
-            # plt.title('Combined Business Status Distribution')
-            # st.pyplot(plt)
         
             ## DONUTS
             # Combine all data into a single pie chart
@@ -426,24 +366,8 @@ if input_method == 'Manual Input':
             st.markdown("</ul>", unsafe_allow_html=True)
 
             st.write("###### *Wishing you the best in your entrepreneurial journey. Your innovation has the potential to make a remarkable difference!*")
-            # st.markdown("*This is a mock response for demonstration purposes.*")
-            # st.write("Imagine this text is the detailed commercial analysis provided by the AI.")
-
-            # Uncomment and modify the following lines for actual implementation
-            # with open('commercial_prompt.txt', 'r') as file:
-            #     commercial_prompt = file.read()
-            # response = openai.ChatCompletion.create(
-            #     model="gpt-4-1106-preview",
-            #     messages=[{"role": "system", "content": commercial_prompt},
-            #               {"role": "user", "content": f"Problem:{problem}\n\nSolution:{solution}"}
-            #     ],
-            #     max_tokens=4096,
-            # )
-            # commercial_response = response["choices"][0]["message"]["content"]
-            # st.write(commercial_response)
 
         # progress_bar.empty()
-
 
 
 elif input_method == 'Upload CSV':
@@ -495,10 +419,6 @@ elif input_method == 'Upload CSV':
                     highest_total_score_idx = final_df['total_score'].idxmax()
                     highest_novelty_score_idx = final_df['novelty_score'].idxmax()
                     
-                    # if highest_total_score_idx != highest_novelty_score_idx:
-                    # sorted_indices.remove(highest_total_score_idx)
-                    # sorted_indices.remove(highest_novelty_score_idx)
-                    # sorted_indices = [highest_total_score_idx, highest_novelty_score_idx] + sorted_indices
     
                     # Iterate through each row in final_df to display the results
                     for index, row in final_df.iterrows():
@@ -538,13 +458,10 @@ elif input_method == 'Upload CSV':
                             st.write("### Novelty Analysis:")
                             st.write(row['novelty_comment'])
         
-                            # Additional information can be added here if available in final_df
-                            # ...
 
         else:
             st.error("The CSV file must contain 'problem' and 'solution' columns.")
 
-        ## 测试！DAVID PART
 
 
         

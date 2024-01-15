@@ -37,7 +37,7 @@ with st.sidebar:
     # For example, links or additional instructions
     api_key = st.text_input("Enter your API key", type="password")
     st.write("We require a GPT-4 Turbo API key, specifically the model gpt-4-1106-preview. Please note that usage may incur charges.")
-    
+    st.write("Please review your API key agreement to understand privacy implications before using our evaluator.")
     
 def emoji():
     rain(

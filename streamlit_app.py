@@ -319,7 +319,7 @@ if input_method == 'Manual Input':
     if st.session_state.display_commercial_analysis:
         with st.spinner('Processing commercial analysis, please wait...'):
             # For demonstration, using mock data
-            st.write("### Commercial Analysis Response:")
+            # st.write("### Commercial Analysis Response:")
 
             ## 测试！ANTONIO PART
          
@@ -413,7 +413,7 @@ if input_method == 'Manual Input':
         
             output = generate_commercial_analysis(NumCompetitors_percentile, most_likely_category, most_likely_business_status, TotalRaised_percentile, avg_num_competitors, avg_total_raised)
             st.markdown("### Commercial Analysis Summary")
-            st.write("Congratulations on developing your innovative idea! After a thorough comparison with our extensive industry database, we've gathered insightful findings for your venture:")
+            st.write("*Congratulations on developing your innovative idea! After a thorough comparison with our extensive industry database, we've gathered insightful findings for your venture:*")
             # Split the output into key points
             key_points = output.split("\n\n")
             
@@ -424,6 +424,7 @@ if input_method == 'Manual Input':
                 st.markdown(f"<li>{point}</li>", unsafe_allow_html=True)
             st.markdown("</ul>", unsafe_allow_html=True)
 
+            st.write("##### *Wishing you the best in your entrepreneurial journey. Your innovation has the potential to make a remarkable difference!*")
             # st.markdown("*This is a mock response for demonstration purposes.*")
             # st.write("Imagine this text is the detailed commercial analysis provided by the AI.")
 

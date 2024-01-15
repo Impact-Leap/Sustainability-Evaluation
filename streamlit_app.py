@@ -481,54 +481,55 @@ elif input_method == 'Upload CSV':
             # st.dataframe(df)
 
             #### 最后的最后！
-            processed_results = process_inputs_in_parallel(df, api_key)
-            final_df = processed_results_to_df(processed_results)
-            # st.dataframe(final_df)
-
-            # Find the indices of the highest total_score and novelty_score
-            highest_total_score_idx = final_df['total_score'].idxmax()
-            highest_novelty_score_idx = final_df['novelty_score'].idxmax()
-
-            # Iterate through each row in final_df to display the results
-            for index, row in final_df.iterrows():
-                # Determine if the expander should be open by default
-                if index == highest_total_score_idx:
-                    expanded = True
-                    special_message = "Congratulations! 🎉 This idea has achieved the overall best score in our evaluation."
-                elif index == highest_novelty_score_idx:
-                    expanded = True
-                    special_message = "Congratulations! 🌟 This idea has the highest novelty score, showcasing its unique and innovative aspects."
-                else:
-                    expanded = False
-                    special_message = ""
-
-                problem_snippet = row['problem'][:50] + "..."  # Display first 50 characters of the problem
-                expander_label = f"📝 Entry {index+1}: {problem_snippet}"
-
-                with st.expander(expander_label, expanded=expanded):
-                    if special_message:
-                        st.markdown(f"##### **{special_message}**")
-                         
-                    st.markdown(f"**Problem:** {row['problem']}")
-                    st.markdown(f"**Solution:** {row['solution']}")
-            
-
-
-                    # Sustainability Related
-                    is_sustainable = row['is_sustainable']
-                    sustainability_status = "Yes" if is_sustainable else "No"
-                    st.markdown(f"<h3 style='color:blue;'>Is the Idea Sustainability Related? {sustainability_status}</h3>", unsafe_allow_html=True)
-
-                    # Total Score
-                    st.markdown(f"<h3 style='color:green;'>Summary Score: {row['total_score']} / 100</h3>", unsafe_allow_html=True)
-
-                    # Novelty Score and Analysis
-                    st.markdown(f"<h3 style='color:purple;'>Novelty Score: {row['novelty_score']} / 100</h3>", unsafe_allow_html=True)
-                    st.write("### Novelty Analysis:")
-                    st.write(row['novelty_comment'])
-
-                    # Additional information can be added here if available in final_df
-                    # ...
+                with st.spinner('Evaluating your ideas, please wait...'):
+                processed_results = process_inputs_in_parallel(df, api_key)
+                final_df = processed_results_to_df(processed_results)
+                # st.dataframe(final_df)
+    
+                # Find the indices of the highest total_score and novelty_score
+                highest_total_score_idx = final_df['total_score'].idxmax()
+                highest_novelty_score_idx = final_df['novelty_score'].idxmax()
+    
+                # Iterate through each row in final_df to display the results
+                for index, row in final_df.iterrows():
+                    # Determine if the expander should be open by default
+                    if index == highest_total_score_idx:
+                        expanded = True
+                        special_message = "Congratulations! 🎉 This idea has achieved the overall best score in our evaluation."
+                    elif index == highest_novelty_score_idx:
+                        expanded = True
+                        special_message = "Congratulations! 🌟 This idea has the highest novelty score, showcasing its unique and innovative aspects."
+                    else:
+                        expanded = False
+                        special_message = ""
+    
+                    problem_snippet = row['problem'][:50] + "..."  # Display first 50 characters of the problem
+                    expander_label = f"📝 Entry {index+1}: {problem_snippet}"
+    
+                    with st.expander(expander_label, expanded=expanded):
+                        if special_message:
+                            st.markdown(f"##### **{special_message}**")
+                             
+                        st.markdown(f"**Problem:** {row['problem']}")
+                        st.markdown(f"**Solution:** {row['solution']}")
+                
+    
+    
+                        # Sustainability Related
+                        is_sustainable = row['is_sustainable']
+                        sustainability_status = "Yes" if is_sustainable else "No"
+                        st.markdown(f"<h3 style='color:blue;'>Is the Idea Sustainability Related? {sustainability_status}</h3>", unsafe_allow_html=True)
+    
+                        # Total Score
+                        st.markdown(f"<h3 style='color:green;'>Summary Score: {row['total_score']} / 100</h3>", unsafe_allow_html=True)
+    
+                        # Novelty Score and Analysis
+                        st.markdown(f"<h3 style='color:purple;'>Novelty Score: {row['novelty_score']} / 100</h3>", unsafe_allow_html=True)
+                        st.write("### Novelty Analysis:")
+                        st.write(row['novelty_comment'])
+    
+                        # Additional information can be added here if available in final_df
+                        # ...
 
         else:
             st.error("The CSV file must contain 'problem' and 'solution' columns.")

@@ -481,7 +481,7 @@ elif input_method == 'Upload CSV':
             # st.dataframe(df)
 
             #### 最后的最后！
-                with st.spinner('Evaluating your ideas, please wait...'):
+            with st.spinner('Evaluating your ideas, please wait...'):
                 processed_results = process_inputs_in_parallel(df, api_key)
                 final_df = processed_results_to_df(processed_results)
                 # st.dataframe(final_df)

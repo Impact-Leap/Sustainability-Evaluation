@@ -102,7 +102,7 @@ def get_percentile_by_category(df, column_name, value, category):
     return percentile
 
 def generate_commercial_analysis(NumCompetitors_percentile, most_likely_category, most_likely_business_status, TotalRaised_percentile, avg_num_competitors, avg_total_raised):
-    summary = "Commercial Analysis Summary\n\n"
+    # summary = "Commercial Analysis Summary\n\n"
     summary += "Congratulations on developing your innovative idea! After a thorough comparison with our extensive industry database, we've gathered insightful findings for your venture:\n\n"
 
     summary += f"Category Insight: Your venture aligns closely with the '{most_likely_category}' category.\n\n"

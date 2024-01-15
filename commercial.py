@@ -105,7 +105,7 @@ def generate_commercial_analysis(NumCompetitors_percentile, most_likely_category
     summary = "Commercial Analysis Summary\n\n"
     summary += "Congratulations on developing your innovative idea! After a thorough comparison with our extensive industry database, we've gathered insightful findings for your venture:\n\n"
 
-    summary += f"Category Insight: Your venture aligns closely with the '{most_likely_category}' category.\n"
+    summary += f"Category Insight: Your venture aligns closely with the '{most_likely_category}' category.\n\n"
     summary += f"Development Stage: Your project appears to be in the '{most_likely_business_status}' stage.\n\n"
 
     if TotalRaised_percentile > 50:

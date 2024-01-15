@@ -159,7 +159,7 @@ if input_method == 'Manual Input':
             
             # progress_bar = st.progress(0)
             
-            with st.spinner('Evaluating your idea, please wait...'):
+            with st.spinner('Evaluating your idea, please wait for aproximately 40 seconds...'):
     
                 # for i in range(100):
                 #     progress_bar.progress(i+1)
@@ -318,7 +318,7 @@ if input_method == 'Manual Input':
             st.session_state.display_commercial_analysis = True            
 
     if st.session_state.display_commercial_analysis:
-        with st.spinner('Processing commercial analysis, please wait...'):
+        with st.spinner('Processing commercial analysis, please wait for aproximately 90 seconds......'):
             # For demonstration, using mock data
             # st.write("### Commercial Analysis Response:")
 
@@ -494,10 +494,10 @@ elif input_method == 'Upload CSV':
                 highest_total_score_idx = final_df['total_score'].idxmax()
                 highest_novelty_score_idx = final_df['novelty_score'].idxmax()
                 
-                if highest_total_score_idx != highest_novelty_score_idx:
-                sorted_indices.remove(highest_total_score_idx)
-                sorted_indices.remove(highest_novelty_score_idx)
-                sorted_indices = [highest_total_score_idx, highest_novelty_score_idx] + sorted_indices
+                # if highest_total_score_idx != highest_novelty_score_idx:
+                # sorted_indices.remove(highest_total_score_idx)
+                # sorted_indices.remove(highest_novelty_score_idx)
+                # sorted_indices = [highest_total_score_idx, highest_novelty_score_idx] + sorted_indices
 
                 # Iterate through each row in final_df to display the results
                 for index, row in final_df.iterrows():

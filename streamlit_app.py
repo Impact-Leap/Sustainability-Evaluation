@@ -176,13 +176,10 @@ if input_method == 'Manual Input':
     TotalRaised_percentile = round(get_percentile_by_category(documents, 'TotalRaised',avg_total_raised,most_likely_category),2)
 
     output = generate_commercial_analysis(NumCompetitors_percentile, most_likely_category, most_likely_business_status, TotalRaised_percentile, avg_num_competitors, avg_total_raised)
-
-    st.write("#### Commercial Analysis:")
-    st.write(output)
     
-    # Display the top 10 similar documents
-    st.write("#### Top 10 Similar Documents:")
-    st.dataframe(top_5_similar_docs)
+    # # Display the top 5 similar documents
+    # st.write("#### Top 5 Similar Documents:")
+    # st.dataframe(top_5_similar_docs)
     
     # # Display the average number of competitors
     # st.write("#### Average Number of Competitors:")
@@ -241,6 +238,9 @@ if input_method == 'Manual Input':
     plt.title('Combined Business Status Distribution')
     st.pyplot(plt)    
 
+    
+    st.write("#### Commercial Analysis:")
+    st.write(output)
     
     # if sumbmitted, send the prompt to openai to rob ~0.35$ from the user
     if submit_button:

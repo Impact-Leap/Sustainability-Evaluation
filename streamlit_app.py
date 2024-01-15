@@ -318,7 +318,7 @@ if input_method == 'Manual Input':
             st.session_state.display_commercial_analysis = True            
 
     if st.session_state.display_commercial_analysis:
-        with st.spinner('Processing commercial analysis, please wait for aproximately 90 seconds......'):
+        with st.spinner('Processing commercial analysis, please wait...'):
             # For demonstration, using mock data
             # st.write("### Commercial Analysis Response:")
 
@@ -486,7 +486,7 @@ elif input_method == 'Upload CSV':
                 # st.dataframe(df)
                 
                 #### 最后的最后！
-                with st.spinner('Evaluating your ideas, please wait...'):
+                with st.spinner('Evaluating your ideas, please wait for aproximately 90 seconds...'):
                     processed_results = process_inputs_in_parallel(df, api_key)
                     final_df = processed_results_to_df(processed_results)
                     # st.dataframe(final_df)

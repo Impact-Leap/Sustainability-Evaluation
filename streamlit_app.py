@@ -487,9 +487,23 @@ elif input_method == 'Upload CSV':
 
             # Iterate through each row in final_df to display the results
             for index, row in final_df.iterrows():
-                with st.expander(f"Analysis for Entry {index + 1}"):
+                # Determine if the expander should be open by default
+                if index == highest_total_score_idx:
+                    expanded = True
+                    special_message = "Congratulations! 🎉 This idea has achieved the overall best score in our evaluation."
+                elif index == highest_novelty_score_idx:
+                    expanded = True
+                    special_message = "Congratulations! 🌟 This idea has the highest novelty score, showcasing its unique and innovative aspects."
+                else:
+                    expanded = False
+                    special_message = ""
+            
+                with st.expander(f"Analysis for Entry {index + 1}", expanded=expanded):
                     st.markdown(f"**Problem:** {row['problem']}")
                     st.markdown(f"**Solution:** {row['solution']}")
+            
+                    if special_message:
+                        st.markdown(f"**{special_message}**")
 
                     # Sustainability Related
                     is_sustainable = row['is_sustainable']

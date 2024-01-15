@@ -480,7 +480,7 @@ elif input_method == 'Upload CSV':
 
             if not api_key:
                 st.error("Please enter an API key.")
-                else:
+            else:
                 # Display the DataFrame
                 # st.write("Uploaded Data:")
                 # st.dataframe(df)

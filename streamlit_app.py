@@ -269,7 +269,7 @@ if input_method == 'Manual Input':
             # st.pyplot()
 
             # Convert 'Metric' to a column suitable for the x-axis in st.bar_chart
-            score_df_for_chart = score_df.set_index('Metric')
+            score_df_for_chart = score_df.set_index('Metric').T
             
             # Display the bar chart using Streamlit's built-in functionality
             st.bar_chart(score_df_for_chart)

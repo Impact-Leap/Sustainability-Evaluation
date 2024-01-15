@@ -460,30 +460,31 @@ elif input_method == 'Upload CSV':
     uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
     if uploaded_file is not None:
 
-        if not api_key:
-            st.error("Please enter an API key.")
-        else:
-            try:
-                # Try reading with default encoding (UTF-8)
-                df = pd.read_csv(uploaded_file)
-            except UnicodeDecodeError:
-                # If UnicodeDecodeError, try reading with alternative encoding
-                uploaded_file.seek(0)  # Reset file pointer to the beginning
-                df = pd.read_csv(uploaded_file, encoding='ISO-8859-1')
-    
-            # Convert column names to lowercase
-            df.columns = [col.lower() for col in df.columns]
-    
-            # Check if 'id' column exists, if not add it
-            if 'id' not in df.columns:
-                df.insert(0, 'id', range(1, 1 + len(df)))
-    
-            # Check for necessary columns 'problem' and 'solution'
-            if 'problem' in df.columns and 'solution' in df.columns:
+        try:
+            # Try reading with default encoding (UTF-8)
+            df = pd.read_csv(uploaded_file)
+        except UnicodeDecodeError:
+            # If UnicodeDecodeError, try reading with alternative encoding
+            uploaded_file.seek(0)  # Reset file pointer to the beginning
+            df = pd.read_csv(uploaded_file, encoding='ISO-8859-1')
+
+        # Convert column names to lowercase
+        df.columns = [col.lower() for col in df.columns]
+
+        # Check if 'id' column exists, if not add it
+        if 'id' not in df.columns:
+            df.insert(0, 'id', range(1, 1 + len(df)))
+
+        # Check for necessary columns 'problem' and 'solution'
+        if 'problem' in df.columns and 'solution' in df.columns:
+
+            if not api_key:
+                st.error("Please enter an API key.")
+                else:
                 # Display the DataFrame
                 # st.write("Uploaded Data:")
                 # st.dataframe(df)
-    
+                
                 #### 最后的最后！
                 with st.spinner('Evaluating your ideas, please wait...'):
                     processed_results = process_inputs_in_parallel(df, api_key)

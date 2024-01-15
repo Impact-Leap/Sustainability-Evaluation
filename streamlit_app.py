@@ -540,8 +540,8 @@ elif input_method == 'Upload CSV':
                             # Additional information can be added here if available in final_df
                             # ...
 
-    else:
-        st.error("The CSV file must contain 'problem' and 'solution' columns.")
+        else:
+            st.error("The CSV file must contain 'problem' and 'solution' columns.")
 
         ## 测试！DAVID PART
 

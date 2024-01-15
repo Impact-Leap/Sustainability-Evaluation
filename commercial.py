@@ -120,7 +120,6 @@ def generate_commercial_analysis(NumCompetitors_percentile, most_likely_category
     else:
         summary += f"Market Competition: Prepare for a challenging yet rewarding journey. The sector is competitive, with an average of {avg_num_competitors} competitors, but your unique approach can still make a significant impact.\n\n"
 
-    summary += "Wishing you the best in your entrepreneurial journey. Your innovation has the potential to make a remarkable difference!"
 
     return summary
 

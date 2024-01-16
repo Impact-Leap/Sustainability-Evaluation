@@ -434,7 +434,10 @@ elif input_method == 'Upload CSV':
                     highest_total_score_idx = final_df['total_score'].idxmax()
                     highest_novelty_score_idx = final_df['novelty_score'].idxmax()
                     
-    
+                    num_ideas = len(final_df)
+                    summary_sentence = f"We have evaluated {num_ideas} of your ideas. Idea {highest_total_score_idx + 1} achieved the overall best score, while Idea {highest_novelty_score_idx + 1} has the highest novelty score."
+                    st.markdown(f"##### {summary_sentence}")
+                    
                     # Iterate through each row in final_df to display the results
                     for index, row in final_df.iterrows():
                         # Determine if the expander should be open by default

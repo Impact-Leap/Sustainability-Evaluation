@@ -449,7 +449,7 @@ elif input_method == 'Upload CSV':
                             special_message = ""
         
                         problem_snippet = row['problem'][:50] + "..."  # Display first 50 characters of the problem
-                        expander_label = f"📝 Entry {index+1}: {problem_snippet}"
+                        expander_label = f"📝 Idea {index+1}: {problem_snippet}"
         
                         with st.expander(expander_label, expanded=expanded):
                             if special_message:

@@ -219,7 +219,7 @@ if input_method == 'Manual Input':
                 """)
 
             # Display the summary score without decimals
-            st.markdown(f"<h3 style='color:green;'>Summary Score: {total_score} / 100</h3>", unsafe_allow_html=True)
+            st.markdown(f"<h3 style='color:green;'>Summary Score: {total_score} / 170</h3>", unsafe_allow_html=True)
             st.write("### Summary Analysis:")
             st.write(analysis_context)
 
@@ -470,10 +470,10 @@ elif input_method == 'Upload CSV':
                                 st.markdown("<h3 style='color: red;'>After careful evaluation, it appears that this idea is not sustainability-related.</h3>", unsafe_allow_html=True)
 
                             # Total Score
-                            st.markdown(f"<h3 style='color:green;'>Summary Score: {row['total_score']} / 100</h3>", unsafe_allow_html=True)
+                            st.markdown(f"<h3 style='color:green;'>Summary Score: {row['total_score']} / 170</h3>", unsafe_allow_html=True)
         
                             # Novelty Score and Analysis
-                            st.markdown(f"<h3 style='color:purple;'>Novelty Score: {row['novelty_score']} / 100</h3>", unsafe_allow_html=True)
+                            st.markdown(f"<h3 style='color:purple;'>Novelty Score: {row['novelty_score']} / 170</h3>", unsafe_allow_html=True)
                             st.write("### Novelty Analysis:")
                             st.write(row['novelty_comment'])
         

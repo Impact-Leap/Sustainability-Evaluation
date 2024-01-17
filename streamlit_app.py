@@ -438,7 +438,7 @@ elif input_method == 'Upload CSV':
                     # st.dataframe(final_df)
 
                     # Store final_df in session state for later use
-                    st.session_state.final_df = final_df
+                    # st.session_state.final_df = final_df
         
                     # Find the indices of the highest total_score and novelty_score
                     highest_total_score_idx = final_df['total_score'].idxmax()
@@ -495,11 +495,13 @@ elif input_method == 'Upload CSV':
                             # commercial_key = f"commercial_{index}"
                             
                             # button_key = f"button_{index}"
+    
                 # Dropdown for selecting an idea
-                idea_options = [f"Idea {i+1}" for i in range(len(final_df))]
-                selected_idea = st.selectbox("Select an idea for commercial analysis:", idea_options)
+                idea_options = [f"📝 Idea {index+1}: {row['problem'][:50]}..." for index, row in final_df.iterrows()]
+                selected_idea_format = st.selectbox("Select an idea for economical analysis:", idea_options, format_func=lambda x: x)
 
-                if st.button("Perform Commercial Analysis"):
+
+                if st.button("Perform Economical Analysis"):
                     selected_index = int(selected_idea.split(' ')[1]) - 1
                     
                     if st.session_state.selected_idea_index != selected_index:
@@ -507,7 +509,7 @@ elif input_method == 'Upload CSV':
                         problem = final_df.iloc[selected_index]['problem']
                         solution = final_df.iloc[selected_index]['solution']
                             
-                        with st.spinner('Processing commercial analysis, please wait...'):
+                        with st.spinner('Processing economical analysis, please wait...'):
             
                             # commercial_analysis_result = perform_commercial_analysis(problem, solution, documents)
     

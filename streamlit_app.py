@@ -395,7 +395,7 @@ if input_method == 'Manual Input':
         # if st.session_state.api_response:
             # csv_data = convert_data_to_csv(st.session_state.api_response)
             st.download_button(
-                label="Download Analysis"#,
+                label="Download Analysis",
                 data=temp_response,
                 file_name='Analysis.json',
                 # mime='text/csv'
@@ -612,7 +612,7 @@ elif input_method == 'Upload CSV':
                             st.write("##### *Wishing you the best in your entrepreneurial journey. Your innovation has the potential to make a remarkable difference!*")
                 
                 st.download_button(
-                    label="Download Analysis"#,
+                    label="Download Analysis",
                     data=final_df,
                     file_name='csv_analysis.csv',
                     # mime='text/csv'

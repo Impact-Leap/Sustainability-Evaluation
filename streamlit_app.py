@@ -456,12 +456,13 @@ elif input_method == 'Upload CSV':
                 # Display the DataFrame
                 # st.write("Uploaded Data:")
                 # st.dataframe(df)
-                
-                if 'my_dataframe' not in st.session_state.keys():
-                    with st.spinner('Evaluating your ideas, please wait for aproximately 90 seconds...'):
-                        processed_results = process_inputs_in_parallel(df, api_key)
-                        final_df = processed_results_to_df(processed_results)
-                        st.session_state['my_dataframe'] = final_df.copy()
+
+                # This line is for not reprocess every time
+                # if 'my_dataframe' not in st.session_state.keys():
+                with st.spinner('Evaluating your ideas, please wait for aproximately 90 seconds...'):
+                    processed_results = process_inputs_in_parallel(df, api_key)
+                    final_df = processed_results_to_df(processed_results)
+                    st.session_state['my_dataframe'] = final_df.copy()
                 # st.dataframe(final_df)
 
                 # Store final_df in session state for later use

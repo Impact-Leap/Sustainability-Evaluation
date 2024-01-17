@@ -23,8 +23,8 @@ if 'api_response' not in st.session_state:
     st.session_state.api_response = None
 if 'display_commercial_analysis' not in st.session_state:
     st.session_state.display_commercial_analysis = False
-if 'selected_idea_index' not in st.session_state:
-    st.session_state.selected_idea_index = None
+# if 'selected_idea_index' not in st.session_state:
+#     st.session_state.selected_idea_index = None
 
 
 # testing with mock json data to save money

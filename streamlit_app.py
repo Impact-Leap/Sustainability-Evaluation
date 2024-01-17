@@ -607,7 +607,7 @@ elif input_method == 'Upload CSV':
                 
                             st.write("##### *Wishing you the best in your entrepreneurial journey. Your innovation has the potential to make a remarkable difference!*")
                 
-                st.download_button(label='Download Analysis")
+                download_button = st.download_button(label='Download Analysis")
 
         else:
             st.error("The CSV file must contain 'problem' and 'solution' columns.")

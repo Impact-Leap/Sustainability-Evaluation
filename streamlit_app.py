@@ -385,7 +385,10 @@ if input_method == 'Manual Input':
         
                 # progress_bar.empty()
     
-
+# Add a key in session state to store commercial analysis data
+if 'commercial_analysis_results' not in st.session_state:
+    st.session_state.commercial_analysis_results = {}
+    
 elif input_method == 'Upload CSV':
 
     with st.expander("CSV Upload Instructions", expanded=True):
@@ -465,7 +468,7 @@ elif input_method == 'Upload CSV':
                             st.markdown(f"**Problem:** {row['problem']}")
                             st.markdown(f"**Solution:** {row['solution']}")
                     
-        
+
         
                             # Sustainability Related
                             is_sustainable = row['is_sustainable']
@@ -484,16 +487,21 @@ elif input_method == 'Upload CSV':
                             st.write("### Novelty Analysis:")
                             st.write(row['novelty_comment'])
                             
-
-                            button_key = f"button_{index}"
-                            if st.button("Display Commercial Analysis", key=button_key):
-                                st.session_state.clicked_button_index = index
-
-                            if st.session_state.get("clicked_button_index") == index:
+                            # Generate a unique key for each problem-solution pair
+                            commercial_key = f"commercial_{index}"
+                            
+                            # button_key = f"button_{index}"
+                            if st.button("Display Commercial Analysis", key=commercial_key):
+                                # Perform commercial analysis and store results in session state
                                 problem = row['problem']
-                                solution = row['solution']                                
+                                solution = row['solution']
+                                commercial_analysis_result = perform_commercial_analysis(problem, solution, documents)
+                                st.session_state.commercial_analysis_results[commercial_key] = commercial_analysis_result
+
+
+                                if commercial_key in st.session_state.commercial_analysis_results:                           
                                 
-                                with st.spinner('Processing commercial analysis, please wait...'):
+                                # with st.spinner('Processing commercial analysis, please wait...'):
 
                                     top_5_similar_docs, avg_num_competitors, avg_total_raised = get_top_5_tfidf(problem, solution)
                                     df_cat = get_business_status_distribution(top_5_similar_docs)

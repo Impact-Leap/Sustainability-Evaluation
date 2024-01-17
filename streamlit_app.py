@@ -22,6 +22,9 @@ if 'api_response' not in st.session_state:
     st.session_state.api_response = None
 if 'display_commercial_analysis' not in st.session_state:
     st.session_state.display_commercial_analysis = False
+if 'selected_idea_index' not in st.session_state:
+    st.session_state.selected_idea_index = None
+
 
 # testing with mock json data to save money
 with open('mock_data.json', 'r') as file:
@@ -498,98 +501,101 @@ elif input_method == 'Upload CSV':
 
                 if st.button("Perform Commercial Analysis"):
                     selected_index = int(selected_idea.split(' ')[1]) - 1
-                    problem = final_df.iloc[selected_index]['problem']
-                    solution = final_df.iloc[selected_index]['solution']
                     
-                    with st.spinner('Processing commercial analysis, please wait...'):
-        
-                        # commercial_analysis_result = perform_commercial_analysis(problem, solution, documents)
-
-                        top_5_similar_docs, avg_num_competitors, avg_total_raised = get_top_5_tfidf(problem, solution)
-                        df_cat = get_business_status_distribution(top_5_similar_docs)
-
-                        category_summary = df_cat.groupby('Category')['Percentage'].sum()
-                    
-                        # Find the category with the highest total percentage
-                        most_likely_category = category_summary.idxmax()
-                        
-                        # Group by 'BusinessStatus' and sum the 'Percentage'
-                        business_status_summary = df_cat.groupby('BusinessStatus')['Percentage'].sum()
-                        
-                        # Find the business status with the highest total percentage
-                        most_likely_business_status = business_status_summary.idxmax()
-                        
-                        # Find the number of competitor percentile
-                        NumCompetitors_percentile = round(get_percentile_by_category(documents, 'NumCompetitors',avg_num_competitors,most_likely_category),2)
-                        
-                        # Find the totalraised percentile
-                        TotalRaised_percentile = round(get_percentile_by_category(documents, 'TotalRaised',avg_total_raised,most_likely_category),2)
-                    
-                        output = generate_commercial_analysis(NumCompetitors_percentile, most_likely_category, most_likely_business_status, TotalRaised_percentile, avg_num_competitors, avg_total_raised)
-                          
-                        # Store the result and other details in session state
-                        # st.session_state.commercial_analysis_results[commercial_key] = {
-                        #     "output": output,
-                        #     "avg_num_competitors": avg_num_competitors,
-                        #     "avg_total_raised": avg_total_raised,
-                        #     "df_cat": df_cat
-                        # }
-
-
-                    # if commercial_key in st.session_state.commercial_analysis_results:                           
-                        
-                        # with st.spinner('Processing commercial analysis, please wait...'):
-                        # analysis_data = st.session_state.commercial_analysis_results[commercial_key]
-        
-                        
-                        st.write('<br><br>', unsafe_allow_html=True)
-                        col1, col2 = st.columns(2)
-                    
-                        with col1:
-                            st.metric(label="##### ⚔️Estimated Number of Competitors", value=avg_num_competitors)
-                        
-                        with col2:
-                            st.metric(label="##### 📈Estimated Investments (mln)", value=f"${avg_total_raised:,}")
-                    
-                        st.write('<br><br>', unsafe_allow_html=True)
-                        
-                    
-                        ## DONUTS
-                        # Combine all data into a single pie chart
-                        plt.figure(figsize=(10, 6))
-                        
-                        # Plot each entry in the DataFrame as a separate slice in the pie chart
-                        wedges, texts, autotexts = plt.pie(df_cat['Percentage'], labels=df_cat['BusinessStatus'], autopct='%1.1f%%', startangle=140)
-                        
-                        # Draw a circle at the center of pie to turn it into a donut chart
-                        centre_circle = plt.Circle((0,0),0.70,fc='white')
-                        fig = plt.gcf()
-                        fig.gca().add_artist(centre_circle)
-                        
-                        legend_labels = [f"{category}" for category in df_cat['Category']]
-                        plt.legend(wedges, legend_labels, title="Categories", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
-                        
-                        plt.title('Combined Business Status Distribution')
-                        st.pyplot(plt)    
-                    
-                        # st.write(output)
-                    
-                        # output = generate_commercial_analysis(NumCompetitors_percentile, most_likely_category, most_likely_business_status, TotalRaised_percentile, avg_num_competitors, avg_total_raised)
-                        st.markdown("### Economical Analysis")
-                        st.write("##### *🎉Congratulations on developing your innovative idea! After a thorough comparison with our extensive industry database, we've gathered insightful findings for your venture:*")
-                        # Split the output into key points
-                        key_points = output.split("\n\n")
-                        
-                        # Display each key point as a bullet point
-                    
-                        st.markdown("<ul>", unsafe_allow_html=True)
-                        for point in key_points:
-                            st.markdown(f"<li style='font-size: 18px;'>{point}</li>", unsafe_allow_html=True)
+                    if st.session_state.selected_idea_index != selected_index:
+                        st.session_state.selected_idea_index = selected_index
+                        problem = final_df.iloc[selected_index]['problem']
+                        solution = final_df.iloc[selected_index]['solution']
+                            
+                        with st.spinner('Processing commercial analysis, please wait...'):
             
-                        st.markdown("</ul>", unsafe_allow_html=True)
+                            # commercial_analysis_result = perform_commercial_analysis(problem, solution, documents)
+    
+                            top_5_similar_docs, avg_num_competitors, avg_total_raised = get_top_5_tfidf(problem, solution)
+                            df_cat = get_business_status_distribution(top_5_similar_docs)
+    
+                            category_summary = df_cat.groupby('Category')['Percentage'].sum()
+                        
+                            # Find the category with the highest total percentage
+                            most_likely_category = category_summary.idxmax()
+                            
+                            # Group by 'BusinessStatus' and sum the 'Percentage'
+                            business_status_summary = df_cat.groupby('BusinessStatus')['Percentage'].sum()
+                            
+                            # Find the business status with the highest total percentage
+                            most_likely_business_status = business_status_summary.idxmax()
+                            
+                            # Find the number of competitor percentile
+                            NumCompetitors_percentile = round(get_percentile_by_category(documents, 'NumCompetitors',avg_num_competitors,most_likely_category),2)
+                            
+                            # Find the totalraised percentile
+                            TotalRaised_percentile = round(get_percentile_by_category(documents, 'TotalRaised',avg_total_raised,most_likely_category),2)
+                        
+                            output = generate_commercial_analysis(NumCompetitors_percentile, most_likely_category, most_likely_business_status, TotalRaised_percentile, avg_num_competitors, avg_total_raised)
+                              
+                            # Store the result and other details in session state
+                            # st.session_state.commercial_analysis_results[commercial_key] = {
+                            #     "output": output,
+                            #     "avg_num_competitors": avg_num_competitors,
+                            #     "avg_total_raised": avg_total_raised,
+                            #     "df_cat": df_cat
+                            # }
+    
+    
+                        # if commercial_key in st.session_state.commercial_analysis_results:                           
+                            
+                            # with st.spinner('Processing commercial analysis, please wait...'):
+                            # analysis_data = st.session_state.commercial_analysis_results[commercial_key]
             
-                        st.write("##### *Wishing you the best in your entrepreneurial journey. Your innovation has the potential to make a remarkable difference!*")
-            
+                            
+                            st.write('<br><br>', unsafe_allow_html=True)
+                            col1, col2 = st.columns(2)
+                        
+                            with col1:
+                                st.metric(label="##### ⚔️Estimated Number of Competitors", value=avg_num_competitors)
+                            
+                            with col2:
+                                st.metric(label="##### 📈Estimated Investments (mln)", value=f"${avg_total_raised:,}")
+                        
+                            st.write('<br><br>', unsafe_allow_html=True)
+                            
+                        
+                            ## DONUTS
+                            # Combine all data into a single pie chart
+                            plt.figure(figsize=(10, 6))
+                            
+                            # Plot each entry in the DataFrame as a separate slice in the pie chart
+                            wedges, texts, autotexts = plt.pie(df_cat['Percentage'], labels=df_cat['BusinessStatus'], autopct='%1.1f%%', startangle=140)
+                            
+                            # Draw a circle at the center of pie to turn it into a donut chart
+                            centre_circle = plt.Circle((0,0),0.70,fc='white')
+                            fig = plt.gcf()
+                            fig.gca().add_artist(centre_circle)
+                            
+                            legend_labels = [f"{category}" for category in df_cat['Category']]
+                            plt.legend(wedges, legend_labels, title="Categories", loc="center left", bbox_to_anchor=(1, 0, 0.5, 1))
+                            
+                            plt.title('Combined Business Status Distribution')
+                            st.pyplot(plt)    
+                        
+                            # st.write(output)
+                        
+                            # output = generate_commercial_analysis(NumCompetitors_percentile, most_likely_category, most_likely_business_status, TotalRaised_percentile, avg_num_competitors, avg_total_raised)
+                            st.markdown("### Economical Analysis")
+                            st.write("##### *🎉Congratulations on developing your innovative idea! After a thorough comparison with our extensive industry database, we've gathered insightful findings for your venture:*")
+                            # Split the output into key points
+                            key_points = output.split("\n\n")
+                            
+                            # Display each key point as a bullet point
+                        
+                            st.markdown("<ul>", unsafe_allow_html=True)
+                            for point in key_points:
+                                st.markdown(f"<li style='font-size: 18px;'>{point}</li>", unsafe_allow_html=True)
+                
+                            st.markdown("</ul>", unsafe_allow_html=True)
+                
+                            st.write("##### *Wishing you the best in your entrepreneurial journey. Your innovation has the potential to make a remarkable difference!*")
+                
         
 
         else:

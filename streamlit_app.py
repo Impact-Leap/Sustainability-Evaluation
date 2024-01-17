@@ -454,6 +454,7 @@ elif input_method == 'Upload CSV':
                 with st.spinner('Evaluating your ideas, please wait for aproximately 90 seconds...'):
                     processed_results = process_inputs_in_parallel(df, api_key)
                     final_df = processed_results_to_df(processed_results)
+                    st.session_state['my_dataframe'] = final_df.copy()
                     # st.dataframe(final_df)
 
                     # Store final_df in session state for later use
@@ -635,7 +636,7 @@ elif input_method == 'Upload CSV':
                 
                 st.download_button(
                     label="Download Analysis",
-                    data=convert_df_to_csv(final_df),
+                    data=convert_df_to_csv(st.session_state['my_dataframe']),
                     file_name='csv_analysis.csv',
                     # mime='text/csv'
                 )    

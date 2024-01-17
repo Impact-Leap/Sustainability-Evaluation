@@ -417,6 +417,8 @@ if 'commercial_analysis_results' not in st.session_state:
     
 elif input_method == 'Upload CSV':
 
+    st.session_state.uploaded_file = False
+
     with st.expander("CSV Upload Instructions", expanded=True):
         st.write("""
             Please follow these guidelines for your CSV file:
@@ -425,8 +427,11 @@ elif input_method == 'Upload CSV':
             - The file should be encoded in UTF-8 or ISO-8859-1.
             - Each row in the file should represent a separate problem-solution pair.
         """)
-        
-    uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
+    
+    if st.session_state.uploaded_file == False:
+        uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
+        st.session_state.uploaded_file = True
+
     if uploaded_file is not None:
 
         try:
@@ -454,84 +459,84 @@ elif input_method == 'Upload CSV':
                 # st.write("Uploaded Data:")
                 # st.dataframe(df)
                 
+                if 'my_dataframe' not in st.session_state.keys():
+                    with st.spinner('Evaluating your ideas, please wait for aproximately 90 seconds...'):
+                        processed_results = process_inputs_in_parallel(df, api_key)
+                        final_df = processed_results_to_df(processed_results)
+                        st.session_state['my_dataframe'] = final_df.copy()
+                # st.dataframe(final_df)
+
+                # Store final_df in session state for later use
+                # st.session_state.final_df = final_df
+    
+                # Find the indices of the highest total_score and novelty_score
+                highest_total_score_idx = st.session_state['my_dataframe']['total_score'].idxmax()
+                highest_novelty_score_idx = st.session_state['my_dataframe']['novelty_score'].idxmax()
                 
-                with st.spinner('Evaluating your ideas, please wait for aproximately 90 seconds...'):
-                    processed_results = process_inputs_in_parallel(df, api_key)
-                    final_df = processed_results_to_df(processed_results)
-                    st.session_state['my_dataframe'] = final_df.copy()
-                    # st.dataframe(final_df)
+                num_ideas = len(st.session_state['my_dataframe'])
+                summary_sentence = f"We have evaluated {num_ideas} of your ideas. Idea {highest_total_score_idx + 1} achieved the overall best score, while Idea {highest_novelty_score_idx + 1} has the highest novelty score."
+                st.markdown(f"##### {summary_sentence}")
+                
+                # Iterate through each row in final_df to display the results
+                for index, row in st.session_state['my_dataframe'].iterrows():
+                    # Determine if the expander should be open by default
+                    if index == highest_total_score_idx:
+                        expanded = True
+                        special_message = "Congratulations! 🎉 This idea has achieved the overall best score in our evaluation."
+                    elif index == highest_novelty_score_idx:
+                        expanded = True
+                        special_message = "Congratulations! 🌟 This idea has the highest novelty score, showcasing its unique and innovative aspects."
+                    else:
+                        expanded = False
+                        special_message = ""
+    
+                    problem_snippet = row['problem'][:50] + "..."  # Display first 50 characters of the problem
+                    expander_label = f"📝 Idea {index+1}: {problem_snippet}"
 
-                    # Store final_df in session state for later use
-                    # st.session_state.final_df = final_df
-        
-                    # Find the indices of the highest total_score and novelty_score
-                    highest_total_score_idx = final_df['total_score'].idxmax()
-                    highest_novelty_score_idx = final_df['novelty_score'].idxmax()
+                    is_sustainable = row['is_sustainable']
+                    total_score = row['total_score']
+                    novelty_score = row['novelty_score']
+                    novelty_comment = row['novelty_comment']
                     
-                    num_ideas = len(final_df)
-                    summary_sentence = f"We have evaluated {num_ideas} of your ideas. Idea {highest_total_score_idx + 1} achieved the overall best score, while Idea {highest_novelty_score_idx + 1} has the highest novelty score."
-                    st.markdown(f"##### {summary_sentence}")
-                    
-                    # Iterate through each row in final_df to display the results
-                    for index, row in final_df.iterrows():
-                        # Determine if the expander should be open by default
-                        if index == highest_total_score_idx:
-                            expanded = True
-                            special_message = "Congratulations! 🎉 This idea has achieved the overall best score in our evaluation."
-                        elif index == highest_novelty_score_idx:
-                            expanded = True
-                            special_message = "Congratulations! 🌟 This idea has the highest novelty score, showcasing its unique and innovative aspects."
-                        else:
-                            expanded = False
-                            special_message = ""
-        
-                        problem_snippet = row['problem'][:50] + "..."  # Display first 50 characters of the problem
-                        expander_label = f"📝 Idea {index+1}: {problem_snippet}"
-
-                        is_sustainable = row['is_sustainable']
-                        total_score = row['total_score']
-                        novelty_score = row['novelty_score']
-                        novelty_comment = row['novelty_comment']
-                        
-                        with st.expander(expander_label, expanded=expanded):
-                            if special_message:
-                                st.markdown(f"##### **{special_message}**")
-                                 
-                            st.markdown(f"**Problem:** {row['problem']}")
-                            st.markdown(f"**Solution:** {row['solution']}")
-                    
-
-        
-                            # Sustainability Related
-                            # is_sustainable = row['is_sustainable']
-                            
-                            # sustainability_status = "Yes" if is_sustainable else "No"
-                            # st.markdown(f"<h3 style='color:blue;'>Is the Idea Sustainability Related? {sustainability_status}</h3>", unsafe_allow_html=True)
-                            if is_sustainable:
-                                st.markdown("<h3 style='color: green;'>We've evaluated this, and it's exciting news: This idea is sustainability-related!</h3>", unsafe_allow_html=True)
-                            else:
-                                st.markdown("<h3 style='color: red;'>After careful evaluation, it appears that this idea is not sustainability-related.</h3>", unsafe_allow_html=True)
-
-                            # Only display scores and novelty analysis if the idea is not 'bad'
-                            if not pd.isna(total_score) and not pd.isna(novelty_score):
-                                st.markdown(f"<h3 style='color:green;'>Summary Score: {total_score} / 170</h3>", unsafe_allow_html=True)
-                                st.markdown(f"<h3 style='color:purple;'>Novelty Score: {novelty_score} / 100</h3>", unsafe_allow_html=True)
-                                st.write("### Novelty Analysis:")
-                                st.write(novelty_comment)
+                    with st.expander(expander_label, expanded=expanded):
+                        if special_message:
+                            st.markdown(f"##### **{special_message}**")
                                 
-                            # # Total Score
-                            # st.markdown(f"<h3 style='color:green;'>Sustainability Score: {row['total_score']} / 170</h3>", unsafe_allow_html=True)
-        
-                            # # Novelty Score and Analysis
-                            # st.markdown(f"<h3 style='color:purple;'>Novelty Score: {row['novelty_score']} / 170</h3>", unsafe_allow_html=True)
-                            # st.write("### Novelty Analysis:")
-                            # st.write(row['novelty_comment'])
+                        st.markdown(f"**Problem:** {row['problem']}")
+                        st.markdown(f"**Solution:** {row['solution']}")
+                
 
+    
+                        # Sustainability Related
+                        # is_sustainable = row['is_sustainable']
+                        
+                        # sustainability_status = "Yes" if is_sustainable else "No"
+                        # st.markdown(f"<h3 style='color:blue;'>Is the Idea Sustainability Related? {sustainability_status}</h3>", unsafe_allow_html=True)
+                        if is_sustainable:
+                            st.markdown("<h3 style='color: green;'>We've evaluated this, and it's exciting news: This idea is sustainability-related!</h3>", unsafe_allow_html=True)
+                        else:
+                            st.markdown("<h3 style='color: red;'>After careful evaluation, it appears that this idea is not sustainability-related.</h3>", unsafe_allow_html=True)
+
+                        # Only display scores and novelty analysis if the idea is not 'bad'
+                        if not pd.isna(total_score) and not pd.isna(novelty_score):
+                            st.markdown(f"<h3 style='color:green;'>Summary Score: {total_score} / 170</h3>", unsafe_allow_html=True)
+                            st.markdown(f"<h3 style='color:purple;'>Novelty Score: {novelty_score} / 100</h3>", unsafe_allow_html=True)
+                            st.write("### Novelty Analysis:")
+                            st.write(novelty_comment)
                             
-                            # Generate a unique key for each problem-solution pair
-                            # commercial_key = f"commercial_{index}"
-                            
-                            # button_key = f"button_{index}"
+                        # # Total Score
+                        # st.markdown(f"<h3 style='color:green;'>Sustainability Score: {row['total_score']} / 170</h3>", unsafe_allow_html=True)
+    
+                        # # Novelty Score and Analysis
+                        # st.markdown(f"<h3 style='color:purple;'>Novelty Score: {row['novelty_score']} / 170</h3>", unsafe_allow_html=True)
+                        # st.write("### Novelty Analysis:")
+                        # st.write(row['novelty_comment'])
+
+                        
+                        # Generate a unique key for each problem-solution pair
+                        # commercial_key = f"commercial_{index}"
+                        
+                        # button_key = f"button_{index}"
 
                 # st.markdown("---")
                 # st.markdown("### **Do you want further economical analysis?💸**")
@@ -653,6 +658,5 @@ elif input_method == 'Upload CSV':
         
         
         
-
 
 

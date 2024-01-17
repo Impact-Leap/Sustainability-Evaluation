@@ -482,7 +482,12 @@ elif input_method == 'Upload CSV':
         
                         problem_snippet = row['problem'][:50] + "..."  # Display first 50 characters of the problem
                         expander_label = f"📝 Idea {index+1}: {problem_snippet}"
-        
+
+                        is_sustainable = row['is_sustainable']
+                        total_score = row['total_score']
+                        novelty_score = row['novelty_score']
+                        novelty_comment = row['novelty_comment']
+                        
                         with st.expander(expander_label, expanded=expanded):
                             if special_message:
                                 st.markdown(f"##### **{special_message}**")
@@ -493,7 +498,8 @@ elif input_method == 'Upload CSV':
 
         
                             # Sustainability Related
-                            is_sustainable = row['is_sustainable']
+                            # is_sustainable = row['is_sustainable']
+                            
                             # sustainability_status = "Yes" if is_sustainable else "No"
                             # st.markdown(f"<h3 style='color:blue;'>Is the Idea Sustainability Related? {sustainability_status}</h3>", unsafe_allow_html=True)
                             if is_sustainable:
@@ -501,13 +507,20 @@ elif input_method == 'Upload CSV':
                             else:
                                 st.markdown("<h3 style='color: red;'>After careful evaluation, it appears that this idea is not sustainability-related.</h3>", unsafe_allow_html=True)
 
-                            # Total Score
-                            st.markdown(f"<h3 style='color:green;'>Sustainability Score: {row['total_score']} / 170</h3>", unsafe_allow_html=True)
+                            # Only display scores and novelty analysis if the idea is not 'bad'
+                            if total_score is not None and novelty_score is not None:
+                                st.markdown(f"<h3 style='color:green;'>Summary Score: {total_score} / 170</h3>", unsafe_allow_html=True)
+                                st.markdown(f"<h3 style='color:purple;'>Novelty Score: {novelty_score} / 100</h3>", unsafe_allow_html=True)
+                                st.write("### Novelty Analysis:")
+                                st.write(novelty_comment)
+                                
+                            # # Total Score
+                            # st.markdown(f"<h3 style='color:green;'>Sustainability Score: {row['total_score']} / 170</h3>", unsafe_allow_html=True)
         
-                            # Novelty Score and Analysis
-                            st.markdown(f"<h3 style='color:purple;'>Novelty Score: {row['novelty_score']} / 170</h3>", unsafe_allow_html=True)
-                            st.write("### Novelty Analysis:")
-                            st.write(row['novelty_comment'])
+                            # # Novelty Score and Analysis
+                            # st.markdown(f"<h3 style='color:purple;'>Novelty Score: {row['novelty_score']} / 170</h3>", unsafe_allow_html=True)
+                            # st.write("### Novelty Analysis:")
+                            # st.write(row['novelty_comment'])
 
                             
                             # Generate a unique key for each problem-solution pair

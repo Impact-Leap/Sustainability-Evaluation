@@ -52,8 +52,15 @@ def processed_results_to_df(processed_results):
     summary_df['ai_response_json'] = summary_df['ai_response'].apply(lambda x: json.loads(x))
 
     def safe_access_evaluation(data, key):
-        return int(data['Evaluation'][key]) if 'Evaluation' in data and key in data['Evaluation'] else None
-
+        # Check if 'Evaluation' and the specific key exist and have a non-empty value
+        if 'Evaluation' in data and key in data['Evaluation'] and data['Evaluation'][key] != '':
+            try:
+                return int(data['Evaluation'][key])  # Convert to integer
+            except ValueError:
+                return None  # Return None if conversion fails
+        else:
+            return None  # Return None if keys do not exist or values are empty
+    
     summary_df['is_sustainable'] = summary_df['ai_response_json'].apply(
         lambda x: x.get('Idea_Sustainability_Related', False))
     summary_df['total_score'] = summary_df['ai_response_json'].apply(
@@ -62,7 +69,6 @@ def processed_results_to_df(processed_results):
         lambda x: safe_access_evaluation(x, 'Novelty_Score'))
     summary_df['novelty_comment'] = summary_df['ai_response_json'].apply(
         lambda x: x['Evaluation']['Novelty_Evaluation']['Comment'] if 'Evaluation' in x and 'Novelty_Evaluation' in x['Evaluation'] and 'Comment' in x['Evaluation']['Novelty_Evaluation'] else "")
-
 
     # sort by total score
     summary_df.sort_values(by=['total_score'], ascending=False, inplace=True)

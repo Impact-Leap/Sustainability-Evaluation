@@ -57,9 +57,9 @@ def emoji():
 # for fun, but we commented it out
 # emoji()
 
-@st.cache(allow_output_mutation=True)
-def cached_processed_results_to_df(processed_results):
-    return processed_results_to_df(processed_results)
+# @st.cache(allow_output_mutation=True)
+# def cached_processed_results_to_df(processed_results):
+#     return processed_results_to_df(processed_results)
 
 def convert_df_to_csv(df):
     output = StringIO()

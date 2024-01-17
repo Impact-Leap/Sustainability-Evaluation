@@ -295,18 +295,18 @@ if input_method == 'Manual Input':
             
         # Display a section for commercial analysis
             st.markdown("---")
-            st.markdown("### **Do you want further commercial analysis?💸**")
+            st.markdown("### **Do you want further economical analysis?💸**")
             # st.markdown("*Note: This will incur additional costs with the use of the API key.*")
         
             # Button for commercial analysis
-            commercial_analysis_button = st.button("Display Commercial Analysis")
+            commercial_analysis_button = st.button("Display Economical Analysis")
         
             # Mock commercial analysis process (commented out, use for real implementation)
             if commercial_analysis_button:
                 st.session_state.display_commercial_analysis = True            
         
             if st.session_state.display_commercial_analysis:
-                with st.spinner('Processing commercial analysis, please wait...'):
+                with st.spinner('Processing economical analysis, please wait...'):
           
                     # Read the file contents
                     documents = pd.read_csv('Cleaned_ValidationSet.csv', encoding='ISO-8859-1')
@@ -367,7 +367,7 @@ if input_method == 'Manual Input':
                     # st.write(output)
                 
                     output = generate_commercial_analysis(NumCompetitors_percentile, most_likely_category, most_likely_business_status, TotalRaised_percentile, avg_num_competitors, avg_total_raised)
-                    st.markdown("### Commercial Analysis Summary")
+                    st.markdown("### Economical Analysis")
                     st.write("##### *🎉Congratulations on developing your innovative idea! After a thorough comparison with our extensive industry database, we've gathered insightful findings for your venture:*")
                     # Split the output into key points
                     key_points = output.split("\n\n")

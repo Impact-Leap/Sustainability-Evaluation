@@ -508,7 +508,7 @@ elif input_method == 'Upload CSV':
                                 st.markdown("<h3 style='color: red;'>After careful evaluation, it appears that this idea is not sustainability-related.</h3>", unsafe_allow_html=True)
 
                             # Only display scores and novelty analysis if the idea is not 'bad'
-                            if total_score is not None and novelty_score is not None:
+                            if not pd.isna(total_score) and not pd.isna(novelty_score):
                                 st.markdown(f"<h3 style='color:green;'>Summary Score: {total_score} / 170</h3>", unsafe_allow_html=True)
                                 st.markdown(f"<h3 style='color:purple;'>Novelty Score: {novelty_score} / 100</h3>", unsafe_allow_html=True)
                                 st.write("### Novelty Analysis:")

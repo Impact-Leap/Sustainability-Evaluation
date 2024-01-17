@@ -341,7 +341,7 @@ if input_method == 'Manual Input':
                         st.metric(label="##### ⚔️Estimated Number of Competitors", value=avg_num_competitors)
                     
                     with col2:
-                        st.metric(label="##### 📈Estimated Total Raised (mln)", value=f"${avg_total_raised:,}")
+                        st.metric(label="##### 📈Estimated Investments (mln)", value=f"${avg_total_raised:,}")
                 
                     st.write('<br><br>', unsafe_allow_html=True)
                 

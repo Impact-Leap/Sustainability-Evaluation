@@ -224,7 +224,7 @@ if input_method == 'Manual Input':
             
             # Display the novelty similarity score with decimals and novelty status
             st.markdown(f"<h3 style='color:orange;'>Similarity Score: {max_similarity:.2f} / 1</h3>", unsafe_allow_html=True)
-            st.markdown(f"<h3 style='color:orange;'>Is it Novelty? {novelty_status}</h3>", unsafe_allow_html=True)
+            # st.markdown(f"<h3 style='color:orange;'>Is it Novelty? {novelty_status}</h3>", unsafe_allow_html=True)
 
             with st.expander("Understanding the Novelty Similarity Score"):
                 st.write("""
@@ -235,8 +235,8 @@ if input_method == 'Manual Input':
                 """)
 
             # Display the summary score without decimals
-            st.markdown(f"<h3 style='color:green;'>Summary Score: {total_score} / 170</h3>", unsafe_allow_html=True)
-            st.write("### Summary Analysis:")
+            st.markdown(f"<h3 style='color:green;'>Sustainability Score: {total_score} / 170</h3>", unsafe_allow_html=True)
+            st.write("### Sustainability Analysis:")
             st.write(analysis_context)
 
             
@@ -502,7 +502,7 @@ elif input_method == 'Upload CSV':
                                 st.markdown("<h3 style='color: red;'>After careful evaluation, it appears that this idea is not sustainability-related.</h3>", unsafe_allow_html=True)
 
                             # Total Score
-                            st.markdown(f"<h3 style='color:green;'>Summary Score: {row['total_score']} / 170</h3>", unsafe_allow_html=True)
+                            st.markdown(f"<h3 style='color:green;'>Sustainability Score: {row['total_score']} / 170</h3>", unsafe_allow_html=True)
         
                             # Novelty Score and Analysis
                             st.markdown(f"<h3 style='color:purple;'>Novelty Score: {row['novelty_score']} / 170</h3>", unsafe_allow_html=True)
@@ -514,7 +514,10 @@ elif input_method == 'Upload CSV':
                             # commercial_key = f"commercial_{index}"
                             
                             # button_key = f"button_{index}"
-    
+
+                st.markdown("---")
+                st.markdown("### **Do you want further economical analysis?💸**")
+            
                 # Dropdown for selecting an idea
                 idea_options = [f"📝 Idea {index+1}: {row['problem'][:50]}..." for index, row in final_df.iterrows()]
                 selected_idea_format = st.selectbox("Select an idea for economical analysis:", idea_options, format_func=lambda x: x)

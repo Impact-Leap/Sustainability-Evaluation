@@ -430,6 +430,9 @@ elif input_method == 'Upload CSV':
                     processed_results = process_inputs_in_parallel(df, api_key)
                     final_df = processed_results_to_df(processed_results)
                     # st.dataframe(final_df)
+
+                    # Store final_df in session state for later use
+                    st.session_state.final_df = final_df
         
                     # Find the indices of the highest total_score and novelty_score
                     highest_total_score_idx = final_df['total_score'].idxmax()
@@ -480,11 +483,16 @@ elif input_method == 'Upload CSV':
                             st.markdown(f"<h3 style='color:purple;'>Novelty Score: {row['novelty_score']} / 170</h3>", unsafe_allow_html=True)
                             st.write("### Novelty Analysis:")
                             st.write(row['novelty_comment'])
+                            
 
-                            problem = row['problem']
-                            solution = row['solution']
+                            button_key = f"button_{index}"
+                            if st.button("Display Commercial Analysis", key=button_key):
+                                st.session_state.clicked_button_index = index
 
-                            if st.button("Display Commercial Analysis", key=f"button_{index}"):
+                            if st.session_state.get("clicked_button_index") == index:
+                                problem = row['problem']
+                                solution = row['solution']                                
+                                
                                 with st.spinner('Processing commercial analysis, please wait...'):
 
                                     top_5_similar_docs, avg_num_competitors, avg_total_raised = get_top_5_tfidf(problem, solution)

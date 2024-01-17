@@ -499,7 +499,7 @@ elif input_method == 'Upload CSV':
                                 st.session_state.commercial_analysis_results[commercial_key] = commercial_analysis_result
 
 
-                                if commercial_key in st.session_state.commercial_analysis_results:                           
+                            if commercial_key in st.session_state.commercial_analysis_results:                           
                                 
                                 # with st.spinner('Processing commercial analysis, please wait...'):
 

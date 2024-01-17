@@ -396,8 +396,8 @@ if input_method == 'Manual Input':
             # csv_data = convert_data_to_csv(st.session_state.api_response)
             st.download_button(
                 label="Download Analysis",
-                data=temp_response,
-                file_name='Analysis.json',
+                data=api_response,
+                file_name='Analysis.json'
                 # mime='text/csv'
             )    
 

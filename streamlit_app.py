@@ -149,6 +149,7 @@ solution_placeholder = "Bariq factory to recycle plastic bottles"
 
         
 if input_method == 'Manual Input':
+    st.session_state.uploaded_file = False
     with st.form("business_idea_form"):
         problem = st.text_area("Problem:", value="", placeholder=problem_placeholder)
         solution = st.text_area("Solution:", value="", placeholder=solution_placeholder)
@@ -417,7 +418,7 @@ if 'commercial_analysis_results' not in st.session_state:
     
 elif input_method == 'Upload CSV':
 
-    st.session_state.uploaded_file = False
+    # st.session_state.uploaded_file = False
 
     with st.expander("CSV Upload Instructions", expanded=True):
         st.write("""

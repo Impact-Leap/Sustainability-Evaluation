@@ -67,7 +67,10 @@ metrics = [
     "11_Sustainable_Cities_and_Communities", "12_Responsible_Consumption_and_Production",
     "13_Climate_Action", "14_Life_Below_Water", "15_Life_on_Land",
     "16_Peace_Justice_and_Strong_Institutions", "17_Partnerships_for_the_Goals"
-]    
+]
+
+# variable to temporarely store api response
+temp_response = ""
 
 def format_metric_name(metric):
     # Split the string at the underscore and return the part after it
@@ -177,6 +180,7 @@ if input_method == 'Manual Input':
     # if api_response:
     if st.session_state.api_response:
         api_response = st.session_state.api_response
+        temp_response = api_response
         # Display if the idea is sustainability related with highlighting
         is_sustainable = api_response['Idea_Sustainability_Related'] == True
         
@@ -392,7 +396,7 @@ if input_method == 'Manual Input':
             # csv_data = convert_data_to_csv(st.session_state.api_response)
             st.download_button(
                 label="Download Analysis"#,
-                data=api_response,
+                data=temp_response,
                 file_name='Analysis.json',
                 # mime='text/csv'
             )    

@@ -12,6 +12,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 from tfidf_novelty import get_tfidf_novelty
 from commercial import get_top_5_tfidf, get_business_status_distribution, get_percentile_by_category, generate_commercial_analysis
 from parallel_summary import chat_with_openai, process_inputs_in_parallel, processed_results_to_df
+from io import StringIO
 
 import openai
 import re
@@ -55,6 +56,11 @@ def emoji():
 
 # for fun, but we commented it out
 # emoji()
+
+def convert_df_to_csv(df):
+    output = StringIO()
+    df.to_csv(output, index=False)  # index=False to not include row indices
+    return output.getvalue()
 
 # st.title('🌏 Earth Hack')
 
@@ -396,7 +402,7 @@ if input_method == 'Manual Input':
             # csv_data = convert_data_to_csv(st.session_state.api_response)
             st.download_button(
                 label="Download Analysis",
-                data=api_response,
+                data=json.dumps(api_response),
                 file_name='Analysis.json'
                 # mime='text/csv'
             )    
@@ -613,7 +619,7 @@ elif input_method == 'Upload CSV':
                 
                 st.download_button(
                     label="Download Analysis",
-                    data=final_df,
+                    data=convert_df_to_csv(final_df),
                     file_name='csv_analysis.csv',
                     # mime='text/csv'
                 )    

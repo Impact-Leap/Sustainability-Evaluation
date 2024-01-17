@@ -640,13 +640,16 @@ elif input_method == 'Upload CSV':
                 #             st.markdown("</ul>", unsafe_allow_html=True)
                 
                 #             st.write("##### *Wishing you the best in your entrepreneurial journey. Your innovation has the potential to make a remarkable difference!*")
-                
-                st.download_button(
-                    label="Download Analysis",
-                    data=convert_df_to_csv(st.session_state['my_dataframe']),
-                    file_name='csv_analysis.csv',
-                    # mime='text/csv'
-                )    
+
+
+                #######
+                # Download function, would cause unable to read another csv, so we deleted this function.
+                # st.download_button(
+                #     label="Download Analysis",
+                #     data=convert_df_to_csv(st.session_state['my_dataframe']),
+                #     file_name='csv_analysis.csv',
+                #     # mime='text/csv'
+                # )    
 
         else:
             st.error("The CSV file must contain 'problem' and 'solution' columns.")

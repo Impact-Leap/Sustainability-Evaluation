@@ -387,7 +387,16 @@ if input_method == 'Manual Input':
                     st.write("##### *Wishing you the best in your entrepreneurial journey. Your innovation has the potential to make a remarkable difference!*")
         
                 # progress_bar.empty()
-    
+
+        # if st.session_state.api_response:
+            # csv_data = convert_data_to_csv(st.session_state.api_response)
+            st.download_button(
+                label="Download Analysis"#,
+                # data=csv_data,
+                # file_name='manual_input_analysis.csv',
+                # mime='text/csv'
+            )    
+
 # Add a key in session state to store commercial analysis data
 if 'commercial_analysis_results' not in st.session_state:
     st.session_state.commercial_analysis_results = {}
@@ -598,7 +607,7 @@ elif input_method == 'Upload CSV':
                 
                             st.write("##### *Wishing you the best in your entrepreneurial journey. Your innovation has the potential to make a remarkable difference!*")
                 
-        
+                st.download_button(label='Download Analysis")
 
         else:
             st.error("The CSV file must contain 'problem' and 'solution' columns.")

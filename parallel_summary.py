@@ -51,13 +51,18 @@ def processed_results_to_df(processed_results):
     # add a new column that use json to load the ai_response
     summary_df['ai_response_json'] = summary_df['ai_response'].apply(lambda x: json.loads(x))
 
-    summary_df['is_sustainable'] = summary_df['ai_response_json'].apply(
-        lambda x: x['Idea_Sustainability_Related'] == True)
-    summary_df['total_score'] = summary_df['ai_response_json'].apply(lambda x: int(x['Evaluation']['Total_Score']))
-    summary_df['novelty_score'] = summary_df['ai_response_json'].apply(lambda x: int(x['Evaluation']['Novelty_Score']))
+    def safe_access_evaluation(data, key):
+        return int(data['Evaluation'][key]) if 'Evaluation' in data and key in data['Evaluation'] else None
 
+    summary_df['is_sustainable'] = summary_df['ai_response_json'].apply(
+        lambda x: x.get('Idea_Sustainability_Related', False))
+    summary_df['total_score'] = summary_df['ai_response_json'].apply(
+        lambda x: safe_access_evaluation(x, 'Total_Score'))
+    summary_df['novelty_score'] = summary_df['ai_response_json'].apply(
+        lambda x: safe_access_evaluation(x, 'Novelty_Score'))
     summary_df['novelty_comment'] = summary_df['ai_response_json'].apply(
-        lambda x: x['Evaluation']['Novelty_Evaluation']['Comment'])
+        lambda x: x['Evaluation']['Novelty_Evaluation']['Comment'] if 'Evaluation' in x and 'Novelty_Evaluation' in x['Evaluation'] and 'Comment' in x['Evaluation']['Novelty_Evaluation'] else "")
+
 
     # sort by total score
     summary_df.sort_values(by=['total_score'], ascending=False, inplace=True)

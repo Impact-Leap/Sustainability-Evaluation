@@ -489,7 +489,11 @@ elif input_method == 'Upload CSV':
                         expanded = False
                         special_message = ""
     
-                    problem_snippet = row['problem'][:50] + "..."  # Display first 50 characters of the problem
+                    # problem_snippet = row['problem'][:50] + "..."  # Display first 50 characters of the problem
+                    if isinstance(row['problem'], str):
+                        problem_snippet = row['problem'][:50] + "..."  # Display first 50 characters of the problem
+                    else:
+                        problem_snippet = "No problem description available"
                     expander_label = f"📝 Idea {index+1}: {problem_snippet}"
 
                     is_sustainable = row['is_sustainable']

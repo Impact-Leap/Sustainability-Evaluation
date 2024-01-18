@@ -423,7 +423,8 @@ elif input_method == 'Upload CSV':
         st.write("""
             Please follow these guidelines for your CSV file:
             - Your CSV file should contain only two columns: 'problem' and 'solution'.
-            - If your file has headers, ensure the column titles are 'problem' and 'solution'.
+            - Ensure the column titles are exactly 'problem' and 'solution'. The column names are case sensitive.
+            - If your file has headers, they should match the above column names exactly.
             - The file should be encoded in UTF-8 or ISO-8859-1.
             - Each row in the file should represent a separate problem-solution pair.
         """)

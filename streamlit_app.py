@@ -173,7 +173,7 @@ if input_method == 'Manual Input':
                 #     progress_bar.progress(i+1)
                 #     time.sleep(1)
                     
-                try:
+      try:
                     st.session_state.api_response = evaluate_idea(problem, solution)
                     # api_response = evaluate_idea(problem, solution)
                 except groq.error.InvalidRequestError as e:

@@ -160,8 +160,8 @@ if input_method == 'Manual Input':
     if submit_button:
         st.session_state.display_commercial_analysis = False
         st.session_state.api_response = False
-        if not api_key:
-            st.error("Please enter an API key.")
+       # if not api_key:
+         #   st.error("Please enter an API key.")
         else:
             # get the response
             

@@ -167,7 +167,7 @@ if input_method == 'Manual Input':
             
             # progress_bar = st.progress(0)
             
-            with st.spinner('Evaluating your idea, please wait for aproximately 40 seconds...'):
+         #   with st.spinner('Evaluating your idea, please wait for aproximately 40 seconds...'):
     
                 # for i in range(100):
                 #     progress_bar.progress(i+1)

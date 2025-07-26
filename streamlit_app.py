@@ -176,7 +176,7 @@ if input_method == 'Manual Input':
                 try:
                     st.session_state.api_response = evaluate_idea(problem, solution)
                     # api_response = evaluate_idea(problem, solution)
-                except openai.error.InvalidRequestError as e:
+                except groq.error.InvalidRequestError as e:
                     if e.status_code == 401:  # Unauthorized, typically due to invalid API key
                         st.error("Invalid API key. Please check your API key and try again.")
                     else:

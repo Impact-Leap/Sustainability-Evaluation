@@ -2,7 +2,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 import pandas as pd
-import openai
+import groq
 
 def get_top_5_tfidf(problem: str, solution: str):
     try:

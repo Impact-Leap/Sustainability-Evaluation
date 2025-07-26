@@ -157,15 +157,15 @@ if input_method == 'Manual Input':
     
 
     # if sumbmitted, send the prompt to openai to rob ~0.35$ from the user
-      if submit_button:
-      st.session_state.display_commercial_analysis = False
+    if submit_button:
+        st.session_state.display_commercial_analysis = False
         st.session_state.api_response = False
         if not api_key:
-        st.error("Please enter an API key.")
+            st.error("Please enter an API key.")
         else:
             # get the response
             
-            progress_bar = st.progress(0)
+            # progress_bar = st.progress(0)
             
             with st.spinner('Evaluating your idea, please wait for aproximately 40 seconds...'):
     
@@ -176,17 +176,16 @@ if input_method == 'Manual Input':
                 try:
                     st.session_state.api_response = evaluate_idea(problem, solution)
                     # api_response = evaluate_idea(problem, solution)
-            #    except openai.error.InvalidRequestError as e:
-            #        if e.status_code == 401:  # Unauthorized, typically due to invalid API key
-            #            st.error("Invalid API key. Please check your API key and try again.")
-            #        else:
+                except openai.error.InvalidRequestError as e:
+                    if e.status_code == 401:  # Unauthorized, typically due to invalid API key
+                        st.error("Invalid API key. Please check your API key and try again.")
+                    else:
                         st.error(f"An error occurred: {e}")
-            #    else:
+                else:
                     # This 'else' block runs only if no exception was raised
                     if not st.session_state.api_response:
                         # Display warning message if API call fails to retrieve data
                         st.error("Unable to retrieve data. Please try again later.")
-
                            
     # if api_response:
     if st.session_state.api_response:

@@ -162,7 +162,7 @@ if input_method == 'Manual Input':
         st.session_state.api_response = False
        # if not api_key:
          #   st.error("Please enter an API key.")
-        else:
+      #  else:
             # get the response
             
             # progress_bar = st.progress(0)

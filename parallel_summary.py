@@ -34,7 +34,7 @@ def process_inputs_in_parallel(inputs, api_key):
     # convert the input dataframe to a dictionary
     inputs = inputs.to_dict('index')
 
-    groq.api_key = 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
+    groq.api_key =
     results = []
     with concurrent.futures.ThreadPoolExecutor() as executor:
         # Submit each input data to be processed in parallel

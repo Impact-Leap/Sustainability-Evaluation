@@ -165,7 +165,7 @@ if input_method == 'Manual Input':
         else:
             # get the response
             
-            # progress_bar = st.progress(0)
+            progress_bar = st.progress(0)
             
             with st.spinner('Evaluating your idea, please wait for aproximately 40 seconds...'):
     

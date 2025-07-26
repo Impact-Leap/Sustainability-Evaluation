@@ -14,7 +14,7 @@ from commercial import get_top_5_tfidf, get_business_status_distribution, get_pe
 from parallel_summary import chat_with_openai, process_inputs_in_parallel, processed_results_to_df
 from io import StringIO
 
-import openai
+import groq
 import re
 import time
 
@@ -42,9 +42,10 @@ documents = pd.read_csv('Cleaned_ValidationSet.csv', encoding='ISO-8859-1')
 with st.sidebar:
     st.image("earth.png", width=250)
     # For example, links or additional instructions
-    api_key = st.text_input("Enter your API key", type="password")
-    st.write("We require a GPT-4 Turbo API key, specifically the model gpt-4-1106-preview. Please note that usage may incur charges.")
-    st.markdown("_(**Please review your API key agreement to understand privacy implications before using our evaluator.**)_", unsafe_allow_html=True)
+ #   api_key = 
+ # st.text_input("Enter your API key", type="password")
+ #   st.write("We require a GPT-4 Turbo API key, specifically the model gpt-4-1106-preview. Please note that usage may incur charges.")
+ #  st.markdown("_(**Please review your API key agreement to understand privacy implications before using our evaluator.**)_", unsafe_allow_html=True)
 
 def emoji():
     rain(
@@ -103,11 +104,11 @@ def evaluate_idea(problem, solution):
     # return mock_json
 
     # Pass the apikey to the OpenAI library
-    openai.api_key = api_key
+    groq.api_key = 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
 
     # try:
-    response = openai.ChatCompletion.create(
-        model="gpt-4-1106-preview",
+    response = groq.ChatCompletion.create(
+     #   model="gpt-4-1106-preview",
         messages=[{"role": "system", "content": system_prompt},
                     {"role": "user", "content": f"Problem:{problem}\n\nSolution:{solution}"}
             ],
@@ -156,12 +157,12 @@ if input_method == 'Manual Input':
     
 
     # if sumbmitted, send the prompt to openai to rob ~0.35$ from the user
-    if submit_button:
-        st.session_state.display_commercial_analysis = False
-        st.session_state.api_response = False
-        if not api_key:
-            st.error("Please enter an API key.")
-        else:
+   # if submit_button:
+    #    st.session_state.display_commercial_analysis = False
+     #   st.session_state.api_response = False
+     #   if not api_key:
+    #      st.error("Please enter an API key.")
+    #    else:
             # get the response
             
             # progress_bar = st.progress(0)
@@ -175,12 +176,12 @@ if input_method == 'Manual Input':
                 try:
                     st.session_state.api_response = evaluate_idea(problem, solution)
                     # api_response = evaluate_idea(problem, solution)
-                except openai.error.InvalidRequestError as e:
-                    if e.status_code == 401:  # Unauthorized, typically due to invalid API key
-                        st.error("Invalid API key. Please check your API key and try again.")
-                    else:
+            #    except openai.error.InvalidRequestError as e:
+            #        if e.status_code == 401:  # Unauthorized, typically due to invalid API key
+            #            st.error("Invalid API key. Please check your API key and try again.")
+            #        else:
                         st.error(f"An error occurred: {e}")
-                else:
+            #    else:
                     # This 'else' block runs only if no exception was raised
                     if not st.session_state.api_response:
                         # Display warning message if API call fails to retrieve data

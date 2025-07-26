@@ -104,7 +104,7 @@ def evaluate_idea(problem, solution):
     # return mock_json
 
     # Pass the apikey to the OpenAI library
-    groq.api_key = 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
+    groq.api_key = 
 
     # try:
     response = groq.ChatCompletion.create(

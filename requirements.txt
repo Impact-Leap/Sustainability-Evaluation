@@ -1,4 +1,5 @@
 streamlit>=1.26.0
+groq==0.26.0
 openai==0.28
 llama-index
 nltk

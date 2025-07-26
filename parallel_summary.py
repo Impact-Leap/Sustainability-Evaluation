@@ -1,11 +1,12 @@
 import concurrent.futures
-import openai
+import groq
+# import openai
 import pandas as pd
 import json
 import re
 
 # tool function to send given data with prompt to openai api
-def chat_with_openai(input_data):
+def chat_with_groq(input_data):
 
     # input data is of the form: {'id': 0, 'problem': '', 'solution': ''}
 
@@ -14,8 +15,8 @@ def chat_with_openai(input_data):
     with open('system_prompt.txt', 'r', encoding='utf-8') as file:
         system_prompt = file.read()
 
-    response = openai.ChatCompletion.create(
-        model="gpt-4-1106-preview",
+    response = groq.ChatCompletion.create(
+     #   model="gpt-4-1106-preview",
         messages=[{"role": "system", "content": f"{system_prompt}"},
                     {"role": "user", "content": f"problem: {input_data['problem']}. Solution: {input_data['solution']} "}
             ],
@@ -33,11 +34,11 @@ def process_inputs_in_parallel(inputs, api_key):
     # convert the input dataframe to a dictionary
     inputs = inputs.to_dict('index')
 
-    openai.api_key = api_key
+    groq.api_key = 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
     results = []
     with concurrent.futures.ThreadPoolExecutor() as executor:
         # Submit each input data to be processed in parallel
-        futures = [executor.submit(chat_with_openai, messages) for _, messages in inputs.items()]
+        futures = [executor.submit(chat_with_groq, messages) for _, messages in inputs.items()]
         for future in concurrent.futures.as_completed(futures):
             results.append(future.result())
     return results

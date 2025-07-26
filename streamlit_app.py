@@ -11,7 +11,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from tfidf_novelty import get_tfidf_novelty
 from commercial import get_top_5_tfidf, get_business_status_distribution, get_percentile_by_category, generate_commercial_analysis
-from parallel_summary import chat_with_openai, process_inputs_in_parallel, processed_results_to_df
+from parallel_summary import chat_with_groq, process_inputs_in_parallel, processed_results_to_df
 from io import StringIO
 
 import groq

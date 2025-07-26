@@ -176,12 +176,12 @@ if input_method == 'Manual Input':
           try:
                     st.session_state.api_response = evaluate_idea(problem, solution)
                     # api_response = evaluate_idea(problem, solution)
-                except openai.error.InvalidRequestError as e:
+          except openai.error.InvalidRequestError as e:
                     if e.status_code == 401:  # Unauthorized, typically due to invalid API key
                         st.error("Invalid API key. Please check your API key and try again.")
                     else:
                         st.error(f"An error occurred: {e}")
-                else:
+          else:
                     # This 'else' block runs only if no exception was raised
                     if not st.session_state.api_response:
                         # Display warning message if API call fails to retrieve data
